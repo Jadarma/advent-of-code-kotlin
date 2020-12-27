@@ -1,5 +1,5 @@
 rootProject.name = "advent-of-code-kotlin"
-include("core")
+include("core", "solutions")
 
 pluginManagement {
     val kotlinVersion: String by settings
