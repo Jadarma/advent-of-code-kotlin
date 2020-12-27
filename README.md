@@ -3,7 +3,7 @@
 My solutions to [Advent of Code](https://adventofcode.com/), using idiomatic Kotlin and my very own helper framework
 to make everything clean and easy to use.
 
-_"Anything that's worth doing, it's worth overdoing."_
+_"Anything that's worth doing, is worth overdoing."_
 
 ---
 
@@ -47,13 +47,13 @@ src
 
 There are a few simple key points here:
 - Solutions go into `src/main/kotlin`.
-  While it is not a requirement to split them into yearly packages, it is recommended.
-  There is also no requirement for the file/class name, but keeping it simple and consistent helps with organising.
+  While it is not a requirement to split them into packages by year or have a specific naming convention for the class
+  names, doing so helps with organising.
 - Unit tests go into `src/test/kotlin` and should have the same structure as the `main` source set.
 - Input data goes into `src/main/resources`.
-  The format for these ***is enforced*** and it needs to follow the `/aoc/input/y[year]/input_Y[year]D[paddedDay].txt`
+  The format for these ***is enforced*** and needs to follow the `/aoc/input/y[year]/input_Y[year]D[paddedDay].txt`
   format, otherwise it will not be recognised!
-- Only classes from `aoc.solution.*` package will be taken into consideration!
+- Only classes from `aoc.solutions.*` package will be taken into consideration!
   This is already the default package of the source set (defined in `Main.kt`).
   If the runner doesn't find it, this is most likely the cause.
 
@@ -67,7 +67,7 @@ After which you only need to override the `partOne` and `partTwo` functions, whi
 
 A minimal example:
 ```kotlin
-class  Y2015D01 : AdventDay(2015, 1, "Not Quite List") {
+class Y2015D01 : AdventDay(2015, 1, "Not Quite Lisp") {
     override fun partOne(input: String) = "Won't spoil it here"
     override fun partTwo(input: String) = "But you get the idea."
 }
@@ -103,7 +103,7 @@ class Y2015D01Test : AdventTest(Y2015D01()) {
 
 If you run it you will see you already have two more tests that are ignored, responsible for asserting the validity of
 the actual input.
-After you solve the problem and obtain the correct answer(s), you may pass it to the test class, and it will
+After you solve the problem and obtain the correct answer(s), you may pass them to the test class, and it will
 automatically check that the implementation continues to produce the same output, using the same input file from the
 resources directory.
 This is helpful if you want to later refactor your code and not worry about breaking something.
