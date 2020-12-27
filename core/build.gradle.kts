@@ -31,7 +31,7 @@ tasks {
 
     withType<KotlinCompile>().configureEach {
         kotlinOptions.freeCompilerArgs += listOf(
-            "-Xopt-in=org.mylibrary.OptInAnnotation",
+            "-Xopt-in=kotlin.time.ExperimentalTime",
             "-Xexplicit-api=strict"
         )
     }
