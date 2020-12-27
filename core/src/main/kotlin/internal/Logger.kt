@@ -64,7 +64,12 @@ internal class LoggerImpl(colorMode: EnableColor) : Logger {
         is PartResult.Inconsistent -> row(
             label,
             (bold + yellow)("Warn"),
-            yellow(result.results.joinToString()),
+            yellow(result.results
+                .groupBy { it }
+                .asSequence()
+                .map { "${it.key} (x${it.value.count()})" }
+                .joinToString()
+            ),
             gray("n/a")
         )
         is PartResult.Ok -> row(
