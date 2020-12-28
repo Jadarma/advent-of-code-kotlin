@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization")
     application
 }
 
@@ -9,7 +10,9 @@ application {
 }
 
 dependencies {
+    val kotlinSerializationJsonVersion: String by project
     implementation(project(":core"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationJsonVersion")
 
     val junitEngineVersion: String by rootProject
     testImplementation(project(":core", "testArchive"))
