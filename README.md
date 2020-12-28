@@ -13,10 +13,13 @@ _"Anything that's worth doing, is worth overdoing."_
 This project already comes with my own solutions.
 Fortunately, you can very easily remove them and implement them yourself.
 
-Either clone the `clean-template` branch, or just delete my implementations with:
+Either clone the [clean-template](https://github.com/Jadarma/advent-of-code-kotlin/tree/clean-template) branch, or just
+delete my implementations and inputs:
 
 ```shell
-rm -rf ./solutions/src/main/kotlin/y* ./solutions/src/main/resources/aoc/input/y*
+rm -rf ./solutions/src/main/kotlin/y*
+rm -rf ./solutions/src/test/kotlin/y*
+rm -rf ./solutions/src/main/resources/aoc/input/y*
 ```
 
 More about what these paths mean will be explained shortly.
