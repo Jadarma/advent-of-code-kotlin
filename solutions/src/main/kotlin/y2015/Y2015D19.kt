@@ -51,4 +51,23 @@ class Y2015D19 : AdventDay(2015, 19, "Medicine for Rudolph") {
 
         return iterations
     }
+
+    /**
+     * This is too cool not to show: you can solve this only by using the medicine molecule if you can figure out that
+     * the transformation rules follow an unambiguous grammar. Unfortunately, it won't pass the test on the trivial
+     * HOH example since it doesn't use the same grammar, but it works for real input data in linear time! Yay math!
+     *
+     * Discovered by Reddit user `/u/askalski`.
+     * Original explanation: [https://www.reddit.com/r/adventofcode/comments/3xflz8/day_19_solutions/cy4etju].
+     */
+    @Suppress("unused")
+    private fun partTwoByMagic(input: String): Int {
+        val molecule = input.lineSequence().last()
+
+        val elements = molecule.count { it in 'A'..'Z' }
+        val parens = molecule.windowed(2).count { it == "Rn" || it == "Ar" }
+        val commas = molecule.count { it == 'Y' }
+
+        return elements - parens - commas * 2 - 1
+    }
 }
