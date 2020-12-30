@@ -65,7 +65,7 @@ class Y2015D23 : AdventDay(2015, 23, "Opening the Turing Lock") {
         companion object {
 
             /** All valid instructions follow this syntax. */
-            private val syntax = Regex("""^([a-z]\w+) ([+\-]\d+|\w+)(?:, ([+\-]\d+|\w+))*$""")
+            private val syntax = Regex("""([a-z]+) ([+\-]\d+|[a-z]+)(?:, ([+\-]\d+|[a-z]+))*$""")
 
             /** Parses the [input] into an [Instruction], or throws an [IllegalArgumentException] if it is invalid. */
             fun parse(input: String): Instruction = runCatching {
