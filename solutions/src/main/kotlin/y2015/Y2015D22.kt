@@ -17,9 +17,9 @@ class Y2015D22 : AdventDay(2015, 22, "Wizard Simulator 20XX") {
     private enum class Spell(val cost: Int, val turns: Int = 0) {
         MagicMissile(cost = 53),
         Drain(cost = 73),
-        Shield(cost = 113, 6),
-        Poison(cost = 173, 6),
-        Recharge(cost = 229, 5);
+        Shield(cost = 113, turns = 6),
+        Poison(cost = 173, turns = 6),
+        Recharge(cost = 229, turns = 5);
     }
 
     /** Describes the state of the game in any point during the battle simulation. */
