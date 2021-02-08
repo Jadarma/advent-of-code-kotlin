@@ -9,3 +9,11 @@ pluginManagement {
         kotlin("plugin.serialization") version kotlinVersion
     }
 }
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+}

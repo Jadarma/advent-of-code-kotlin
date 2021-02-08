@@ -5,18 +5,10 @@ plugins {
 }
 
 subprojects {
-    repositories {
-        mavenLocal()
-        jcenter()
-        mavenCentral()
-    }
-
     tasks {
         withType<Test> {
             useJUnitPlatform()
         }
-
-
 
         withType<KotlinCompile>().configureEach {
             kotlinOptions.apply {
