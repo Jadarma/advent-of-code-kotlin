@@ -1,19 +1,17 @@
 package aoc.core.internal
 
 import aoc.core.EnableColor
-import com.github.ajalt.mordant.rendering.BorderStyle
+import com.github.ajalt.mordant.rendering.*
 import com.github.ajalt.mordant.rendering.OverflowWrap.BREAK_WORD
-import com.github.ajalt.mordant.rendering.TextAlign
 import com.github.ajalt.mordant.rendering.TextAlign.CENTER
+import com.github.ajalt.mordant.rendering.TextColors.*
+import com.github.ajalt.mordant.rendering.TextStyles.bold
+import com.github.ajalt.mordant.rendering.TextStyles.underline
 import com.github.ajalt.mordant.table.ColumnWidth.Expand
 import com.github.ajalt.mordant.table.ColumnWidth.Fixed
 import com.github.ajalt.mordant.table.SectionBuilder
 import com.github.ajalt.mordant.table.table
-import com.github.ajalt.mordant.terminal.AnsiLevel
 import com.github.ajalt.mordant.terminal.Terminal
-import com.github.ajalt.mordant.terminal.TextColors.*
-import com.github.ajalt.mordant.terminal.TextStyles.bold
-import com.github.ajalt.mordant.terminal.TextStyles.underline
 
 /** Formats and pretty prints the outcomes of executing advent days. */
 internal interface Logger {

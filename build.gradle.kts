@@ -5,22 +5,15 @@ plugins {
 }
 
 subprojects {
-    repositories {
-        mavenLocal()
-        jcenter()
-        mavenCentral()
-    }
-
     tasks {
         withType<Test> {
             useJUnitPlatform()
         }
 
-
-
         withType<KotlinCompile>().configureEach {
             kotlinOptions.apply {
-                jvmTarget = "1.8"
+                useIR = true
+                jvmTarget = "11"
                 languageVersion = "1.4"
             }
         }
