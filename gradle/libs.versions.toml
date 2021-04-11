@@ -1,0 +1,14 @@
+[versions]
+kotlin = "1.4.32"
+
+[libraries]
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
+
+clikt = "com.github.ajalt.clikt:clikt:3.1.0"
+mordant = "com.github.ajalt.mordant:mordant:2.0.0-beta1"
+
+reflections = "org.reflections:reflections:0.9.12"
+
+junit-engine = "org.junit.jupiter:junit-jupiter-engine:5.7.1"
+junit-kotlin = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }

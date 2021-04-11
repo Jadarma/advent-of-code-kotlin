@@ -10,12 +10,10 @@ application {
 }
 
 dependencies {
-    val kotlinSerializationJsonVersion: String by project
     implementation(project(":core"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationJsonVersion")
+    implementation(libs.kotlin.serializationJson)
 
-    val junitEngineVersion: String by rootProject
     testImplementation(project(":core", "testArchive"))
-    testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitEngineVersion")
+    testImplementation(libs.junit.kotlin)
+    testRuntimeOnly(libs.junit.engine)
 }
