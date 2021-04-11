@@ -14,6 +14,5 @@ dependencyResolutionManagement {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
     }
 }
