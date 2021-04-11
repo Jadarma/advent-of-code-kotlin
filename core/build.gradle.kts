@@ -5,17 +5,13 @@ plugins {
 }
 
 dependencies {
-    val clicktVersion: String by project
-    val reflectionsVersion: String by project
-    val mordantVersion: String by project
-    implementation(kotlin("reflect"))
-    implementation("org.reflections:reflections:$reflectionsVersion")
-    implementation("com.github.ajalt.clikt:clikt:$clicktVersion")
-    implementation("com.github.ajalt.mordant:mordant:$mordantVersion")
+    implementation(libs.kotlin.reflect)
+    implementation(libs.reflections)
+    implementation(libs.clikt)
+    implementation(libs.mordant)
 
-    val junitEngineVersion: String by rootProject
-    testImplementation(kotlin("test-junit5"))
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitEngineVersion")
+    testImplementation(libs.junit.kotlin)
+    testRuntimeOnly(libs.junit.engine)
 }
 
 configurations.register("testArchive") {
