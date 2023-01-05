@@ -1,0 +1,13 @@
+# Enforce LF ending for all files, unless otherwise specified below.
+*           text eol=lf
+
+# Preserve CRLF for Windows only files (realistically just gradlew.bat).
+*.bat       text eol=crlf
+
+# Use more specific diff drivers for certain files.
+*.kt        text diff=kotlin
+*.kts       text diff=kotlin
+*.md        text diff=markdown
+
+# Explicitly mark binary files as such.
+*.jar       binary

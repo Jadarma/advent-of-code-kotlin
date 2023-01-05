@@ -1,0 +1,16 @@
+comments:
+  # https://detekt.dev/docs/rules/comments#endofsentenceformat
+  EndOfSentenceFormat:
+    active: true
+  # https://detekt.dev/docs/rules/comments#kdocreferencesnonpublicproperty
+  KDocReferencesNonPublicProperty:
+    active: true
+  # https://detekt.dev/docs/rules/comments#outdateddocumentation
+  OutdatedDocumentation:
+    active: true
+  # https://detekt.dev/docs/rules/comments#undocumentedpublicclass
+  UndocumentedPublicClass:
+    active: true
+  # https://detekt.dev/docs/rules/comments#undocumentedpublicproperty
+  UndocumentedPublicProperty:
+    active: true
