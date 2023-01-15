@@ -1,7 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 rootProject.name = "advent-of-code-kotlin"
-include(":aock-cli", ":aock-core", ":aock-sdk", ":aock-test", ":aock-util")
+include(":aockt-cli", ":aockt-core", ":aockt-sdk", ":aockt-test")
 
 pluginManagement {
     repositories {

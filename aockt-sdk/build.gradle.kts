@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    api(project(":aock-core"))
+    api(project(":aockt-core"))
 }
