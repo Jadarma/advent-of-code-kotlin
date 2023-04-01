@@ -1,4 +1,4 @@
-package io.github.jadarma.aock.test
+package io.github.jadarma.aockt.test
 
 
 /**
