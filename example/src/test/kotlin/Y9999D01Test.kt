@@ -12,5 +12,6 @@ import io.github.jadarma.aockt.test.AdventSpec
  */
 @AdventDay(9999, 1, "Magic Numbers")
 class Y9999D01Test : AdventSpec(Y9999D01(), {
-    test("true") { }
+    partOne()
+    partTwo()
 })
