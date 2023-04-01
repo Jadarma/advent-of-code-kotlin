@@ -9,6 +9,7 @@ import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
 import io.github.jadarma.aockt.test.internal.ConflictingPartExampleConfigurationException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
+import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
 import io.github.jadarma.aockt.test.internal.PuzzleTestData
 import io.github.jadarma.aockt.test.internal.TestData
 import io.github.jadarma.aockt.test.internal.id
@@ -16,10 +17,18 @@ import io.github.jadarma.aockt.test.internal.partFunction
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.mpp.annotation
+import io.kotest.mpp.newInstanceNoArgConstructorOrObjectInstance
+import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubtypeOf
+import kotlin.reflect.full.starProjectedType
+import kotlin.reflect.jvm.jvmErasure
+import kotlin.reflect.typeOf
 
 /**
  * A [FunSpec] specialized for testing Advent of Code puzzle [Solution]s.
  * The test classes extending this should also provide information about the puzzle with an [AdventDay] annotation.
+ *
+ * @param T The implementation class of the [Solution] to be tested.
  *
  * Example:
  * ```kotlin
@@ -28,18 +37,34 @@ import io.kotest.mpp.annotation
  * import io.github.jadarma.aockt.test.AdventDay
  *
  * @AdventDay(2015, 1, "Not Quite Lisp")
- * class Y2015D01Test : AdventSpec(2015D01(), {
+ * class Y2015D01Test : AdventSpec<Y2015D01>({
  *     // ...
  * }
  * ```
  */
-public abstract class AdventSpec(
-    protected val solution: Solution,
-    body: AdventSpec.() -> Unit = {},
+public abstract class AdventSpec<T : Solution>(
+    body: AdventSpec<T>.() -> Unit = {},
 ) : FunSpec() {
 
     private val adventDayId: AdventDayID
     private val testData: PuzzleTestData
+
+    /**
+     * The implementation class of the [Solution] to be tested.
+     * Injected by some reflection magic that while not that pretty, is fine for use in unit tests, and allows for a
+     * more elegant syntax when declaring [AdventSpec]s.
+     */
+    private val solution: Solution = this::class
+        .starProjectedType.jvmErasure.supertypes
+        .first { it.isSubtypeOf(typeOf<AdventSpec<*>>()) }
+        .arguments.first().type!!.jvmErasure
+        .run {
+            @Suppress("UNCHECKED_CAST") // Must be a solution because of AdventSpec bounds.
+            this as KClass<Solution>
+
+            runCatching { newInstanceNoArgConstructorOrObjectInstance() }
+                .getOrElse { throw MissingNoArgConstructorException(this) }
+        }
 
     init {
         val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
@@ -82,7 +107,7 @@ public abstract class AdventSpec(
             enabled = enabled,
             tags = if (expensive) setOf(ExpensiveDay) else emptySet(),
         ) {
-            test("Outputs a solution").config(enabled = testData.input != null) {
+            test("Outputs a solution").config(enabled = testData.input != null && !examplesOnly) {
                 // TODO: Test and display the results.
             }
 
