@@ -4,5 +4,6 @@ plugins {
 
 dependencies {
     api(project(":aockt-core"))
-    implementation(project(":aockt-sdk"))
+    implementation(libs.kotlin.reflect)
+    implementation(libs.kotest.api)
 }
