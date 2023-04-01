@@ -74,6 +74,19 @@ internal value class PuzzleInput(private val input: String): CharSequence by inp
     }
 
     override fun toString(): String = input
+
+    /** Formats the input in a printable friendly manner. */
+    fun preview(): String = when(input.count { it == '\n' }) {
+        0 -> input
+        in 1 .. 5 -> "\n$input\n"
+        else -> buildString {
+            val lines = input.lines()
+            appendLine()
+            lines.take(3).forEach(::appendLine)
+            appendLine("...")
+            appendLine(lines.last())
+        }
+    }
 }
 
 /** An answer given by a [Solution] that was given a [PuzzleInput]. */

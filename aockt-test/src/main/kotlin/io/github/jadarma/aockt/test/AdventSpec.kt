@@ -54,14 +54,14 @@ public abstract class AdventSpec(
      * Will create a context with two tests:
      *  - Verifies the output, given the input file has been added to the test resources.
      *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventPartTestContext], useful for a TDD approach when implementing the
-     *    solution for the first time.
+     *  - Verifies the given examples in an [AdventSpecExampleContainerScope], useful for a TDD approach when
+     *    implementing the solution for the first time.
      *
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param examplesOnly Only run the examples, and don't test against actual input.
      * @param skipExamples Only run against actual input.
-     * @param examples Test the solution against example inputs defined in this [AdventPartTestContext].
+     * @param examples Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     @Suppress("LongParameterList")
     private fun partTest(
@@ -70,7 +70,7 @@ public abstract class AdventSpec(
         expensive: Boolean,
         examplesOnly: Boolean,
         skipExamples: Boolean,
-        examples: (suspend AdventPartTestContext.() -> Unit)?,
+        examples: (suspend AdventSpecExampleContainerScope.() -> Unit)?,
     ) {
         if (examplesOnly && skipExamples) {
             throw ConflictingPartExampleConfigurationException(this::class)
@@ -87,8 +87,8 @@ public abstract class AdventSpec(
             }
 
             if (examples != null) {
-                test("Validates the examples").config(enabled = !skipExamples) {
-                    AdventPartTestContext(partFunction).examples()
+                context("Validates the examples").config(enabled = !skipExamples) {
+                    AdventSpecExampleContainerScope(partFunction, this).examples()
                 }
             }
         }
@@ -101,21 +101,21 @@ public abstract class AdventSpec(
      * Will create a context with two tests:
      *  - Verifies the output, given the input file has been added to the test resources.
      *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventPartTestContext], useful for a TDD approach when implementing the
-     *    solution for the first time.
+     *  - Verifies the given examples in an [AdventSpecExampleContainerScope], useful for a TDD approach when
+     *    implementing the solution for the first time.
      *
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param examplesOnly Only run the examples, and don't test against actual input.
      * @param skipExamples Only run against actual input.
-     * @param test Test the solution against example inputs defined in this [AdventPartTestContext].
+     * @param test Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     public fun partOne(
         enabled: Boolean = true,
         expensive: Boolean = false,
         examplesOnly: Boolean = false,
         skipExamples: Boolean = false,
-        test: (suspend AdventPartTestContext.() -> Unit)? = null,
+        test: (suspend AdventSpecExampleContainerScope.() -> Unit)? = null,
     ): Unit = partTest(
         part = One,
         enabled = enabled,
@@ -132,21 +132,21 @@ public abstract class AdventSpec(
      * Will create a context with two tests:
      *  - Verifies the output, given the input file has been added to the test resources.
      *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventPartTestContext], useful for a TDD approach when implementing the
-     *    solution for the first time.
+     *  - Verifies the given examples in an [AdventSpecExampleContainerScope], useful for a TDD approach when
+     *    implementing the solution for the first time.
      *
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param examplesOnly Only run the examples, and don't test against actual input.
      * @param skipExamples Only run against actual input.
-     * @param test Test the solution against example inputs defined in this [AdventPartTestContext].
+     * @param test Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     public fun partTwo(
         enabled: Boolean = true,
         expensive: Boolean = false,
         examplesOnly: Boolean = false,
         skipExamples: Boolean = false,
-        test: (suspend AdventPartTestContext.() -> Unit)? = null,
+        test: (suspend AdventSpecExampleContainerScope.() -> Unit)? = null,
     ): Unit = partTest(
         part = Two,
         enabled = enabled,
