@@ -3,8 +3,7 @@ package io.github.jadarma.aockt.test
 import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.internal.AdventDayID
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
-import io.github.jadarma.aockt.test.internal.PuzzleTestData
-import io.github.jadarma.aockt.test.internal.TestData
+import io.github.jadarma.aockt.test.internal.id
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.mpp.annotation
 
@@ -29,13 +28,14 @@ public abstract class AdventSpec(
     body: AdventSpec.() -> Unit = {},
 ) : FunSpec() {
 
-    private val adventDayId: AdventDayID = this::class.annotation<AdventDay>()
-        ?.run { AdventDayID(year, day) }
-        ?: throw MissingAdventDayAnnotationException(this::class)
-
-    private val testData: PuzzleTestData = TestData.inputFor(adventDayId)
+    private val adventDayId: AdventDayID
 
     init {
+        val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
+
+        if(adventDay.isExpensive) tags(ExpensiveDay)
+        adventDayId = adventDay.id
+
         body()
     }
 }

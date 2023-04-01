@@ -1,5 +1,7 @@
 package io.github.jadarma.aockt.test.internal
 
+import io.github.jadarma.aockt.test.AdventDay
+
 /**
  * Identifies an Advent of Code problem.
  *
@@ -26,3 +28,6 @@ public data class AdventDayID(
         val VALID_YEAR_RANGE = 2015 .. 9999
     }
 }
+
+/** The internal typesafe [AdventDayID] for this [AdventDay]. */
+public val AdventDay.id: AdventDayID get() = AdventDayID(year, day)
