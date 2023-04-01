@@ -32,10 +32,7 @@ public abstract class AdventSpec(
 
     init {
         val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
-
-        if(adventDay.isExpensive) tags(ExpensiveDay)
         adventDayId = adventDay.id
-
         body()
     }
 }
