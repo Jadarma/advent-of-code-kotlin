@@ -1,6 +1,5 @@
 package io.github.jadarma.aockt.test
 
-
 /**
  * Marks an [AdventSpec] as being the tests of a solution to a specific advent puzzle.
  *

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalKotest::class)
-
 package io.github.jadarma.aockt.test
 
 import io.github.jadarma.aockt.core.Solution
@@ -29,6 +27,7 @@ import kotlin.reflect.typeOf
  * The test classes extending this should also provide information about the puzzle with an [AdventDay] annotation.
  *
  * @param T The implementation class of the [Solution] to be tested.
+ * @param body A context in which to configure the tests.
  *
  * Example:
  * ```kotlin
@@ -42,6 +41,7 @@ import kotlin.reflect.typeOf
  * }
  * ```
  */
+@OptIn(ExperimentalKotest::class)
 public abstract class AdventSpec<T : Solution>(
     body: AdventSpec<T>.() -> Unit = {},
 ) : FunSpec() {
@@ -82,6 +82,7 @@ public abstract class AdventSpec<T : Solution>(
      *  - Verifies the given examples in an [AdventSpecExampleContainerScope], useful for a TDD approach when
      *    implementing the solution for the first time.
      *
+     * @param part The part selector.
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param examplesOnly Only run the examples, and don't test against actual input.
