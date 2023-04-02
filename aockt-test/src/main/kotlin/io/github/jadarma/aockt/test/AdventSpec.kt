@@ -8,12 +8,17 @@ import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
 import io.github.jadarma.aockt.test.internal.ConflictingPartExampleConfigurationException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
 import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
+import io.github.jadarma.aockt.test.internal.PuzzleAnswer
 import io.github.jadarma.aockt.test.internal.PuzzleTestData
 import io.github.jadarma.aockt.test.internal.TestData
 import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.partFunction
+import io.github.jadarma.aockt.test.internal.solutionToPart
+import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.mpp.annotation
 import io.kotest.mpp.newInstanceNoArgConstructorOrObjectInstance
 import kotlin.reflect.KClass
@@ -21,6 +26,8 @@ import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 /**
  * A [FunSpec] specialized for testing Advent of Code puzzle [Solution]s.
@@ -37,11 +44,20 @@ import kotlin.reflect.typeOf
  *
  * @AdventDay(2015, 1, "Not Quite Lisp")
  * class Y2015D01Test : AdventSpec<Y2015D01>({
- *     // ...
+ *     partOne {
+ *         listOf("(())", "()()") shouldAllOutput 0
+ *         listOf("(((", "(()(()(") shouldAllOutput 3
+ *         listOf("())", "))(") shouldAllOutput -1
+ *         listOf(")))", ")())())") shouldAllOutput -3
+ *     }
+ *     partTwo {
+ *         ")" shouldOutput 1
+ *         "()())" shouldOutput 5
+ *     }
  * }
  * ```
  */
-@OptIn(ExperimentalKotest::class)
+@OptIn(ExperimentalKotest::class, ExperimentalTime::class)
 public abstract class AdventSpec<T : Solution>(
     body: AdventSpec<T>.() -> Unit = {},
 ) : FunSpec() {
@@ -102,19 +118,39 @@ public abstract class AdventSpec<T : Solution>(
             throw ConflictingPartExampleConfigurationException(this::class)
         }
 
-        val partFunction = solution.partFunction(part)
-
         context("Part $part").config(
             enabled = enabled,
             tags = if (expensive) setOf(ExpensiveDay) else emptySet(),
         ) {
-            test("Outputs a solution").config(enabled = testData.input != null && !examplesOnly) {
-                // TODO: Test and display the results.
+            val input = testData.input?.toString()
+            val partFunction = solution.partFunction(part)
+            val correctAnswer = testData.solutionToPart(part)
+
+            val suffix = when {
+                input == null -> " (Unavailable)"
+                correctAnswer == null -> " (Unverified)"
+                else -> ""
             }
 
             if (examples != null) {
                 context("Validates the examples").config(enabled = !skipExamples) {
                     AdventSpecExampleContainerScope(partFunction, this).examples()
+                }
+            }
+
+            test("Validates the input$suffix").config(enabled = input != null && !examplesOnly) {
+                checkNotNull(input) { "Impossible state, test should be disabled on null input."}
+
+                val (answer, duration) = shouldNotThrowAny {
+                    measureTimedValue { partFunction(input) }
+                }
+
+                println("Your answer was: $answer ($duration)")
+
+                correctAnswer?.run {
+                    withClue("Correct solution was: $this") {
+                        PuzzleAnswer(answer.toString()) shouldBe this
+                    }
                 }
             }
         }
