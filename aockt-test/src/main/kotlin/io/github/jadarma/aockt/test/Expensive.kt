@@ -8,4 +8,4 @@ import io.kotest.core.Tag
  * Useful for marking the test specs for some days (like brute force challenges) so they can be excluded conditionally
  * in bulk test executions.
  */
-public object ExpensiveDay : Tag()
+public object Expensive : Tag()
