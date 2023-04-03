@@ -37,7 +37,6 @@ public class AdventSpecExampleContainerScope(
                     this@AdventSpecExampleContainerScope.implementation(input.toString()).toString()
                 }
                 answer shouldBe expected.toString()
-                println("Correct answer '$expected' given for input: $preview")
             }
         }
     }
