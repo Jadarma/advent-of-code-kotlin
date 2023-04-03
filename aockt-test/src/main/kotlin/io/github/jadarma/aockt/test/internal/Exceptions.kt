@@ -14,7 +14,7 @@ internal abstract class AocktException(message: String? = null, cause: Throwable
  * It is required in order to determine test input.
  */
 internal class MissingAdventDayAnnotationException(kclass: KClass<out AdventSpec<*>>) : AocktException(
-    message = "Class ${kclass.qualifiedName} is an AdventSpec but is missing the AdventDay annotation."
+    message = "Class ${kclass.qualifiedName} is an AdventSpec but is missing the AdventDay annotation.",
 )
 
 /**
@@ -23,7 +23,7 @@ internal class MissingAdventDayAnnotationException(kclass: KClass<out AdventSpec
  * Add a no-arg constructor to it or declare it as an object.
  */
 internal class MissingNoArgConstructorException(kclass: KClass<out Solution>): AocktException(
-    message = "Class ${kclass.qualifiedName} is a Solution but it is missing a no-arg constructor."
+    message = "Class ${kclass.qualifiedName} is a Solution but it is missing a no-arg constructor.",
 )
 
 /**
@@ -32,5 +32,13 @@ internal class MissingNoArgConstructorException(kclass: KClass<out Solution>): A
  */
 internal class ConflictingPartExampleConfigurationException(spec: KClass<*>) : AocktException(
     message = "In ${spec.qualifiedName}, a part can either be configured to execute only the examples, or skip them," +
-        " but not both."
+        " but not both.",
+)
+
+/**
+ * An [AdventSpec] declared the same part scope twice.
+ * The [AdventSpec.partOne] and [AdventSpec.partTwo] should be used at most once per spec.
+ */
+internal class DuplicatePartDefinitionException(spec: KClass<*>, part: AdventDayPart): AocktException(
+    message = "In ${spec.qualifiedName}, part$part has been declared twice.",
 )

@@ -6,6 +6,7 @@ import io.github.jadarma.aockt.test.internal.AdventDayPart
 import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
 import io.github.jadarma.aockt.test.internal.ConflictingPartExampleConfigurationException
+import io.github.jadarma.aockt.test.internal.DuplicatePartDefinitionException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
 import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
 import io.github.jadarma.aockt.test.internal.PuzzleAnswer
@@ -107,6 +108,10 @@ public abstract class AdventSpec<T : Solution>(
         body()
     }
 
+    // Flags to prevent the user from defining a part more than once.
+    private var isPartOneDefined: Boolean = false
+    private var isPartTwoDefined: Boolean = false
+
     /**
      * Provides a context to test the implementation of one of a [Solution]'s part function.
      *
@@ -123,7 +128,7 @@ public abstract class AdventSpec<T : Solution>(
      * @param skipExamples Only run against actual input.
      * @param examples Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
-    @Suppress("LongParameterList")
+    @Suppress("LongParameterList", "ThrowsCount")
     private fun partTest(
         part: AdventDayPart,
         enabled: Boolean,
@@ -134,6 +139,17 @@ public abstract class AdventSpec<T : Solution>(
     ) {
         if (examplesOnly && skipExamples) {
             throw ConflictingPartExampleConfigurationException(this::class)
+        }
+
+        when(part) {
+            One -> {
+                if(isPartOneDefined) throw DuplicatePartDefinitionException(this::class, One)
+                isPartOneDefined = true
+            }
+            Two -> {
+                if(isPartTwoDefined) throw DuplicatePartDefinitionException(this::class, Two)
+                isPartTwoDefined = true
+            }
         }
 
         context("Part $part").config(
