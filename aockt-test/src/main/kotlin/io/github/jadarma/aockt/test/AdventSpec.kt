@@ -14,10 +14,15 @@ import io.github.jadarma.aockt.test.internal.TestData
 import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.partFunction
 import io.github.jadarma.aockt.test.internal.solutionToPart
-import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.assertions.failure
 import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
+import io.kotest.core.concurrency.CoroutineDispatcherFactory
+import io.kotest.core.config.ProjectConfiguration
+import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.core.test.TestCaseOrder
+import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.matchers.shouldBe
 import io.kotest.mpp.annotation
 import io.kotest.mpp.newInstanceNoArgConstructorOrObjectInstance
@@ -26,6 +31,10 @@ import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
@@ -82,6 +91,15 @@ public abstract class AdventSpec<T : Solution>(
                 .getOrElse { throw MissingNoArgConstructorException(this) }
         }
 
+    // Enforce some configuration to ensure that all tests within one AdventSpec will be executed sequentially on a
+    // single thread.
+    final override fun isolationMode(): IsolationMode = IsolationMode.SingleInstance
+    final override fun testCaseOrder(): TestCaseOrder = TestCaseOrder.Sequential
+    final override fun concurrency(): Int = ProjectConfiguration.Sequential
+    final override fun threads(): Int = 1
+    final override fun dispatcherAffinity(): Boolean = true
+    final override fun coroutineDispatcherFactory(): CoroutineDispatcherFactory? = null
+
     init {
         val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
         adventDayId = adventDay.id
@@ -120,17 +138,9 @@ public abstract class AdventSpec<T : Solution>(
 
         context("Part $part").config(
             enabled = enabled,
-            tags = if (expensive) setOf(ExpensiveDay) else emptySet(),
+            tags = if (expensive) setOf(Expensive) else emptySet(),
         ) {
-            val input = testData.input?.toString()
             val partFunction = solution.partFunction(part)
-            val correctAnswer = testData.solutionToPart(part)
-
-            val suffix = when {
-                input == null -> " (Unavailable)"
-                correctAnswer == null -> " (Unverified)"
-                else -> ""
-            }
 
             if (examples != null) {
                 context("Validates the examples").config(enabled = !skipExamples) {
@@ -138,18 +148,41 @@ public abstract class AdventSpec<T : Solution>(
                 }
             }
 
-            test("Validates the input$suffix").config(enabled = input != null && !examplesOnly) {
-                checkNotNull(input) { "Impossible state, test should be disabled on null input."}
+            context("The solution").config(
+                enabled = testData.input != null && !examplesOnly,
+                timeout = if (expensive) 1.hours else 1.minutes,
+            ) {
+                val input = testData.input?.toString()
+                checkNotNull(input) { "Impossible state, test should be disabled on null input." }
 
-                val (answer, duration) = shouldNotThrowAny {
-                    measureTimedValue { partFunction(input) }
+                val correctAnswer = testData.solutionToPart(part)
+                val solutionKnown = correctAnswer != null
+
+                var error: Throwable? = null
+                var answer: PuzzleAnswer? = null
+                var duration: Duration? = null
+
+                runCatching {
+                    val (value, time) = measureTimedValue { partFunction(input) }
+                    answer = PuzzleAnswer(value.toString())
+                    duration = time
+                }.onFailure { error = it }
+
+                val unverifiedSuffix = if(!solutionKnown) " (Unverified: $answer)" else ""
+                test("Is correct$unverifiedSuffix").config(enabled = solutionKnown) {
+                    if(error != null) {
+                        throw failure("The solution threw an exception before it could return an answer.", error)
+                    }
+
+                    withClue("Got different answer than the known solution.") {
+                        answer shouldBe correctAnswer
+                    }
                 }
 
-                println("Your answer was: $answer ($duration)")
-
-                correctAnswer?.run {
-                    withClue("Correct solution was: $this") {
-                        PuzzleAnswer(answer.toString()) shouldBe this
+                val durationSuffix = if(error == null) " ($duration)" else ""
+                test("Is reasonably efficient$durationSuffix").config(enabled = !expensive) {
+                    withClue("Every problem has a solution that completes in at most 15s.") {
+                        duration!! shouldBeLessThanOrEqualTo 15.seconds
                     }
                 }
             }
