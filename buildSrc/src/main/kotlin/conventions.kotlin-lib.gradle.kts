@@ -6,6 +6,7 @@ plugins {
     id("conventions.kotest")
     id("conventions.detekt")
     id("conventions.dokka")
+    id("conventions.publish")
 }
 
 kotlin {
