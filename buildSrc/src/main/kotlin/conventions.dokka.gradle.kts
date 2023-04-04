@@ -11,3 +11,9 @@ tasks.withType<DokkaTask>().configureEach {
         noStdlibLink.set(true)
     }
 }
+
+tasks.register<Jar>("dokkaJavadocJar") {
+    dependsOn(tasks.dokkaHtml)
+    from(tasks.dokkaHtml.flatMap { it.outputDirectory })
+    archiveClassifier.set("javadoc")
+}

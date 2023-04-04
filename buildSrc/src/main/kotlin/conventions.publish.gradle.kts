@@ -5,7 +5,6 @@ plugins {
 }
 
 java {
-    withJavadocJar()
     withSourcesJar()
 }
 
@@ -22,6 +21,7 @@ publishing {
 
     publications.create<MavenPublication>(project.name) {
         from(components["java"])
+        artifact(tasks.named("dokkaJavadocJar"))
 
         group = "io.github.jadarma.aockt"
         artifactId = project.name
