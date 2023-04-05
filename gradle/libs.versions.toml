@@ -1,5 +1,5 @@
 [versions]
-aockt = "0.1.0"
+aockt = "0.1.0-SNAPSHOT"
 kotlin = "1.8.10"
 detekt = "1.22.0"
 dokka = "1.8.10"
