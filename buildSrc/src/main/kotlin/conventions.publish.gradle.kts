@@ -8,15 +8,32 @@ java {
     withSourcesJar()
 }
 
+val ossrhUsername: String? by project
+val ossrhPassword: String? by project
+val credentialsAvailable = ossrhUsername != null && ossrhPassword != null
+
+val snapshotVersion = "0.1.0-SNAPSHOT"
+val releaseVersion: String? = System.getenv("RELEASE_VERSION")
+val publishVersion = releaseVersion ?: snapshotVersion
+val isRelease = releaseVersion != null
+
 signing {
     useGpgCmd()
-    sign(publishing.publications)
+    if(isRelease) sign(publishing.publications)
 }
 
 publishing {
-    repositories {
-        // TODO: Configure Maven Central.
-        mavenLocal()
+    if(credentialsAvailable) {
+        repositories.maven {
+            url = when(isRelease) {
+                true -> uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                false -> uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            }
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
     }
 
     publications.create<MavenPublication>(project.name) {
@@ -25,7 +42,7 @@ publishing {
 
         group = "io.github.jadarma.aockt"
         artifactId = project.name
-        version = libs.versions.aockt.get()
+        version = publishVersion
 
         pom {
             name.set("Advent of Code Kotlin")
