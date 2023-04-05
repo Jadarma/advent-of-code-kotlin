@@ -80,7 +80,8 @@ public abstract class AdventSpec<T : Solution>(
      * Injected by some reflection magic that while not that pretty, is fine for use in unit tests, and allows for a
      * more elegant syntax when declaring [AdventSpec]s.
      */
-    private val solution: Solution = this::class
+    @Suppress("MemberVisibilityCanBePrivate")
+    public val solution: Solution = this::class
         .starProjectedType.jvmErasure.supertypes
         .first { it.isSubtypeOf(typeOf<AdventSpec<*>>()) }
         .arguments.first().type!!.jvmErasure
