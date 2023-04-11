@@ -43,9 +43,6 @@ import kotlin.time.measureTimedValue
  * A [FunSpec] specialized for testing Advent of Code puzzle [Solution]s.
  * The test classes extending this should also provide information about the puzzle with an [AdventDay] annotation.
  *
- * @param T The implementation class of the [Solution] to be tested.
- * @param body A context in which to configure the tests.
- *
  * Example:
  * ```kotlin
  * import io.github.jadarma.aockt.core.Solution
@@ -66,6 +63,9 @@ import kotlin.time.measureTimedValue
  *     }
  * }
  * ```
+ *
+ * @param T The implementation class of the [Solution] to be tested.
+ * @param body A context in which to configure the tests.
  */
 @OptIn(ExperimentalKotest::class, ExperimentalTime::class)
 public abstract class AdventSpec<T : Solution>(
@@ -75,11 +75,9 @@ public abstract class AdventSpec<T : Solution>(
     private val adventDayId: AdventDayID
     private val testData: PuzzleTestData
 
-    /**
-     * The implementation class of the [Solution] to be tested.
-     * Injected by some reflection magic that while not that pretty, is fine for use in unit tests, and allows for a
-     * more elegant syntax when declaring [AdventSpec]s.
-     */
+    // Injected by some reflection magic that while not that pretty, is fine for use in unit tests, and allows for a
+    // more elegant syntax when declaring [AdventSpec]s.
+    /** The instance of the [Solution] to be tested. */
     @Suppress("MemberVisibilityCanBePrivate")
     public val solution: Solution = this::class
         .starProjectedType.jvmErasure.supertypes

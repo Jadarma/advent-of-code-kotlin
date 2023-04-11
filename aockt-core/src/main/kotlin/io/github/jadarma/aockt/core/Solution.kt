@@ -2,13 +2,24 @@ package io.github.jadarma.aockt.core
 
 /**
  * An API for a solution to an Advent Day puzzle.
- * A solution should be stateless, and should be implemented either by an object or a class with a no-arg constructor.
+ *
+ * An implementation **must**:
+ * - be an `object` or have a no-arg constructor.
+ * - have independent functions (i.e.: it should be able to solve the second part of the puzzle without having invoked
+ *   the first).
+ *
+ * Best practice recommendations:
+ * - The part functions should be stateless and have no side effects.
+ * - Keep as much of the solution within your type (except very generic helpers you don't wish to copy-paste).
+ * - Keep all other members, inner classes, and helper functions as `private`, to simulate a black-box approach.
+ * - Include the puzzle date in the name of the class, to make it easier to search for when sharing your solutions.
  *
  * Example:
  * ```kotlin
  * object Y9999D01 : Solution {
- *     override fun partOne(input: String) = input.length
- *     override fun partTwo(input: String) = input.first()
+ *     private fun parseInput(input: String): Sequence<Int> = input.splitToSequence(',').map(String::toInt)
+ *     override fun partOne(input: String) = input.sumOf { it >= 42 }
+ *     override fun partTwo(input: String) = input.filter { it < 0 }.count()
  * }
  * ```
  */
