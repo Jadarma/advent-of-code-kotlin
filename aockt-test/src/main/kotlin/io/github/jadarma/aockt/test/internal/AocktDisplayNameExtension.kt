@@ -1,28 +1,19 @@
-package io.github.jadarma.aockt.test
+package io.github.jadarma.aockt.test.internal
 
-import io.github.jadarma.aockt.test.internal.AdventDayID
+import io.github.jadarma.aockt.test.AdventDay
+import io.github.jadarma.aockt.test.AdventSpec
 import io.kotest.core.extensions.DisplayNameFormatterExtension
 import io.kotest.core.extensions.Extension
 import io.kotest.core.names.DisplayNameFormatter
+import io.kotest.core.project.ProjectContext
 import io.kotest.core.test.TestCase
+import io.kotest.engine.test.names.getDisplayNameFormatter
 import io.kotest.mpp.annotation
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
-/**
- * A name formatter extension that adjusts the names of [AdventSpec]s with the info of their [AdventDay].
- * Should be loaded in the project configuration.
- *
- * Example:
- * ```kotlin
- * object TestConfig : AbstractProjectConfig() {
- *     override fun extensions() = listOf(
- *         AocktDisplayNameExtension(DefaultDisplayNameFormatter())
- *     )
- * }
- * ```
- */
-public class AocktDisplayNameExtension(
+/** A name formatter extension that adjusts the names of [AdventSpec]s with the info of their [AdventDay]. */
+internal class AocktDisplayNameExtension(
     private val fallbackFormatter: DisplayNameFormatter,
 ) : DisplayNameFormatterExtension, Extension {
 
@@ -53,4 +44,15 @@ public class AocktDisplayNameExtension(
 
         override fun toString(): String = "AocktDisplayNameFormatter"
     }
+}
+
+internal fun ProjectContext.configureAocKtDisplayNameExtension() {
+    val fallbackFormatter = getDisplayNameFormatter(configuration.registry, configuration)
+
+    configuration.registry.all()
+        .filterIsInstance<DisplayNameFormatterExtension>()
+        .filterIsInstance<Extension>()
+        .forEach(configuration.registry::remove)
+
+    configuration.registry.add(AocktDisplayNameExtension(fallbackFormatter))
 }
