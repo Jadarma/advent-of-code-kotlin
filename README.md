@@ -1,6 +1,7 @@
 # Advent of Code - Kotlin (AocKt)
 
-![Kotlin](https://img.shields.io/badge/Kotlin-1.8.10-%237F52FF.svg?style=flat-square&logo=kotlin&logoColor=white)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.8.10-%237F52FF.svg?style=flat-square&logo=kotlin&logoColor=%237F52FF)](https://kotlinlang.org/)
+[![Kotlin](https://img.shields.io/badge/Kotest-5.5.5-%35ED35.svg?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggc3R5bGU9ImZpbGw6IzM1ZWQzNSIgZD0iTTEyIDJoNGwtOCA4IDQgNEg0di00TDAgNmg4WiIvPjwvc3ZnPg==)](https://kotest.io/)
 
 AocKt _(short for Advent of Code - Kotlin)_ is a simple library that makes running and testing your Kotlin solutions to
 [Advent of Code](https://adventofcode.com) puzzles a breeze.
@@ -30,9 +31,10 @@ repositories {
 
 dependencies {
     val aocktVersion = "0.1.0-SNAPSHOT"
+    val kotestVersion = "5.5.5"
     implementation("io.github.jadarma.aockt:aockt-core:$aocktVersion")
     testImplementation("io.github.jadarma.aockt:aockt-test:$aocktVersion")
-    testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
 }
 
 tasks.test {
@@ -81,7 +83,7 @@ In the above example:
    then you may simply omit it.
 5. To define a test case, use the `shouldOutput` function.
    Each usage will define another test case.
-   The value tested against is checked against its string value, so `shouldOutput 4` and `shouldOutput "4"` are 
+   The value tested against is checked against its string value, so `shouldOutput 4` and `shouldOutput "4"` are
    equivalent.
 6. As a shorthand for defining multiple examples that should output the same thing, use the `shouldAllOutput` function.
 7. If you don't have any examples, but do want to run the part against your input the lambda can be omitted.
