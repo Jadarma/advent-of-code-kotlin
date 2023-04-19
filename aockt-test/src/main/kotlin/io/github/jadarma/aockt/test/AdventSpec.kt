@@ -195,8 +195,15 @@ public abstract class AdventSpec<T : Solution>(
                     }
                 }
 
+                val enableSpeedTesting = when {
+                    expensive -> false
+                    correctAnswer == null -> false
+                    error != null -> false
+                    answer != correctAnswer -> false
+                    else -> true
+                }
                 val durationSuffix = if(error == null) " ($duration)" else ""
-                test("Is reasonably efficient$durationSuffix").config(enabled = !expensive) {
+                test("Is reasonably efficient$durationSuffix").config(enabled = enableSpeedTesting) {
                     withClue("Every problem has a solution that completes in at most 15s.") {
                         val efficiencyBenchmark = configuration.registry.all()
                             .filterIsInstance<AocKtExtension>()
