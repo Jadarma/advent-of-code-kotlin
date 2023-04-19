@@ -9,6 +9,9 @@ import kotlin.reflect.KClass
 @Suppress("UnnecessaryAbstractClass")
 internal abstract class AocktException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
 
+/** A general exception thrown upon a misconfiguration event. */
+internal class ConfigurationException(message: String? = null) : AocktException(message = message)
+
 /**
  * An [AdventSpec] was declared without an [AdventDay] annotation.
  * It is required in order to determine test input.
@@ -22,7 +25,7 @@ internal class MissingAdventDayAnnotationException(kclass: KClass<out AdventSpec
  * which is required since [Solution]s should not be stateful.
  * Add a no-arg constructor to it or declare it as an object.
  */
-internal class MissingNoArgConstructorException(kclass: KClass<out Solution>): AocktException(
+internal class MissingNoArgConstructorException(kclass: KClass<out Solution>) : AocktException(
     message = "Class ${kclass.qualifiedName} is a Solution but it is missing a no-arg constructor.",
 )
 
@@ -39,6 +42,6 @@ internal class ConflictingPartExampleConfigurationException(spec: KClass<*>) : A
  * An [AdventSpec] declared the same part scope twice.
  * The [AdventSpec.partOne] and [AdventSpec.partTwo] should be used at most once per spec.
  */
-internal class DuplicatePartDefinitionException(spec: KClass<*>, part: AdventDayPart): AocktException(
+internal class DuplicatePartDefinitionException(spec: KClass<*>, part: AdventDayPart) : AocktException(
     message = "In ${spec.qualifiedName}, part$part has been declared twice.",
 )

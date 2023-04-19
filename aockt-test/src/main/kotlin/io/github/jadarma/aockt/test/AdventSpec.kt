@@ -20,6 +20,7 @@ import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.concurrency.CoroutineDispatcherFactory
 import io.kotest.core.config.ProjectConfiguration
+import io.kotest.core.config.configuration
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.test.TestCaseOrder
@@ -35,7 +36,6 @@ import kotlin.reflect.typeOf
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
@@ -127,7 +127,7 @@ public abstract class AdventSpec<T : Solution>(
      * @param skipExamples Only run against actual input.
      * @param examples Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
-    @Suppress("LongParameterList", "ThrowsCount")
+    @Suppress("LongParameterList", "ThrowsCount", "LongMethod", "CyclomaticComplexMethod")
     private fun partTest(
         part: AdventDayPart,
         enabled: Boolean,
@@ -140,13 +140,14 @@ public abstract class AdventSpec<T : Solution>(
             throw ConflictingPartExampleConfigurationException(this::class)
         }
 
-        when(part) {
+        when (part) {
             One -> {
-                if(isPartOneDefined) throw DuplicatePartDefinitionException(this::class, One)
+                if (isPartOneDefined) throw DuplicatePartDefinitionException(this::class, One)
                 isPartOneDefined = true
             }
+
             Two -> {
-                if(isPartTwoDefined) throw DuplicatePartDefinitionException(this::class, Two)
+                if (isPartTwoDefined) throw DuplicatePartDefinitionException(this::class, Two)
                 isPartTwoDefined = true
             }
         }
@@ -197,7 +198,13 @@ public abstract class AdventSpec<T : Solution>(
                 val durationSuffix = if(error == null) " ($duration)" else ""
                 test("Is reasonably efficient$durationSuffix").config(enabled = !expensive) {
                     withClue("Every problem has a solution that completes in at most 15s.") {
-                        duration!! shouldBeLessThanOrEqualTo 15.seconds
+                        val efficiencyBenchmark = configuration.registry.all()
+                            .filterIsInstance<AocKtExtension>()
+                            .firstOrNull()
+                            ?.efficiencyBenchmark
+                            ?: AocKtExtension.defaultEfficiencyBenchmark
+
+                        duration!! shouldBeLessThanOrEqualTo efficiencyBenchmark
                     }
                 }
             }

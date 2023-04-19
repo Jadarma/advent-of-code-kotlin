@@ -91,6 +91,32 @@ In the above example:
 </details>
 
 <details>
+    <summary>Project Configuration</summary>
+
+AocKt provides an extension you may register in your Kotest project to tweak the behaviour of the `AdventSpec`.
+Registering it is optional but recommended, and can be done like any other extension:
+
+```kotlin
+object TestConfig : AbstractProjectConfig() {
+
+    override fun extensions() = listOf<Extension>(
+        AocKtExtension(),
+    )
+}
+```
+
+The following optional parameters exist:
+
+- *formatAdventSpecNames* - When the extension is registered, `AdventSpec` classes have a pretty formatted name in the
+  test runner. Set this to `false` to opt out of this behavior.
+- *efficiencyBenchmark* - If a solution completes under this time value, it will pass its efficiency test.
+  Lower this value to increase the challenge or increase it to adjust for your hardware *(the latter shouldn't be
+  necessary)*.
+  Default is fifteen seconds.
+
+</details>
+
+<details>
     <summary>Testing Against User Input</summary>
 
 By default, only the example defined in the DSL will run.
