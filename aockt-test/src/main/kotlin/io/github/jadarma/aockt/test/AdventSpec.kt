@@ -34,7 +34,6 @@ import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -166,7 +165,8 @@ public abstract class AdventSpec<T : Solution>(
 
             context("The solution").config(
                 enabled = testData.input != null && !examplesOnly,
-                timeout = if (expensive) 1.hours else 1.minutes,
+                timeout = 1.minutes.takeUnless { expensive },
+                blockingTest = true,
             ) {
                 val input = testData.input?.toString()
                 checkNotNull(input) { "Impossible state, test should be disabled on null input." }

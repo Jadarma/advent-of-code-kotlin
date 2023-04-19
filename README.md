@@ -164,8 +164,7 @@ The following optional parameters exist:
 - *expensive* - False by default. Lowers the time restrictions for execution.
   While most puzzles should be solvable in under 15 seconds, sometimes it's hard to come up with an optimised solution
   on the first try.
-  This option raises the test timeout from one minute to one hour, and also tags it as such if you want to exclude it
-  from bulk execution.
+  This option removes the test timeout and tags the tests as slow if you want to exclude them from bulk execution.
 
 - *examplesOnly* - False by default. Does not run against the true puzzle input even if present.
   Useful when refactoring an expensive day and no not wish to waste time on the big test while the small ones do fail.
