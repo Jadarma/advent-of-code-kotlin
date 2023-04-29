@@ -30,15 +30,6 @@ internal class MissingNoArgConstructorException(kclass: KClass<out Solution>) : 
 )
 
 /**
- * An [AdventSpec] defined a part that was configured incorrectly, specifying a conflict in how to handle the example
- * cases.
- */
-internal class ConflictingPartExampleConfigurationException(spec: KClass<*>) : AocktException(
-    message = "In ${spec.qualifiedName}, a part can either be configured to execute only the examples, or skip them," +
-        " but not both.",
-)
-
-/**
  * An [AdventSpec] declared the same part scope twice.
  * The [AdventSpec.partOne] and [AdventSpec.partTwo] should be used at most once per spec.
  */

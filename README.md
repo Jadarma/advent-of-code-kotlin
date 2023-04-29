@@ -113,6 +113,13 @@ The following optional parameters exist:
   Lower this value to increase the challenge or increase it to adjust for your hardware *(the latter shouldn't be
   necessary)*.
   Default is fifteen seconds.
+- *executionMode* - Choose the default execution mode for the entire project (run only examples, only user input, or
+  all of them).
+  If set to `ExamplesOnly`, does not run against the true puzzle input even if present.
+  Useful when running the project with encrypted inputs (e.g. running a clone of someone else's solution repo).
+  If set to `SkipExamples`, will only test against user input.
+  Can be overridden for individual parts, see *Execution Configuration for Parts* for more details.
+  Default is all.
 
 </details>
 
@@ -166,11 +173,11 @@ The following optional parameters exist:
   on the first try.
   This option removes the test timeout and tags the tests as slow if you want to exclude them from bulk execution.
 
-- *examplesOnly* - False by default. Does not run against the true puzzle input even if present.
+- *executionMode* - Defaults to project configuration.
+  If set to `ExamplesOnly`, does not run against the true puzzle input even if present.
   Useful when refactoring an expensive day and no not wish to waste time on the big test while the small ones do fail.
-  Also useful when running the project with encrypted inputs (e.g. running a clone of someone else's solution repo).
-
-- *skipExamples* - False by default. Does not run against the example test cases even if present.
+  If set to `SkipExamples`, does not run against the example test cases even if present.
+  Useful for isolating a single execution of the solution, useful when debugging.
 
 </details>
 

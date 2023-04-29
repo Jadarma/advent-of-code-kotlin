@@ -26,10 +26,16 @@ import kotlin.time.Duration.Companion.seconds
  *   You may decrease this value for an increased challenge though do be aware of fluctuations in execution time due to
  *   JVM warmup.
  *   Default is fifteen seconds.
+ * @property executionMode The default execution mode for puzzle part definitions.
+ *   If set to `ExamplesOnly`, does not run against the true puzzle input even if present.
+ *   Useful when running the project with encrypted inputs (e.g. running a clone of someone else's solution repo).
+ *   If set to `SkipExamples`, will only test against user input.
+ *   Can be overridden for individual parts, see *Execution Configuration for Parts* for more details.
  */
 public class AocKtExtension(
     private val formatAdventSpecNames: Boolean = true,
     internal val efficiencyBenchmark: Duration = defaultEfficiencyBenchmark,
+    internal val executionMode: ExecMode = defaultExecutionMode,
 ) : ProjectExtension {
 
     init {
@@ -53,9 +59,21 @@ public class AocKtExtension(
     internal companion object {
 
         internal val defaultEfficiencyBenchmark: Duration = 15.seconds
+        internal val defaultExecutionMode: ExecMode = ExecMode.All
 
         private fun checkConfig(condition: Boolean, lazyMessage: () -> String) {
             if (!condition) throw ConfigurationException(lazyMessage())
         }
     }
+}
+
+public enum class ExecMode {
+    /** Run both tests and the user input, if available. */
+    All,
+
+    /** Do not run the user input, even if available. */
+    ExamplesOnly,
+
+    /** Do not run the defined examples. */
+    SkipExamples;
 }

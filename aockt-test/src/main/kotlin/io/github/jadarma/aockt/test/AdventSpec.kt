@@ -5,7 +5,6 @@ import io.github.jadarma.aockt.test.internal.AdventDayID
 import io.github.jadarma.aockt.test.internal.AdventDayPart
 import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
-import io.github.jadarma.aockt.test.internal.ConflictingPartExampleConfigurationException
 import io.github.jadarma.aockt.test.internal.DuplicatePartDefinitionException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
 import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
@@ -122,8 +121,7 @@ public abstract class AdventSpec<T : Solution>(
      * @param part The part selector.
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
-     * @param examplesOnly Only run the examples, and don't test against actual input.
-     * @param skipExamples Only run against actual input.
+     * @param executionMode Specifies which tests defined for this part will be enabled.
      * @param examples Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     @Suppress("LongParameterList", "ThrowsCount", "LongMethod", "CyclomaticComplexMethod")
@@ -131,14 +129,9 @@ public abstract class AdventSpec<T : Solution>(
         part: AdventDayPart,
         enabled: Boolean,
         expensive: Boolean,
-        examplesOnly: Boolean,
-        skipExamples: Boolean,
+        executionMode: ExecMode?,
         examples: (suspend AdventSpecExampleContainerScope.() -> Unit)?,
     ) {
-        if (examplesOnly && skipExamples) {
-            throw ConflictingPartExampleConfigurationException(this::class)
-        }
-
         when (part) {
             One -> {
                 if (isPartOneDefined) throw DuplicatePartDefinitionException(this::class, One)
@@ -156,15 +149,22 @@ public abstract class AdventSpec<T : Solution>(
             tags = if (expensive) setOf(Expensive) else emptySet(),
         ) {
             val partFunction = solution.partFunction(part)
+            val extension = configuration.registry.all()
+                .filterIsInstance<AocKtExtension>()
+                .firstOrNull()
+
+            val execMode = executionMode
+                ?: extension?.executionMode
+                ?: AocKtExtension.defaultExecutionMode
 
             if (examples != null) {
-                context("Validates the examples").config(enabled = !skipExamples) {
+                context("Validates the examples").config(enabled = execMode != ExecMode.SkipExamples) {
                     AdventSpecExampleContainerScope(partFunction, this).examples()
                 }
             }
 
             context("The solution").config(
-                enabled = testData.input != null && !examplesOnly,
+                enabled = testData.input != null && execMode != ExecMode.ExamplesOnly,
                 timeout = 1.minutes.takeUnless { expensive },
                 blockingTest = true,
             ) {
@@ -184,9 +184,9 @@ public abstract class AdventSpec<T : Solution>(
                     duration = time
                 }.onFailure { error = it }
 
-                val unverifiedSuffix = if(!solutionKnown) " (Unverified: $answer)" else ""
+                val unverifiedSuffix = if (!solutionKnown) " (Unverified: $answer)" else ""
                 test("Is correct$unverifiedSuffix").config(enabled = solutionKnown) {
-                    if(error != null) {
+                    if (error != null) {
                         throw failure("The solution threw an exception before it could return an answer.", error)
                     }
 
@@ -202,13 +202,10 @@ public abstract class AdventSpec<T : Solution>(
                     answer != correctAnswer -> false
                     else -> true
                 }
-                val durationSuffix = if(error == null) " ($duration)" else ""
+                val durationSuffix = if (error == null) " ($duration)" else ""
                 test("Is reasonably efficient$durationSuffix").config(enabled = enableSpeedTesting) {
                     withClue("Every problem has a solution that completes in at most 15s.") {
-                        val efficiencyBenchmark = configuration.registry.all()
-                            .filterIsInstance<AocKtExtension>()
-                            .firstOrNull()
-                            ?.efficiencyBenchmark
+                        val efficiencyBenchmark = extension?.efficiencyBenchmark
                             ?: AocKtExtension.defaultEfficiencyBenchmark
 
                         duration!! shouldBeLessThanOrEqualTo efficiencyBenchmark
@@ -230,22 +227,19 @@ public abstract class AdventSpec<T : Solution>(
      *
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
-     * @param examplesOnly Only run the examples, and don't test against actual input.
-     * @param skipExamples Only run against actual input.
+     * @param executionMode Specifies which tests defined for this part will be enabled.
      * @param test Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     public fun partOne(
         enabled: Boolean = true,
         expensive: Boolean = false,
-        examplesOnly: Boolean = false,
-        skipExamples: Boolean = false,
+        executionMode: ExecMode? = null,
         test: (suspend AdventSpecExampleContainerScope.() -> Unit)? = null,
     ): Unit = partTest(
         part = One,
         enabled = enabled,
         expensive = expensive,
-        examplesOnly = examplesOnly,
-        skipExamples = skipExamples,
+        executionMode = executionMode,
         examples = test,
     )
 
@@ -261,22 +255,19 @@ public abstract class AdventSpec<T : Solution>(
      *
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
-     * @param examplesOnly Only run the examples, and don't test against actual input.
-     * @param skipExamples Only run against actual input.
+     * @param executionMode Specifies which tests defined for this part will be enabled.
      * @param test Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     public fun partTwo(
         enabled: Boolean = true,
         expensive: Boolean = false,
-        examplesOnly: Boolean = false,
-        skipExamples: Boolean = false,
+        executionMode: ExecMode? = null,
         test: (suspend AdventSpecExampleContainerScope.() -> Unit)? = null,
     ): Unit = partTest(
         part = Two,
         enabled = enabled,
         expensive = expensive,
-        examplesOnly = examplesOnly,
-        skipExamples = skipExamples,
+        executionMode = executionMode,
         examples = test,
     )
 }
