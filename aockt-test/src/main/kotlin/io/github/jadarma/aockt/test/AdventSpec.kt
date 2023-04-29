@@ -5,6 +5,7 @@ import io.github.jadarma.aockt.test.internal.AdventDayID
 import io.github.jadarma.aockt.test.internal.AdventDayPart
 import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
+import io.github.jadarma.aockt.test.internal.ConfigurationException
 import io.github.jadarma.aockt.test.internal.DuplicatePartDefinitionException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
 import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
@@ -122,6 +123,7 @@ public abstract class AdventSpec<T : Solution>(
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param executionMode Specifies which tests defined for this part will be enabled.
+     * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
      * @param examples Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     @Suppress("LongParameterList", "ThrowsCount", "LongMethod", "CyclomaticComplexMethod")
@@ -130,8 +132,13 @@ public abstract class AdventSpec<T : Solution>(
         enabled: Boolean,
         expensive: Boolean,
         executionMode: ExecMode?,
+        efficiencyBenchmark: Duration?,
         examples: (suspend AdventSpecExampleContainerScope.() -> Unit)?,
     ) {
+        if(efficiencyBenchmark != null && !efficiencyBenchmark.isPositive()) {
+            throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
+        }
+
         when (part) {
             One -> {
                 if (isPartOneDefined) throw DuplicatePartDefinitionException(this::class, One)
@@ -156,6 +163,10 @@ public abstract class AdventSpec<T : Solution>(
             val execMode = executionMode
                 ?: extension?.executionMode
                 ?: AocKtExtension.defaultExecutionMode
+
+            val maxEfficientDuration = efficiencyBenchmark
+                ?: extension?.efficiencyBenchmark
+                ?: AocKtExtension.defaultEfficiencyBenchmark
 
             if (examples != null) {
                 context("Validates the examples").config(enabled = execMode != ExecMode.SkipExamples) {
@@ -205,10 +216,7 @@ public abstract class AdventSpec<T : Solution>(
                 val durationSuffix = if (error == null) " ($duration)" else ""
                 test("Is reasonably efficient$durationSuffix").config(enabled = enableSpeedTesting) {
                     withClue("Every problem has a solution that completes in at most 15s.") {
-                        val efficiencyBenchmark = extension?.efficiencyBenchmark
-                            ?: AocKtExtension.defaultEfficiencyBenchmark
-
-                        duration!! shouldBeLessThanOrEqualTo efficiencyBenchmark
+                        duration!! shouldBeLessThanOrEqualTo maxEfficientDuration
                     }
                 }
             }
@@ -228,18 +236,21 @@ public abstract class AdventSpec<T : Solution>(
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param executionMode Specifies which tests defined for this part will be enabled.
+     * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
      * @param test Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     public fun partOne(
         enabled: Boolean = true,
         expensive: Boolean = false,
         executionMode: ExecMode? = null,
+        efficiencyBenchmark: Duration? = null,
         test: (suspend AdventSpecExampleContainerScope.() -> Unit)? = null,
     ): Unit = partTest(
         part = One,
         enabled = enabled,
         expensive = expensive,
         executionMode = executionMode,
+        efficiencyBenchmark = efficiencyBenchmark,
         examples = test,
     )
 
@@ -256,18 +267,21 @@ public abstract class AdventSpec<T : Solution>(
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param executionMode Specifies which tests defined for this part will be enabled.
+     * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
      * @param test Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
      */
     public fun partTwo(
         enabled: Boolean = true,
         expensive: Boolean = false,
         executionMode: ExecMode? = null,
+        efficiencyBenchmark: Duration? = null,
         test: (suspend AdventSpecExampleContainerScope.() -> Unit)? = null,
     ): Unit = partTest(
         part = Two,
         enabled = enabled,
         expensive = expensive,
         executionMode = executionMode,
+        efficiencyBenchmark = efficiencyBenchmark,
         examples = test,
     )
 }

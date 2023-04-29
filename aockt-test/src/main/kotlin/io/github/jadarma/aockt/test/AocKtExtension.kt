@@ -22,15 +22,17 @@ import kotlin.time.Duration.Companion.seconds
  *   Enabled by default.
  * @property efficiencyBenchmark What is the maximum runtime a solution can have while being considered efficient by
  *   the time tests.
+ *   Can be overridden on a per-test basis.
  *   According to the AoC website, all solutions *should* be completable in 15 seconds regardless of hardware.
  *   You may decrease this value for an increased challenge though do be aware of fluctuations in execution time due to
  *   JVM warmup.
  *   Default is fifteen seconds.
  * @property executionMode The default execution mode for puzzle part definitions.
+ *   Can be overridden on a per-test basis.
  *   If set to `ExamplesOnly`, does not run against the true puzzle input even if present.
  *   Useful when running the project with encrypted inputs (e.g. running a clone of someone else's solution repo).
  *   If set to `SkipExamples`, will only test against user input.
- *   Can be overridden for individual parts, see *Execution Configuration for Parts* for more details.
+ *   Default is `All`.
  */
 public class AocKtExtension(
     private val formatAdventSpecNames: Boolean = true,

@@ -112,6 +112,7 @@ The following optional parameters exist:
 - *efficiencyBenchmark* - If a solution completes under this time value, it will pass its efficiency test.
   Lower this value to increase the challenge or increase it to adjust for your hardware *(the latter shouldn't be
   necessary)*.
+  Can be overridden for individual parts, see *Execution Configuration for Parts* for more details.
   Default is fifteen seconds.
 - *executionMode* - Choose the default execution mode for the entire project (run only examples, only user input, or
   all of them).
@@ -178,6 +179,10 @@ The following optional parameters exist:
   Useful when refactoring an expensive day and no not wish to waste time on the big test while the small ones do fail.
   If set to `SkipExamples`, does not run against the example test cases even if present.
   Useful for isolating a single execution of the solution, useful when debugging.
+
+- *efficiencyBenchmark* - Defaults to project configuration.
+  The maximum runtime a solution can have while being considered efficient by the time tests.
+  Only the user input tests are measured.
 
 </details>
 
