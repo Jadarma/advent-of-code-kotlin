@@ -134,7 +134,7 @@ public abstract class AdventSpec<T : Solution>(
         efficiencyBenchmark: Duration?,
         examples: (suspend AdventSpecExampleContainerScope.() -> Unit)?,
     ) {
-        if(efficiencyBenchmark != null && !efficiencyBenchmark.isPositive()) {
+        if (efficiencyBenchmark != null && !efficiencyBenchmark.isPositive()) {
             throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
         }
 
@@ -182,37 +182,41 @@ public abstract class AdventSpec<T : Solution>(
                 val correctAnswer = testData.solutionToPart(part)
                 val solutionKnown = correctAnswer != null
 
-                var error: Throwable? = null
                 var answer: PuzzleAnswer? = null
                 var duration: Duration? = null
 
-                runCatching {
-                    val (value, time) = measureTimedValue { partFunction(input) }
-                    answer = PuzzleAnswer(value.toString())
-                    duration = time
-                }.onFailure { error = it }
+                val mainTestName = if (solutionKnown) "Is correct" else "Computes an answer"
+                test(mainTestName) {
 
-                val unverifiedSuffix = if (!solutionKnown) " (Unverified: $answer)" else ""
-                test("Is correct$unverifiedSuffix").config(enabled = solutionKnown) {
-                    if (error != null) {
+                    runCatching {
+                        val (value, time) = measureTimedValue { partFunction(input) }
+                        answer = PuzzleAnswer(value.toString())
+                        duration = time
+                    }.onFailure { error ->
                         throw failure("The solution threw an exception before it could return an answer.", error)
                     }
 
-                    withClue("Got different answer than the known solution.") {
-                        answer shouldBe correctAnswer
+                    if (solutionKnown) {
+                        withClue("Got different answer than the known solution.") {
+                            answer shouldBe correctAnswer
+                        }
                     }
+                }
+
+                // If solution is unverified, create a dummy ignored test to display the value in the test report.
+                if (!solutionKnown && answer != null) {
+                    xtest("Has unverified answer ($answer)") {}
                 }
 
                 val enableSpeedTesting = when {
                     expensive -> false
                     correctAnswer == null -> false
-                    error != null -> false
                     answer != correctAnswer -> false
                     else -> true
                 }
-                val durationSuffix = if (error == null) " ($duration)" else ""
-                test("Is reasonably efficient$durationSuffix").config(enabled = enableSpeedTesting) {
-                    withClue("Every problem has a solution that completes in at most 15s.") {
+                val durationSuffix = if (answer != null) duration.toString() else "N/A"
+                test("Is reasonably efficient ($durationSuffix)").config(enabled = enableSpeedTesting) {
+                    withClue("The solution did not complete under the configured benchmark of $maxEfficientDuration") {
                         duration!! shouldBeLessThanOrEqualTo maxEfficientDuration
                     }
                 }
