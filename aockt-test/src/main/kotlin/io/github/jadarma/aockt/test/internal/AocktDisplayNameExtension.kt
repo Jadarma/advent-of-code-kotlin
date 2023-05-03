@@ -15,35 +15,32 @@ import kotlin.reflect.full.isSubclassOf
 /** A name formatter extension that adjusts the names of [AdventSpec]s with the info of their [AdventDay]. */
 internal class AocktDisplayNameExtension(
     private val fallbackFormatter: DisplayNameFormatter,
-) : DisplayNameFormatterExtension, Extension {
+) : DisplayNameFormatter, DisplayNameFormatterExtension, Extension {
 
-    override fun formatter(): DisplayNameFormatter = object : DisplayNameFormatter {
+    override fun format(testCase: TestCase): String = fallbackFormatter.format(testCase)
 
-        override fun format(testCase: TestCase): String = fallbackFormatter.format(testCase)
+    override fun format(kclass: KClass<*>): String {
+        val annotation = kclass.annotation<AdventDay>()
 
-        override fun format(kclass: KClass<*>): String {
-            val annotation = kclass.annotation<AdventDay>()
-
-            if (annotation == null || !kclass.isSubclassOf(AdventSpec::class)) {
-                return fallbackFormatter.format(kclass)
-            }
-
-            return buildString {
-                append(AdventDayID(annotation.year, annotation.day))
-                if (annotation.title.isNotEmpty()) {
-                    append(": ")
-                    append(annotation.title)
-                }
-                if (annotation.variant != "default") {
-                    append(" (")
-                    append(annotation.variant)
-                    append(')')
-                }
-            }
+        if (annotation == null || !kclass.isSubclassOf(AdventSpec::class)) {
+            return fallbackFormatter.format(kclass)
         }
 
-        override fun toString(): String = "AocktDisplayNameFormatter"
+        return buildString {
+            append(AdventDayID(annotation.year, annotation.day))
+            if (annotation.title.isNotEmpty()) {
+                append(": ")
+                append(annotation.title)
+            }
+            if (annotation.variant != "default") {
+                append(" (")
+                append(annotation.variant)
+                append(')')
+            }
+        }
     }
+
+    override fun formatter(): DisplayNameFormatter = this
 }
 
 internal fun ProjectContext.configureAocKtDisplayNameExtension() {
