@@ -209,9 +209,10 @@ public abstract class AdventSpec<T : Solution>(
                 }
 
                 val enableSpeedTesting = when {
-                    expensive -> false
                     correctAnswer == null -> false
                     answer != correctAnswer -> false
+                    efficiencyBenchmark != null -> true
+                    expensive -> false
                     else -> true
                 }
                 val durationSuffix = if (answer != null) duration.toString() else "N/A"
