@@ -1,5 +1,6 @@
 package io.github.jadarma.aockt.test
 
+import io.github.jadarma.aockt.test.internal.AocktDsl
 import io.github.jadarma.aockt.test.internal.PuzzleInput
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.withClue
@@ -15,6 +16,7 @@ import io.kotest.matchers.shouldBe
  * @property context The parent context in which to append these test cases.
  */
 @KotestTestScope
+@AocktDsl
 public class AdventSpecExampleContainerScope(
     private val implementation: (String) -> Any,
     private val context: FunSpecContainerScope,

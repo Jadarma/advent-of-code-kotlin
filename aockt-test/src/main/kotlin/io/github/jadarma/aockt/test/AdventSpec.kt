@@ -5,6 +5,7 @@ import io.github.jadarma.aockt.test.internal.AdventDayID
 import io.github.jadarma.aockt.test.internal.AdventDayPart
 import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
+import io.github.jadarma.aockt.test.internal.AocktDsl
 import io.github.jadarma.aockt.test.internal.ConfigurationException
 import io.github.jadarma.aockt.test.internal.DuplicatePartDefinitionException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
@@ -66,6 +67,7 @@ import kotlin.time.measureTimedValue
  * @param body A context in which to configure the tests.
  */
 @OptIn(ExperimentalKotest::class, ExperimentalTime::class)
+@AocktDsl
 public abstract class AdventSpec<T : Solution>(
     body: AdventSpec<T>.() -> Unit = {},
 ) : FunSpec() {
