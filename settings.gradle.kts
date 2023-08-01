@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 rootProject.name = "advent-of-code-kotlin"
+includeBuild("gradle/build-logic")
 include(":aockt-core", ":aockt-test")
 
 pluginManagement {
@@ -10,7 +11,7 @@ pluginManagement {
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.4.0"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.6.0"
 }
 
 dependencyResolutionManagement {
