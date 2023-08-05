@@ -8,14 +8,13 @@ java {
     withSourcesJar()
 }
 
-val ossrhUsername: String? by project
-val ossrhPassword: String? by project
-val credentialsAvailable = ossrhUsername != null && ossrhPassword != null
+val releaseVersion: String? = System.getenv("RELEASE_VERSION").takeUnless { it.isNullOrBlank() }
+val isSnapshot = releaseVersion?.endsWith("-SNAPSHOT") ?: false
+val isRelease = !isSnapshot
 
-val snapshotVersion = "0.1.0-SNAPSHOT"
-val releaseVersion: String? = System.getenv("RELEASE_VERSION")
-val publishVersion = releaseVersion ?: snapshotVersion
-val isRelease = releaseVersion != null
+val ossrhUsername: String? = System.getenv("OSSRH_USERNAME")
+val ossrhPassword: String? = System.getenv("OSSRH_PASSWORD")
+val credentialsAvailable = ossrhUsername != null && ossrhPassword != null
 
 signing {
     useGpgCmd()
@@ -42,7 +41,7 @@ publishing {
 
         group = "io.github.jadarma.aockt"
         artifactId = project.name
-        version = publishVersion
+        version = releaseVersion
 
         pom {
             name.set("Advent of Code Kotlin")
