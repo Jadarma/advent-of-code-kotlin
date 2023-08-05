@@ -7,11 +7,6 @@ on:
         description: "The version to release. (e.g.: `0.1.0-SNAPSHOT`)"
         required: true
         type: string
-      branch:
-        description: "The branch to release from."
-        required: true
-        type: string
-        default: 'main'
 
 jobs:
   publish:
@@ -23,8 +18,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: ${{ inputs.branch }}
       - name: Setup JVM
         uses: actions/setup-java@v3
         with:
