@@ -17,7 +17,10 @@ val ossrhPassword: String? = System.getenv("OSSRH_PASSWORD")
 val credentialsAvailable = ossrhUsername != null && ossrhPassword != null
 
 signing {
-    useGpgCmd()
+    useInMemoryPgpKeys(
+        System.getenv("SIGNING_KEY"),
+        System.getenv("SIGNING_PASSWORD"),
+    )
     if(isRelease) sign(publishing.publications)
 }
 
