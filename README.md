@@ -3,8 +3,8 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.9.0-%237F52FF.svg?style=flat-square&logo=kotlin&logoColor=%237F52FF)](https://kotlinlang.org/)
 [![Kotest](https://img.shields.io/badge/Kotest-5.5.5-%35ED35.svg?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggc3R5bGU9ImZpbGw6IzM1ZWQzNSIgZD0iTTEyIDJoNGwtOCA4IDQgNEg0di00TDAgNmg4WiIvPjwvc3ZnPg==)](https://kotest.io/)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Jadarma/advent-of-code-kotlin/build.yml?style=flat-square&logo=github&label=Build&logoColor=%23171515)](https://github.com/Jadarma/advent-of-code-kotlin/actions/workflows/build.yml)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.jadarma.aockt/aockt-test?style=flat-square&logo=apachemaven&logoColor=blue&label=Maven%20Central)](https://central.sonatype.com/namespace/io.github.jadarma.aockt)
-[![Snapshot](https://img.shields.io/nexus/s/io.github.jadarma.aockt/aockt-test?server=https%3A%2F%2Fs01.oss.sonatype.org&style=flat-square&logo=apachemaven&logoColor=orange&label=Snapshot)](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/jadarma/aockt/)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.jadarma.aockt/aockt-test?style=flat-square&color=blue&logo=apachemaven&logoColor=blue&label=Maven%20Central)](https://central.sonatype.com/namespace/io.github.jadarma.aockt)
+[![Snapshot](https://img.shields.io/nexus/s/io.github.jadarma.aockt/aockt-test?server=https%3A%2F%2Fs01.oss.sonatype.org&style=flat-square&color=orange&logo=apachemaven&logoColor=orange&label=Snapshot)](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/jadarma/aockt/)
 
 AocKt _(short for Advent of Code - Kotlin)_ is a simple library that makes running and testing your Kotlin solutions to
 [Advent of Code](https://adventofcode.com) puzzles a breeze.
@@ -29,15 +29,12 @@ To use AocKt, simply add the dependencies and configure your project to run unit
 ```kotlin
 repositories {
     mavenCentral()
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
-    val aocktVersion = "0.1.0-SNAPSHOT"
-    val kotestVersion = "5.5.5"
     implementation("io.github.jadarma.aockt:aockt-core:$aocktVersion")
     testImplementation("io.github.jadarma.aockt:aockt-test:$aocktVersion")
-    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
 }
 
 tasks.test {
