@@ -8,9 +8,9 @@ import io.github.jadarma.aockt.test.AdventDay
  * @property year The year this problem appeared in.
  * @property day The day associated with this problem.
  */
-public data class AdventDayID(
-    public val year: Int,
-    public val day: Int,
+internal data class AdventDayID(
+    val year: Int,
+    val day: Int,
 ) : Comparable<AdventDayID> {
 
     init {
@@ -30,4 +30,4 @@ public data class AdventDayID(
 }
 
 /** The internal typesafe [AdventDayID] for this [AdventDay]. */
-public val AdventDay.id: AdventDayID get() = AdventDayID(year, day)
+internal val AdventDay.id: AdventDayID get() = AdventDayID(year, day)
