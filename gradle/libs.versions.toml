@@ -1,8 +1,8 @@
 [versions]
-kotlin = "1.9.10"
-detekt = "1.23.1"
-dokka = "1.9.0"
-kotest = "5.7.1"
+kotlin = "1.9.20"
+detekt = "1.23.3"
+dokka = "1.9.10"
+kotest = "5.7.2"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
