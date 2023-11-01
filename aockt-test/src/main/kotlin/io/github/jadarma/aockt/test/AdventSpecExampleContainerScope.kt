@@ -12,8 +12,8 @@ import io.kotest.matchers.shouldBe
 /**
  * A [ContainerScope] specialized for testing the outputs of a specific function against predetermined inputs.
  *
- * @property implementation The function to be tested.
- * @property context The parent context in which to append these test cases.
+ * @param implementation The function to be tested.
+ * @param context The parent context in which to append these test cases.
  */
 @KotestTestScope
 @AocktDsl

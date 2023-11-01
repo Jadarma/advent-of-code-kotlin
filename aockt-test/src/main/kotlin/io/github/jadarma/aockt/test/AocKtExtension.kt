@@ -26,7 +26,7 @@ import kotlin.time.Duration.Companion.seconds
  * }
  * ```
  *
- * @property formatAdventSpecNames Whether to pretty print the names of the AdventSpec in the test output.
+ * @param formatAdventSpecNames Whether to pretty print the names of the AdventSpec in the test output.
  *   Enabled by default.
  * @property efficiencyBenchmark What is the maximum runtime a solution can have while being considered efficient by
  *   the time tests.

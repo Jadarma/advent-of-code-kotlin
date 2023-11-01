@@ -10,7 +10,7 @@ import kotlin.reflect.full.isSubclassOf
 
 /**
  * A name formatter extension that adjusts the names of [AdventSpec]s with the info of their [AdventDay].
- * @property fallbackFormatter The formatter to use for test cases and non-advent specs.
+ * @param fallbackFormatter The formatter to use for test cases and non-advent specs.
  */
 internal class AocktDisplayNameFormatter(
     private val fallbackFormatter: DisplayNameFormatter = DefaultDisplayNameFormatter(),
