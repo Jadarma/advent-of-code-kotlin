@@ -35,7 +35,6 @@ import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
 import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
 /**
@@ -66,7 +65,7 @@ import kotlin.time.measureTimedValue
  * @param T The implementation class of the [Solution] to be tested.
  * @param body A context in which to configure the tests.
  */
-@OptIn(ExperimentalKotest::class, ExperimentalTime::class)
+@OptIn(ExperimentalKotest::class)
 @AocktDsl
 public abstract class AdventSpec<T : Solution>(
     body: AdventSpec<T>.() -> Unit = {},
