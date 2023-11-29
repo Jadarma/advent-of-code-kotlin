@@ -19,6 +19,7 @@ import io.github.jadarma.aockt.test.internal.solutionToPart
 import io.kotest.assertions.failure
 import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
+import io.kotest.common.KotestInternal
 import io.kotest.core.concurrency.CoroutineDispatcherFactory
 import io.kotest.core.config.ProjectConfiguration
 import io.kotest.core.config.configuration
@@ -156,6 +157,7 @@ public abstract class AdventSpec<T : Solution>(
             tags = if (expensive) setOf(Expensive) else emptySet(),
         ) {
             val partFunction = solution.partFunction(part)
+            @OptIn(KotestInternal::class)
             val extension = configuration.registry.all()
                 .filterIsInstance<AocKtExtension>()
                 .firstOrNull()

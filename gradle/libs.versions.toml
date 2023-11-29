@@ -2,7 +2,7 @@
 kotlin = "1.9.23"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
 detekt = "1.23.6"       # https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-gradle-plugin
 dokka = "1.9.20"        # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
-kotest = "5.7.2"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
+kotest = "5.8.1"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
@@ -10,7 +10,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlin-plugin-jvm = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 detekt-plugin = { module = "io.gitlab.arturbosch.detekt:io.gitlab.arturbosch.detekt.gradle.plugin", version.ref = "detekt" }
 dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
-kotest-engine = { module = "io.kotest:kotest-framework-engine-jvm", version.ref = "kotest" }
+kotest-api = { module = "io.kotest:kotest-framework-api-jvm", version.ref = "kotest" }
 kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-assertions = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
