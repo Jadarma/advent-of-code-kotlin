@@ -1,8 +1,8 @@
 [versions]
-kotlin = "1.9.21"
-detekt = "1.23.4"
-dokka = "1.9.10"
-kotest = "5.7.2"
+kotlin = "1.9.23"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+detekt = "1.23.6"       # https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-gradle-plugin
+dokka = "1.9.20"        # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
+kotest = "5.7.2"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
