@@ -6,7 +6,6 @@ import io.kotest.core.extensions.Extension
 import kotlin.time.Duration.Companion.milliseconds
 
 @Suppress("Unused")
-@ExperimentalKotest
 object TestConfig : AbstractProjectConfig() {
 
     override fun extensions() = listOf<Extension>(
@@ -18,5 +17,7 @@ object TestConfig : AbstractProjectConfig() {
 
     private val cores = Runtime.getRuntime().availableProcessors()
     override val parallelism: Int = cores
+
+    @ExperimentalKotest
     override val concurrentSpecs: Int = cores
 }
