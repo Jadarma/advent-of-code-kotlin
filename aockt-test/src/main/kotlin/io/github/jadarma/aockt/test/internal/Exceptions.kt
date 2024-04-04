@@ -6,8 +6,7 @@ import io.github.jadarma.aockt.test.AdventDay
 import kotlin.reflect.KClass
 
 /** Base [Exception] type for all exceptions related to AocKt. */
-@Suppress("UnnecessaryAbstractClass")
-internal abstract class AocktException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
+internal sealed class AocktException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
 
 /** A general exception thrown upon a misconfiguration event. */
 internal class ConfigurationException(message: String? = null) : AocktException(message = message)

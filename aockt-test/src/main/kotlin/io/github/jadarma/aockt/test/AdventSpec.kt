@@ -13,6 +13,7 @@ import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
 import io.github.jadarma.aockt.test.internal.PuzzleAnswer
 import io.github.jadarma.aockt.test.internal.PuzzleTestData
 import io.github.jadarma.aockt.test.internal.TestData
+import io.github.jadarma.aockt.test.internal.configuration
 import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.partFunction
 import io.github.jadarma.aockt.test.internal.solutionToPart
@@ -21,7 +22,6 @@ import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.concurrency.CoroutineDispatcherFactory
 import io.kotest.core.config.ProjectConfiguration
-import io.kotest.core.config.configuration
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.test.TestCaseOrder
@@ -156,17 +156,10 @@ public abstract class AdventSpec<T : Solution>(
             tags = if (expensive) setOf(Expensive) else emptySet(),
         ) {
             val partFunction = solution.partFunction(part)
-            val extension = configuration.registry.all()
-                .filterIsInstance<AocKtExtension>()
-                .firstOrNull()
 
-            val execMode = executionMode
-                ?: extension?.executionMode
-                ?: AocKtExtension.defaultExecutionMode
-
-            val maxEfficientDuration = efficiencyBenchmark
-                ?: extension?.efficiencyBenchmark
-                ?: AocKtExtension.defaultEfficiencyBenchmark
+            val config = configuration()
+            val execMode = executionMode ?: config.executionMode
+            val maxEfficientDuration = efficiencyBenchmark ?: config.efficiencyBenchmark
 
             if (examples != null) {
                 context("Validates the examples").config(enabled = execMode != ExecMode.SkipExamples) {
