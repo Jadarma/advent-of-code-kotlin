@@ -1,7 +1,7 @@
 # Advent of Code - Kotlin (AocKt)
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.9.23-%237F52FF.svg?style=flat-square&logo=kotlin&logoColor=%237F52FF)](https://kotlinlang.org/)
-[![Kotest](https://img.shields.io/badge/Kotest-5.8.1-%35ED35.svg?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggc3R5bGU9ImZpbGw6IzM1ZWQzNSIgZD0iTTEyIDJoNGwtOCA4IDQgNEg0di00TDAgNmg4WiIvPjwvc3ZnPg==)](https://kotest.io/)
+[![Kotest](https://img.shields.io/badge/Kotest-5.9.1-%35ED35.svg?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggc3R5bGU9ImZpbGw6IzM1ZWQzNSIgZD0iTTEyIDJoNGwtOCA4IDQgNEg0di00TDAgNmg4WiIvPjwvc3ZnPg==)](https://kotest.io/)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Jadarma/advent-of-code-kotlin/build.yml?style=flat-square&logo=github&label=Build&logoColor=%23171515)](https://github.com/Jadarma/advent-of-code-kotlin/actions/workflows/build.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.jadarma.aockt/aockt-test?style=flat-square&color=blue&logo=apachemaven&logoColor=blue&label=Maven%20Central)](https://central.sonatype.com/namespace/io.github.jadarma.aockt)
 [![Snapshot](https://img.shields.io/nexus/s/io.github.jadarma.aockt/aockt-test?server=https%3A%2F%2Fs01.oss.sonatype.org&style=flat-square&color=orange&logo=apachemaven&logoColor=orange&label=Snapshot)](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/jadarma/aockt/)
@@ -34,7 +34,7 @@ repositories {
 dependencies {
     implementation("io.github.jadarma.aockt:aockt-core:$aocktVersion")
     testImplementation("io.github.jadarma.aockt:aockt-test:$aocktVersion")
-    testImplementation("io.kotest:kotest-runner-junit5:5.8.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
 }
 
 tasks.test {
