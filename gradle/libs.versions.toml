@@ -17,8 +17,4 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 
 [bundles]
 kotest = [ "kotest-runner", "kotest-assertions", "kotest-property" ]
-
-[plugins]
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+gradlePlugins = [ "kotlin-plugin-jvm", "detekt-plugin", "dokka-plugin" ]
