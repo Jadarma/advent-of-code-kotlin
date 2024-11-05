@@ -20,4 +20,7 @@ object TestConfig : AbstractProjectConfig() {
 
     @ExperimentalKotest
     override val concurrentSpecs: Int = cores
+
+    // https://kotest.io/docs/framework/test_output.html
+    override var displayFullTestPath: Boolean? = System.getenv("CI").toBoolean()
 }
