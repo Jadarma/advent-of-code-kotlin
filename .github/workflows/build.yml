@@ -1,4 +1,4 @@
-name: Gradle Build
+name: 'Build'
 
 on:
   push:
@@ -7,26 +7,23 @@ on:
     branches: [ main ]
 
 jobs:
-  build-gradle-project:
+  Build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup JVM
-        uses: actions/setup-java@v3
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+      - name: 'Setup Java'
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'adopt'
-          cache: 'gradle'
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        env:
-          CI: 'true'
-        with:
-          arguments: 'build'
-      - name: Upload Build Reports
-        uses: actions/upload-artifact@v3
-        if: ${{ !env.ACT }}
+      - name: 'Setup Gradle'
+        uses: gradle/actions/setup-gradle@v4
+      - name: 'Build'
+        run: ./gradlew build
+      - name: 'Upload Build Reports'
+        uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: 'build-reports'
           path: 'aockt-*/build/reports'

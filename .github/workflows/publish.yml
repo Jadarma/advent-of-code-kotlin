@@ -1,4 +1,4 @@
-name: Publish
+name: 'Publish'
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
         type: string
 
 jobs:
-  publish:
+  Publish:
     runs-on: ubuntu-latest
     env:
       RELEASE_VERSION: ${{ inputs.version }}
@@ -18,15 +18,14 @@ jobs:
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
       SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup JVM
-        uses: actions/setup-java@v3
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+      - name: 'Setup Java'
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'adopt'
-          cache: 'gradle'
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: 'publish'
+      - name: 'Setup Gradle'
+        uses: gradle/actions/setup-gradle@v4
+      - name: 'Publish'
+        run: ./gradlew publish
