@@ -10,8 +10,13 @@ plugins {
 detekt {
     buildUponDefaultConfig = true
     parallel = true
-    config.from(files("$rootDir/gradle/detekt/detekt.yml"))
-    baseline = file("$rootDir/gradle/detekt/baseline_${project.name}.xml")
+    baseline = file("$rootDir/gradle/detekt/baseline/${project.name}.xml")
+    config.from(
+        files(
+            "$rootDir/gradle/detekt/config/detekt.yml",
+            "$rootDir/gradle/detekt/config/${project.name}.yml",
+        )
+    )
 }
 
 tasks.withType<Detekt>().configureEach {
