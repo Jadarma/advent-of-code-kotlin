@@ -76,6 +76,7 @@ internal value class PuzzleInput(private val input: String): CharSequence by inp
     override fun toString(): String = input
 
     /** Formats the input in a printable friendly manner. */
+    @Suppress("MagicNumber")
     fun preview(): String = when(input.count { it == '\n' }) {
         0 -> input
         in 1 .. 5 -> "\n$input\n"

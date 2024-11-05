@@ -2,8 +2,5 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>MagicNumber:TestData.kt$PuzzleInput$3</ID>
-    <ID>MagicNumber:TestData.kt$PuzzleInput$5</ID>
-    <ID>UndocumentedPublicClass:AocKtExtension.kt$ExecMode</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -62,6 +62,7 @@ public class AocKtExtension(
     internal companion object Key : CoroutineContext.Key<AocKtExtension>
 }
 
+/** Configures which inputs the tests will run on. */
 public enum class ExecMode {
     /** Run both tests and the user input, if available. */
     All,
