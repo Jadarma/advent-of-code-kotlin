@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.9.24"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+kotlin = "1.9.25"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
 detekt = "1.23.7"       # https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-gradle-plugin
 dokka = "1.9.20"        # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
 kotest = "5.9.1"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
