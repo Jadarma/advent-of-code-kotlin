@@ -1,9 +1,6 @@
 import CompileOptions.Java
 import CompileOptions.Kotlin
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     kotlin("jvm")
@@ -11,16 +8,14 @@ plugins {
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(Java.languageVersion)
-        vendor.set(Java.jvmVendor)
+        languageVersion = Java.languageVersion
+        vendor = Java.jvmVendor
     }
-}
 
-tasks.withType<KotlinCompilationTask<KotlinJvmCompilerOptions>>().configureEach {
     compilerOptions {
-        languageVersion.set(Kotlin.languageVersion)
-        apiVersion.set(Kotlin.apiVersion)
-        jvmTarget.set(Kotlin.jvmTarget)
+        languageVersion = Kotlin.languageVersion
+        apiVersion = Kotlin.apiVersion
+        jvmTarget = Kotlin.jvmTarget
     }
 }
 
