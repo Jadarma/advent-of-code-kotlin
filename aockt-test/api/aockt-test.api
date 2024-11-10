@@ -1,0 +1,65 @@
+public abstract interface annotation class io/github/jadarma/aockt/test/AdventDay : java/lang/annotation/Annotation {
+	public abstract fun day ()I
+	public abstract fun title ()Ljava/lang/String;
+	public abstract fun variant ()Ljava/lang/String;
+	public abstract fun year ()I
+}
+
+public abstract class io/github/jadarma/aockt/test/AdventSpec : io/kotest/core/spec/style/FunSpec {
+	public fun <init> ()V
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun concurrency ()Ljava/lang/Integer;
+	public final fun coroutineDispatcherFactory ()Lio/kotest/core/concurrency/CoroutineDispatcherFactory;
+	public final fun dispatcherAffinity ()Ljava/lang/Boolean;
+	public final fun getSolution ()Lio/github/jadarma/aockt/core/Solution;
+	public final fun isolationMode ()Lio/kotest/core/spec/IsolationMode;
+	public final fun partOne-51bEbmg (ZZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun partOne-51bEbmg$default (Lio/github/jadarma/aockt/test/AdventSpec;ZZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public final fun partTwo-51bEbmg (ZZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun partTwo-51bEbmg$default (Lio/github/jadarma/aockt/test/AdventSpec;ZZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public final fun testCaseOrder ()Lio/kotest/core/test/TestCaseOrder;
+	public final fun threads ()Ljava/lang/Integer;
+}
+
+public final class io/github/jadarma/aockt/test/AdventSpecExampleContainerScope : io/kotest/core/spec/style/scopes/ContainerScope {
+	public fun <init> (Lkotlin/jvm/functions/Function1;Lio/kotest/core/spec/style/scopes/FunSpecContainerScope;)V
+	public fun afterAny (Lkotlin/jvm/functions/Function2;)V
+	public fun afterContainer (Lkotlin/jvm/functions/Function2;)V
+	public fun afterEach (Lkotlin/jvm/functions/Function2;)V
+	public fun afterTest (Lkotlin/jvm/functions/Function2;)V
+	public fun beforeAny (Lkotlin/jvm/functions/Function2;)V
+	public fun beforeContainer (Lkotlin/jvm/functions/Function2;)V
+	public fun beforeEach (Lkotlin/jvm/functions/Function2;)V
+	public fun beforeTest (Lkotlin/jvm/functions/Function2;)V
+	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
+	public fun getTestCase ()Lio/kotest/core/test/TestCase;
+	public fun hasChildren ()Z
+	public fun registerContainer (Lio/kotest/core/names/TestName;ZLio/kotest/core/test/config/TestConfig;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun registerTest (Lio/kotest/core/names/TestName;ZLio/kotest/core/test/config/TestConfig;Lio/kotest/core/test/TestType;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun registerTest (Lio/kotest/core/names/TestName;ZLio/kotest/core/test/config/TestConfig;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun registerTestCase (Lio/kotest/core/test/NestedTest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun shouldAllOutput (Ljava/lang/Iterable;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun shouldOutput (Ljava/lang/String;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/github/jadarma/aockt/test/AocKtExtension : kotlin/coroutines/AbstractCoroutineContextElement, io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/TestCaseExtension {
+	public synthetic fun <init> (ZJLio/github/jadarma/aockt/test/ExecMode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ZJLio/github/jadarma/aockt/test/ExecMode;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun formatter ()Lio/kotest/core/names/DisplayNameFormatter;
+	public fun intercept (Lio/kotest/core/test/TestCase;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/github/jadarma/aockt/test/ExecMode : java/lang/Enum {
+	public static final field All Lio/github/jadarma/aockt/test/ExecMode;
+	public static final field ExamplesOnly Lio/github/jadarma/aockt/test/ExecMode;
+	public static final field SkipExamples Lio/github/jadarma/aockt/test/ExecMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/jadarma/aockt/test/ExecMode;
+	public static fun values ()[Lio/github/jadarma/aockt/test/ExecMode;
+}
+
+public final class io/github/jadarma/aockt/test/Expensive : io/kotest/core/Tag {
+	public static final field INSTANCE Lio/github/jadarma/aockt/test/Expensive;
+}
+

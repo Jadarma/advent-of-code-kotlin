@@ -4,6 +4,7 @@ plugins {
     id("conventions.detekt")
     id("conventions.dokka")
     id("conventions.publish")
+    id("org.jetbrains.kotlinx.binary-compatibility-validator")
 }
 
 kotlin {
