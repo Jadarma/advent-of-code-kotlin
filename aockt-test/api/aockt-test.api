@@ -22,25 +22,9 @@ public abstract class io/github/jadarma/aockt/test/AdventSpec : io/kotest/core/s
 	public final fun threads ()Ljava/lang/Integer;
 }
 
-public final class io/github/jadarma/aockt/test/AdventSpecExampleContainerScope : io/kotest/core/spec/style/scopes/ContainerScope {
-	public fun <init> (Lkotlin/jvm/functions/Function1;Lio/kotest/core/spec/style/scopes/FunSpecContainerScope;)V
-	public fun afterAny (Lkotlin/jvm/functions/Function2;)V
-	public fun afterContainer (Lkotlin/jvm/functions/Function2;)V
-	public fun afterEach (Lkotlin/jvm/functions/Function2;)V
-	public fun afterTest (Lkotlin/jvm/functions/Function2;)V
-	public fun beforeAny (Lkotlin/jvm/functions/Function2;)V
-	public fun beforeContainer (Lkotlin/jvm/functions/Function2;)V
-	public fun beforeEach (Lkotlin/jvm/functions/Function2;)V
-	public fun beforeTest (Lkotlin/jvm/functions/Function2;)V
-	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
-	public fun getTestCase ()Lio/kotest/core/test/TestCase;
-	public fun hasChildren ()Z
-	public fun registerContainer (Lio/kotest/core/names/TestName;ZLio/kotest/core/test/config/TestConfig;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun registerTest (Lio/kotest/core/names/TestName;ZLio/kotest/core/test/config/TestConfig;Lio/kotest/core/test/TestType;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun registerTest (Lio/kotest/core/names/TestName;ZLio/kotest/core/test/config/TestConfig;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun registerTestCase (Lio/kotest/core/test/NestedTest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun shouldAllOutput (Ljava/lang/Iterable;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun shouldOutput (Ljava/lang/String;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class io/github/jadarma/aockt/test/AdventSpec$PartScope {
+	public abstract fun shouldAllOutput (Ljava/lang/Iterable;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun shouldOutput (Ljava/lang/String;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class io/github/jadarma/aockt/test/AocKtExtension : kotlin/coroutines/AbstractCoroutineContextElement, io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/TestCaseExtension {

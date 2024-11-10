@@ -5,6 +5,7 @@ import io.github.jadarma.aockt.test.internal.AdventDayID
 import io.github.jadarma.aockt.test.internal.AdventDayPart
 import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
+import io.github.jadarma.aockt.test.internal.AdventSpecPartScope
 import io.github.jadarma.aockt.test.internal.AocktDsl
 import io.github.jadarma.aockt.test.internal.ConfigurationException
 import io.github.jadarma.aockt.test.internal.DuplicatePartDefinitionException
@@ -110,13 +111,39 @@ public abstract class AdventSpec<T : Solution>(
     private var isPartOneDefined: Boolean = false
     private var isPartTwoDefined: Boolean = false
 
+    /** A DSL scope for defining example assertions for puzzle parts. */
+    @AocktDsl
+    public interface PartScope {
+
+        /**
+         * Creates a new test that asserts that when given this string as input, it gets the correct [expected] answer.
+         * The [expected] value can be anything and will be tested against its `.toString()` value.
+         *
+         * @receiver The example puzzle input.
+         * @param expected The correct answer to the puzzle for the given input.
+         */
+        public suspend infix fun String.shouldOutput(expected: Any)
+
+        /**
+         * For each of the values given creates a new test that asserts that when given as input, it gets the correct
+         * [expected] answer.
+         * The [expected] value can be anything and will be tested against its `.toString()` value.
+         *
+         * _NOTE:_ This should be equivalent to calling [shouldOutput] for every input.
+         *
+         * @receiver The example puzzle inputs.
+         * @param expected The correct answer to the puzzle for all given inputs.
+         */
+        public suspend infix fun Iterable<String>.shouldAllOutput(expected: Any)
+    }
+
     /**
      * Provides a context to test the implementation of one of a [Solution]'s part function.
      *
      * Will create a context with two tests:
      *  - Verifies the output, given the input file has been added to the test resources.
      *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventSpecExampleContainerScope], useful for a TDD approach when
+     *  - Verifies the given examples in an [AdventSpec.PartScope], useful for a TDD approach when
      *    implementing the solution for the first time.
      *
      * @param part The part selector.
@@ -124,7 +151,7 @@ public abstract class AdventSpec<T : Solution>(
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param executionMode Specifies which tests defined for this part will be enabled.
      * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
-     * @param examples Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
+     * @param examples Test the solution against example inputs defined in this [AdventSpec.PartScope].
      */
     @Suppress("LongParameterList", "ThrowsCount", "LongMethod", "CyclomaticComplexMethod")
     private fun partTest(
@@ -133,7 +160,7 @@ public abstract class AdventSpec<T : Solution>(
         expensive: Boolean,
         executionMode: ExecMode?,
         efficiencyBenchmark: Duration?,
-        examples: (suspend AdventSpecExampleContainerScope.() -> Unit)?,
+        examples: (suspend PartScope.() -> Unit)?,
     ) {
         if (efficiencyBenchmark != null && !efficiencyBenchmark.isPositive()) {
             throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
@@ -163,7 +190,7 @@ public abstract class AdventSpec<T : Solution>(
 
             if (examples != null) {
                 context("Validates the examples").config(enabled = execMode != ExecMode.SkipExamples) {
-                    AdventSpecExampleContainerScope(partFunction, this).examples()
+                    AdventSpecPartScope(partFunction, this).examples()
                 }
             }
 
@@ -226,29 +253,22 @@ public abstract class AdventSpec<T : Solution>(
      * Will create a context with two tests:
      *  - Verifies the output, given the input file has been added to the test resources.
      *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventSpecExampleContainerScope], useful for a TDD approach when
+     *  - Verifies the given examples in an [AdventSpec.PartScope], useful for a TDD approach when
      *    implementing the solution for the first time.
      *
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param executionMode Specifies which tests defined for this part will be enabled.
      * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
-     * @param test Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
+     * @param test Test the solution against example inputs defined in this [AdventSpec.PartScope].
      */
     public fun partOne(
         enabled: Boolean = true,
         expensive: Boolean = false,
         executionMode: ExecMode? = null,
         efficiencyBenchmark: Duration? = null,
-        test: (suspend AdventSpecExampleContainerScope.() -> Unit)? = null,
-    ): Unit = partTest(
-        part = One,
-        enabled = enabled,
-        expensive = expensive,
-        executionMode = executionMode,
-        efficiencyBenchmark = efficiencyBenchmark,
-        examples = test,
-    )
+        test: (suspend PartScope.() -> Unit)? = null,
+    ): Unit = partTest(One, enabled, expensive, executionMode, efficiencyBenchmark, test)
 
     /**
      * Provides a context to test the implementation a [Solution.partTwo] function.
@@ -257,27 +277,20 @@ public abstract class AdventSpec<T : Solution>(
      * Will create a context with two tests:
      *  - Verifies the output, given the input file has been added to the test resources.
      *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventSpecExampleContainerScope], useful for a TDD approach when
+     *  - Verifies the given examples in an [AdventSpec.PartScope], useful for a TDD approach when
      *    implementing the solution for the first time.
      *
      * @param enabled If set to false, part one will not be tested.
      * @param expensive This part is known to produce answers in a longer timespan.
      * @param executionMode Specifies which tests defined for this part will be enabled.
      * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
-     * @param test Test the solution against example inputs defined in this [AdventSpecExampleContainerScope].
+     * @param test Test the solution against example inputs defined in this [AdventSpec.PartScope].
      */
     public fun partTwo(
         enabled: Boolean = true,
         expensive: Boolean = false,
         executionMode: ExecMode? = null,
         efficiencyBenchmark: Duration? = null,
-        test: (suspend AdventSpecExampleContainerScope.() -> Unit)? = null,
-    ): Unit = partTest(
-        part = Two,
-        enabled = enabled,
-        expensive = expensive,
-        executionMode = executionMode,
-        efficiencyBenchmark = efficiencyBenchmark,
-        examples = test,
-    )
+        test: (suspend PartScope.() -> Unit)? = null,
+    ): Unit = partTest(Two, enabled, expensive, executionMode, efficiencyBenchmark, test)
 }
