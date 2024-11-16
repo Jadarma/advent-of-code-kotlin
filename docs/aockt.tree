@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="aockt"
+                  name="Advent Of Code Kotlin (AocKt)"
+                  start-page="home.topic">
+
+    <toc-element topic="home.topic"/>
+    <toc-element topic="overview.md"/>
+    <toc-element topic="workflow.md"/>
+    <toc-element toc-title="Advanced Use-Cases">
+        <toc-element topic="project-config.md"/>
+        <toc-element topic="test-config.md"/>
+        <toc-element topic="multiple-solutions.md"/>
+        <toc-element topic="debugging.md"/>
+    </toc-element>
+    <toc-element topic="changelog.md"/>
+
+</instance-profile>

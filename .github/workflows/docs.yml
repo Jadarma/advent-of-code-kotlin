@@ -1,0 +1,47 @@
+name: 'Documentation Site'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    env:
+      INSTANCE: 'docs/aockt'
+      ARTIFACT: 'webHelpAOCKT2-all.zip'
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: 'Build Writerside Docs'
+        uses: JetBrains/writerside-github-action@v4
+        with:
+          instance: ${{ env.INSTANCE }}
+          artifact: ${{ env.ARTIFACT }}
+
+      - name: 'Test Writerside Docs'
+        uses: JetBrains/writerside-checker-action@v1
+        with:
+          instance: artifacts/${{ env.INSTANCE }}
+
+      - name: 'Unzip Artifact'
+        run: unzip -qq 'artifacts/${{ env.ARTIFACT }}' -d public
+
+      - name: 'Upload Pages Artifact'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  Deploy:
+    needs: [ Build ]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      id-token: write
+      pages: write
+    steps:
+      - name: 'Deploy to GitHub Pages'
+        id: deployment
+        uses: actions/deploy-pages@v4

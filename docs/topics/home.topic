@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns=""
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Home" id="home" help-id="home">
+
+    <section-starting-page>
+        <title>Advent of Code Kotlin (AocKt)</title>
+        <description>
+            A simple library that makes running and testing your Kotlin solutions to Advent of Code puzzles a breeze.
+        </description>
+
+        <spotlight>
+            <a href="overview.md" type="start" summary="About AocKt and Quick Start guide."/>
+            <a href="changelog.md" type="check-list" summary="See what's new."/>
+        </spotlight>
+
+        <primary>
+            <title>Start Solving Puzzles!</title>
+            <a href="workflow.md" type="learn" summary="Learn the typical workflow of solving a puzzle with this library."/>
+            <a href="https://github.com/Jadarma/advent-of-code-kotlin-template" type="mixed" summary="Preconfigured project with all you need to get started in minutes!">Project Template</a>
+<!--            <a href="advanced.md" type="settings" summary="Learn how to tweak the way tests behave.">Advanced Configuration</a>-->
+        </primary>
+
+        <secondary>
+            <title>Advanced Use-Cases</title>
+            <a href="project-config.md" type="settings" summary="Apply settings to your whole project."/>
+            <a href="test-config.md" type="experiment" summary="Tweak the way individual tests behave."/>
+            <a href="multiple-solutions.md" type="branch" summary="Share puzzle tests between multiple solutions."/>
+            <a href="debugging.md" type="bug" summary="Learn how to tweak the way tests behave."/>
+        </secondary>
+
+        <misc>
+            <links narrow="true">
+                <group>
+                    <title>Join The AoC Community</title>
+                    <a href="https://adventofcode.com" summary="Official Advent of Code website.">Official AoC Website</a>
+                    <a href="https://reddit.com/r/adventofcode" summary="The r/adventofcode Reddit community.">Community AoC Subreddit</a>
+                    <a href="https://discord.com/invite/wYmyYsf" summary="An unofficial Discord server.">Community AoC Discord</a>
+                </group>
+                <group>
+                    <title>Learn Kotlin</title>
+                    <a href="https://kotlinlang.org/docs/home.html" summary="Official Kotlin documentation website.">Kotlin Documentation</a>
+                    <a href="https://reddit.com/r/kotlin" summary="Kotlin Community Subreddit">Kotlin Subreddit</a>
+                </group>
+                <group>
+                    <title>More Resources</title>
+                    <a href="https://github.com/Bogdanp/awesome-advent-of-code" summary="Awesome List for AoC-related libraries, project templates, and user solutions.">Awesome AoC</a>
+                    <a href="https://github.com/Jadarma/advent-of-code-kotlin-solutions" summary="Stuck on a problem? See how (and if) I solved it!">Author's Solutions</a>
+                </group>
+            </links>
+            <links>
+                <group>
+                    <title>Dokka API Docs</title>
+                    <a href="https://www.javadoc.io/doc/io.github.jadarma.aockt/aockt-core/%aockt-version%" summary="Dokka API documentation for aockt-core.">io.github.jadarma.aockt:aockt-core</a>
+                    <a href="https://www.javadoc.io/doc/io.github.jadarma.aockt/aockt-test/%aockt-version%" summary="Dokka API documentation for aockt-test.">io.github.jadarma.aockt:aockt-test</a>
+                </group>
+                <group>
+                    <title>Maven Central Artifacts</title>
+                    <a href="https://central.sonatype.com/artifact/io.github.jadarma.aockt/aockt-core/%aockt-version%" summary="Latest published Maven artifact for aockt-core.">io.github.jadarma.aockt:aockt-core</a>
+                    <a href="https://central.sonatype.com/artifact/io.github.jadarma.aockt/aockt-test/%aockt-version%" summary="Latest published Maven artifact for aockt-test.">io.github.jadarma.aockt:aockt-test</a>
+                </group>
+            </links>
+        </misc>
+    </section-starting-page>
+</topic>
