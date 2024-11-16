@@ -11,3 +11,4 @@
 
 # Explicitly mark binary files as such.
 *.jar       binary
+*.png       binary
