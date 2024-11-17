@@ -19,6 +19,7 @@ import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.partFunction
 import io.github.jadarma.aockt.test.internal.solutionToPart
 import io.kotest.assertions.failure
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.concurrency.CoroutineDispatcherFactory
@@ -122,7 +123,7 @@ public abstract class AdventSpec<T : Solution>(
          * @receiver The example puzzle input.
          * @param expected The correct answer to the puzzle for the given input.
          */
-        public suspend infix fun String.shouldOutput(expected: Any)
+        public infix fun String.shouldOutput(expected: Any)
 
         /**
          * For each of the values given creates a new test that asserts that when given as input, it gets the correct
@@ -134,7 +135,7 @@ public abstract class AdventSpec<T : Solution>(
          * @receiver The example puzzle inputs.
          * @param expected The correct answer to the puzzle for all given inputs.
          */
-        public suspend infix fun Iterable<String>.shouldAllOutput(expected: Any)
+        public infix fun Iterable<String>.shouldAllOutput(expected: Any)
     }
 
     /**
@@ -160,7 +161,7 @@ public abstract class AdventSpec<T : Solution>(
         expensive: Boolean,
         executionMode: ExecMode?,
         efficiencyBenchmark: Duration?,
-        examples: (suspend PartScope.() -> Unit)?,
+        examples: (PartScope.() -> Unit)?,
     ) {
         if (efficiencyBenchmark != null && !efficiencyBenchmark.isPositive()) {
             throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
@@ -190,7 +191,16 @@ public abstract class AdventSpec<T : Solution>(
 
             if (examples != null) {
                 context("Validates the examples").config(enabled = execMode != ExecMode.SkipExamples) {
-                    AdventSpecPartScope(partFunction, this).examples()
+                    AdventSpecPartScope().apply(examples).forEachIndexed { index, input, expected ->
+                        test("Example #${index + 1}") {
+                            withClue("Expected answer '$expected' for input: ${input.preview()}") {
+                                val answer = shouldNotThrowAny {
+                                    partFunction(input.toString()).toString()
+                                }
+                                answer shouldBe expected
+                            }
+                        }
+                    }
                 }
             }
 
@@ -267,7 +277,7 @@ public abstract class AdventSpec<T : Solution>(
         expensive: Boolean = false,
         executionMode: ExecMode? = null,
         efficiencyBenchmark: Duration? = null,
-        test: (suspend PartScope.() -> Unit)? = null,
+        test: (PartScope.() -> Unit)? = null,
     ): Unit = partTest(One, enabled, expensive, executionMode, efficiencyBenchmark, test)
 
     /**
@@ -291,6 +301,6 @@ public abstract class AdventSpec<T : Solution>(
         expensive: Boolean = false,
         executionMode: ExecMode? = null,
         efficiencyBenchmark: Duration? = null,
-        test: (suspend PartScope.() -> Unit)? = null,
+        test: (PartScope.() -> Unit)? = null,
     ): Unit = partTest(Two, enabled, expensive, executionMode, efficiencyBenchmark, test)
 }
