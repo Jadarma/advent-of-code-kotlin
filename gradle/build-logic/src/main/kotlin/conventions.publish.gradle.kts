@@ -49,7 +49,7 @@ publishing {
         pom {
             name.set("Advent of Code Kotlin")
             description.set("Helper test libraries that make implementing Advent Of Code solutions a breeze.")
-            url.set("https://github.com/Jadarma/advent-of-code-kotlin")
+            url.set("https://jadarma.github.io/advent-of-code-kotlin")
 
             scm {
                 connection.set("scm:git:git://github.com/Jadarma/advent-of-code-kotlin.git")
