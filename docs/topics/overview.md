@@ -1,9 +1,5 @@
 # Features and Overview
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-%kotlin-version%-%237F52FF.svg?style=flat-square&logo=kotlin&logoColor=%237F52FF)](https://kotlinlang.org/)
-[![Kotest](https://img.shields.io/badge/Kotest-%kotest-version%-%35ED35.svg?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggc3R5bGU9ImZpbGw6IzM1ZWQzNSIgZD0iTTEyIDJoNGwtOCA4IDQgNEg0di00TDAgNmg4WiIvPjwvc3ZnPg==)](https://kotest.io/)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.jadarma.aockt/aockt-test?style=flat-square&color=blue&logo=apachemaven&logoColor=blue&label=Maven%20Central)](https://central.sonatype.com/namespace/io.github.jadarma.aockt)
-
 AocKt _(short for Advent of Code - Kotlin)_ is a simple library that makes running and testing your Kotlin solutions to
 [Advent of Code](https://adventofcode.com) puzzles a breeze.
 
@@ -16,15 +12,23 @@ for testing AoC puzzle solutions with minimal boilerplate.
 - **Test-Driven** - Run your code from unit tests for faster feedback loops and fearless refactorings.
 - **DSL-Driven** - Define your test cases with minimal code.
 - **Configurable** - You decide what runs and when using optional parameters.
-- **Minimal** - The test framework is the only non-Kotlin dependency._(short for Advent of Code - Kotlin)_ is a simple library that makes running and testing your Kotlin solutions to
+- **Minimal** - The test framework is the only non-Kotlin dependency.
 
 ## ⚡ Quick Start
 
-> If you don't want to set up your own project, you can use
-> [the AocKt template](https://github.com/Jadarma/advent-of-code-kotlin-template).
-> {style="note"}
+<tabs>
+<tab id="template" title="AocKt Template Project">
+For your convenience, there is an
+<a href="https://github.com/Jadarma/advent-of-code-kotlin-template"><code>advent-of-code-kotlin-template</code></a>
+repository which you can use to generate your own solutions repo.
+It comes with a pre-configured Gradle project with all bells and whistles you might need, as well as a modified source
+structure for easier navigation.
 
-Create a Gradle project with the following build script:
+_(If you need a working example, check out [my solutions repo](https://github.com/Jadarma/advent-of-code-kotlin-solutions).)_
+
+</tab>
+<tab id="standalone" title="Standalone Gradle Project">
+To add AocKt to your existing project, simply add the dependencies and configure your unit tests to run with Kotest:
 
 ```kotlin
 plugins {
@@ -45,6 +49,8 @@ tasks.test {
     useJUnitPlatform()
 }
 ```
+</tab>
+</tabs>
 
 ## 🧪 Test DSL Overview
 

@@ -42,7 +42,7 @@ projectDir
          └── Y2015D01Test.kt
 ```
 </tab>
-<tab id="standalone" title="Standalone Project">
+<tab id="standalone" title="Standalone Gradle Project">
 
 ```text
 projectDir
