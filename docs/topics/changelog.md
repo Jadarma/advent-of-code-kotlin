@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.2.1
+
+_[Released 2024-11-17](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.2.1)_
+
+- Remove `suspend` modifier from part DSL functions.
+  It caused a false positive error in IntelliJ, but it was not needed anyway.
+
 ## 0.2.0
 
 _[Released 2024-11-17](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.2.0)_
