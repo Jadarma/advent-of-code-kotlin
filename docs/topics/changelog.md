@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0-SNAPSHOT
+
+- Updated Kotlin to `2.2.10` and Kotest to `6.0.3`.
+
 ## 0.2.1
 
 _[Released 2024-11-17](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.2.1)_
