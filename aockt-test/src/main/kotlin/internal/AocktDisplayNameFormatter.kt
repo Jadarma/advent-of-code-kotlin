@@ -2,9 +2,9 @@ package io.github.jadarma.aockt.test.internal
 
 import io.github.jadarma.aockt.test.AdventDay
 import io.github.jadarma.aockt.test.AdventSpec
-import io.kotest.core.names.DisplayNameFormatter
+import io.kotest.common.reflection.annotation
 import io.kotest.core.test.TestCase
-import io.kotest.mpp.annotation
+import io.kotest.engine.names.DisplayNameFormatter
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 

@@ -4,9 +4,9 @@ import io.github.jadarma.aockt.test.internal.AdventSpecConfig
 import io.github.jadarma.aockt.test.internal.AocktDisplayNameFormatter
 import io.kotest.core.extensions.DisplayNameFormatterExtension
 import io.kotest.core.extensions.TestCaseExtension
-import io.kotest.core.names.DisplayNameFormatter
 import io.kotest.core.test.TestCase
-import io.kotest.core.test.TestResult
+import io.kotest.engine.names.DisplayNameFormatter
+import io.kotest.engine.test.TestResult
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.AbstractCoroutineContextElement
