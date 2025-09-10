@@ -3,6 +3,9 @@
 ## 0.3.0-SNAPSHOT
 
 - Updated Kotlin to `2.2.10` and Kotest to `6.0.3`.
+- There are no breaking changes to AocKt itself, but there are for configuring 
+  [Kotest 6.0](https://kotest.io/docs/release6).
+  If you use the `AocKtExtension`, see [](project-config.md). 
 
 ## 0.2.1
 

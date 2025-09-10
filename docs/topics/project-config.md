@@ -3,11 +3,11 @@
 AocKt provides an extension you may register in your Kotest project.
 Registering is optional, but recommended.
 
-To register it, add it to your Kotest [project level config](https://kotest.io/docs/framework/project-config.html).
-Simply using the code below should work, although it's also recommended to disable classpath scanning and register the
-config class manually via `kotest.properties`.
+To register it, add it to your Kotest [project level config](https://kotest.io/docs/framework/project-config.html):
 
 ```kotlin
+package my.aoc
+
 import io.github.jadarma.aockt.test.AocKtExtension
 import io.github.jadarma.aockt.test.ExecMode
 import io.kotest.core.config.AbstractProjectConfig
@@ -15,17 +15,27 @@ import io.kotest.core.extensions.Extension
 import kotlin.time.Duration.Companion.seconds
 
 object TestConfig : AbstractProjectConfig() {
-    override fun extensions() = listOf<Extension>(
-        AocKtExtention(
+    override val extensions = listOf<Extension>(
+        AocKtExtension(
             formatAdventSpecNames = true,
             efficiencyBenchmark = 15.seconds,
             executionMode = ExecMode.All,
-        ),
+        )
     )
 }
 ```
 
 > The constructor parameters provided above are also the default values.
+
+To make Kotest use this configuration, you must register it in the 
+[`kotest.properties`](https://kotest.io/docs/intellij/intellij-properties.html#specifying-the-properties-filename)
+file in your `src/test/resources`:
+
+```properties
+kotest.framework.config.fqn=my.aoc.TestConfig
+kotest.framework.classpath.scanning.autoscan.disable=true
+kotest.framework.classpath.scanning.config.disable=true
+```
 
 <link-summary rel="summary"/>
 <tldr id="summary">
