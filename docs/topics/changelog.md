@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.3.0-SNAPSHOT
+
+- Updated Kotlin to `2.2.10` and Kotest to `6.0.3`.
+- There are no breaking changes to AocKt itself, but there are for configuring 
+  [Kotest 6.0](https://kotest.io/docs/release6).
+  If you use the `AocKtExtension`, see [](project-config.md). 
+
 ## 0.2.1
 
 _[Released 2024-11-17](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.2.1)_

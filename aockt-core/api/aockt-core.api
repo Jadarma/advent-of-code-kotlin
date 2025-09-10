@@ -1,6 +1,6 @@
 public abstract interface class io/github/jadarma/aockt/core/Solution {
-	public abstract fun partOne (Ljava/lang/String;)Ljava/lang/Object;
-	public abstract fun partTwo (Ljava/lang/String;)Ljava/lang/Object;
+	public fun partOne (Ljava/lang/String;)Ljava/lang/Object;
+	public fun partTwo (Ljava/lang/String;)Ljava/lang/Object;
 }
 
 public final class io/github/jadarma/aockt/core/Solution$DefaultImpls {

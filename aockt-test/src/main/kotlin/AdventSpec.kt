@@ -18,19 +18,20 @@ import io.github.jadarma.aockt.test.internal.configuration
 import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.partFunction
 import io.github.jadarma.aockt.test.internal.solutionToPart
-import io.kotest.assertions.failure
+import io.kotest.assertions.AssertionErrorBuilder
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
-import io.kotest.core.concurrency.CoroutineDispatcherFactory
-import io.kotest.core.config.ProjectConfiguration
+import io.kotest.common.reflection.ReflectionInstantiations.newInstanceNoArgConstructorOrObjectInstance
+import io.kotest.common.reflection.annotation
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.test.TestCaseOrder
+import io.kotest.engine.concurrency.TestExecutionMode
+import io.kotest.engine.coroutines.CoroutineDispatcherFactory
+import io.kotest.engine.coroutines.ThreadPerSpecCoroutineContextFactory
 import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.matchers.shouldBe
-import io.kotest.mpp.annotation
-import io.kotest.mpp.newInstanceNoArgConstructorOrObjectInstance
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
@@ -88,18 +89,16 @@ public abstract class AdventSpec<T : Solution>(
             @Suppress("UNCHECKED_CAST") // Must be a solution because of AdventSpec bounds.
             this as KClass<Solution>
 
-            runCatching { newInstanceNoArgConstructorOrObjectInstance() }
+            runCatching { newInstanceNoArgConstructorOrObjectInstance(this) }
                 .getOrElse { throw MissingNoArgConstructorException(this) }
         }
 
     // Enforce some configuration to ensure that all tests within one AdventSpec will be executed sequentially on a
     // single thread.
+    final override fun coroutineDispatcherFactory(): CoroutineDispatcherFactory = ThreadPerSpecCoroutineContextFactory
     final override fun isolationMode(): IsolationMode = IsolationMode.SingleInstance
     final override fun testCaseOrder(): TestCaseOrder = TestCaseOrder.Sequential
-    final override fun concurrency(): Int = ProjectConfiguration.Sequential
-    final override fun threads(): Int = 1
-    final override fun dispatcherAffinity(): Boolean = true
-    final override fun coroutineDispatcherFactory(): CoroutineDispatcherFactory? = null
+    final override fun testExecutionMode(): TestExecutionMode = TestExecutionMode.Sequential
 
     init {
         val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
@@ -224,7 +223,10 @@ public abstract class AdventSpec<T : Solution>(
                         answer = PuzzleAnswer(value.toString())
                         duration = time
                     }.onFailure { error ->
-                        throw failure("The solution threw an exception before it could return an answer.", error)
+                        AssertionErrorBuilder.create()
+                            .withMessage("The solution threw an exception before it could return an answer.")
+                            .withCause(error)
+                            .build()
                     }
 
                     if (solutionKnown) {
