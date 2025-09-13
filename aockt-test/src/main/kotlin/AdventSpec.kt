@@ -80,7 +80,7 @@ public abstract class AdventSpec<T : Solution>(
     // Injected by some reflection magic that while not that pretty, is fine for use in unit tests, and allows for a
     // more elegant syntax when declaring [AdventSpec]s.
     /** The instance of the [Solution] to be tested. */
-    @Suppress("MemberVisibilityCanBePrivate")
+    @Suppress("MemberVisibilityCanBePrivate", "UnsafeCallOnNullableType")
     public val solution: Solution = this::class
         .starProjectedType.jvmErasure.supertypes
         .first { it.isSubtypeOf(typeOf<AdventSpec<*>>()) }
@@ -251,6 +251,7 @@ public abstract class AdventSpec<T : Solution>(
                 val durationSuffix = if (answer != null) duration.toString() else "N/A"
                 test("Is reasonably efficient ($durationSuffix)").config(enabled = enableSpeedTesting) {
                     withClue("The solution did not complete under the configured benchmark of $maxEfficientDuration") {
+                        @Suppress("UnsafeCallOnNullableType")
                         duration!! shouldBeLessThanOrEqualTo maxEfficientDuration
                     }
                 }
