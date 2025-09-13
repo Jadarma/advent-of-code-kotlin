@@ -8,8 +8,6 @@ import io.kotest.core.spec.Spec
 import io.kotest.engine.names.DisplayNameFormatter
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.AbstractCoroutineContextElement
-import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
 /**
@@ -43,23 +41,28 @@ public class AocKtExtension(
     private val formatAdventSpecNames: Boolean = true,
     efficiencyBenchmark: Duration = AdventSpecConfig.Default.efficiencyBenchmark,
     executionMode: ExecMode = AdventSpecConfig.Default.executionMode,
-) : SpecExtension, DisplayNameFormatterExtension, AbstractCoroutineContextElement(Key) {
+) : SpecExtension, DisplayNameFormatterExtension {
 
-    internal val configuration: AdventSpecConfig = AdventSpecConfig(efficiencyBenchmark, executionMode)
+    /** The project-level config that will apply to all [AdventSpec]s. */
+    private val configuration: AdventSpecConfig = AdventSpecConfig(efficiencyBenchmark, executionMode)
 
+    /** The formatter to use for [AdventSpec] names, if [formatAdventSpecNames] is enabled. */
     private val displayNameFormatter = AocktDisplayNameFormatter(disabled = formatAdventSpecNames.not())
 
+    /** Provide the custom formatter to the extension. */
     override fun formatter(): DisplayNameFormatter = displayNameFormatter
 
+    /**
+     * Intercept the [spec] execution.
+     * If it is an [AdventSpec], add the project-level config to its coroutine context.
+     */
     override suspend fun intercept(spec: Spec, execute: suspend (Spec) -> Unit) {
         if (spec is AdventSpec<*>) {
-            withContext(currentCoroutineContext() + this) { execute(spec) }
+            withContext(currentCoroutineContext() + configuration) { execute(spec) }
         } else {
             execute(spec)
         }
     }
-
-    internal companion object Key : CoroutineContext.Key<AocKtExtension>
 }
 
 /** Configures which inputs the tests will run on. */

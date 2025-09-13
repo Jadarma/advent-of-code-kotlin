@@ -4,6 +4,8 @@ import io.github.jadarma.aockt.test.AdventSpec
 import io.github.jadarma.aockt.test.AocKtExtension
 import io.github.jadarma.aockt.test.ExecMode
 import kotlinx.coroutines.currentCoroutineContext
+import kotlin.coroutines.AbstractCoroutineContextElement
+import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -17,14 +19,15 @@ import kotlin.time.Duration.Companion.seconds
 internal data class AdventSpecConfig(
     val efficiencyBenchmark: Duration,
     val executionMode: ExecMode,
-) {
+) : AbstractCoroutineContextElement(Key) {
+
     init {
         if (efficiencyBenchmark.isPositive().not()) {
             throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
         }
     }
 
-    companion object {
+    companion object Key : CoroutineContext.Key<AdventSpecConfig> {
         /** Sane defaults. */
         val Default: AdventSpecConfig = AdventSpecConfig(
             efficiencyBenchmark = 15.seconds,
@@ -40,6 +43,4 @@ internal data class AdventSpecConfig(
  */
 @Suppress("UnusedReceiverParameter")
 internal suspend fun AdventSpec<*>.configuration(): AdventSpecConfig =
-    currentCoroutineContext()[AocKtExtension.Key]
-        ?.configuration
-        ?: AdventSpecConfig.Default
+    currentCoroutineContext()[AdventSpecConfig.Key] ?: AdventSpecConfig.Default
