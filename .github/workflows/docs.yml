@@ -1,5 +1,12 @@
 name: 'Documentation Site'
 
+# Action Dependency Pins:
+# actions/checkout                    - 08c6903cd8c0fde910a37f88322edcfb5dd907a8 - v5.0.0 - https://github.com/actions/checkout/releases
+# actions/upload-pages-artifact       - 7b1f4a764d45c48632c6b24a0339c27f5614fb0b - v4.0.0 - https://github.com/actions/upload-pages-artifact/releases
+# actions/deploy-pages                - d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e - v4.0.5 - https://github.com/actions/deploy-pages/releases
+# JetBrains/writerside-github-action  - 73f8f377e7c6a64cce73ca73fe07bbba9a34d556 - v4     - https://github.com/JetBrains/writerside-github-action/releases
+# JetBrains/writerside-checker-action - 23e928973d7703bc49a3f8ea9f7cb699aac56134 - v1     - https://github.com/JetBrains/writerside-checker-action/releases
+
 on:
   workflow_dispatch:
 
@@ -11,24 +18,20 @@ jobs:
       ARTIFACT: 'webHelpAOCKT2-all.zip'
     steps:
       - name: 'Checkout Repository'
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - name: 'Build Writerside Docs'
-        uses: JetBrains/writerside-github-action@v4
+        uses: JetBrains/writerside-github-action@73f8f377e7c6a64cce73ca73fe07bbba9a34d556
         with:
           instance: ${{ env.INSTANCE }}
           artifact: ${{ env.ARTIFACT }}
-
       - name: 'Test Writerside Docs'
-        uses: JetBrains/writerside-checker-action@v1
+        uses: JetBrains/writerside-checker-action@23e928973d7703bc49a3f8ea9f7cb699aac56134
         with:
           instance: artifacts/${{ env.INSTANCE }}
-
       - name: 'Unzip Artifact'
         run: unzip -qq 'artifacts/${{ env.ARTIFACT }}' -d public
-
       - name: 'Upload Pages Artifact'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b
         with:
           path: ./public
 
@@ -44,4 +47,4 @@ jobs:
     steps:
       - name: 'Deploy to GitHub Pages'
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
