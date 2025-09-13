@@ -1,5 +1,5 @@
 plugins {
-    id("conventions.kotlin-base")
+    id("conventions.kotlin")
     id("conventions.kotest")
     id("conventions.detekt")
     id("conventions.dokka")
@@ -7,10 +7,5 @@ plugins {
     id("org.jetbrains.kotlinx.binary-compatibility-validator")
 }
 
-kotlin {
-    explicitApi()
-
-    compilerOptions {
-        allWarningsAsErrors = true
-    }
-}
+group = "io.github.jadarma.aockt"
+version = buildVersion.get()

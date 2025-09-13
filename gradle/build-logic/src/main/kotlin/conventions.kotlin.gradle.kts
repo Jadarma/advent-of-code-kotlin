@@ -16,7 +16,10 @@ kotlin {
         languageVersion = Kotlin.languageVersion
         apiVersion = Kotlin.apiVersion
         jvmTarget = Kotlin.jvmTarget
+        allWarningsAsErrors = true
     }
+
+    explicitApi()
 }
 
 dependencies {

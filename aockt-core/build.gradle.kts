@@ -1,3 +1,3 @@
 plugins {
-    id("conventions.kotlin-lib")
+    id("conventions.library")
 }

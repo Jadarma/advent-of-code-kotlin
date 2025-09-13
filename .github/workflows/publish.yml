@@ -3,16 +3,18 @@ name: 'Publish'
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: "The version to release. (e.g.: `0.1.0-SNAPSHOT`)"
-        required: true
-        type: string
+      isRelease:
+        description: "If this should publish a production build. Otherwise, a snapshot is created."
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   Publish:
     runs-on: ubuntu-latest
     env:
-      RELEASE_VERSION: ${{ inputs.version }}
+      PUBLISHING_ENABLED: true
+      RELEASE_BUILD: ${{ inputs.isRelease }}
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
       OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
