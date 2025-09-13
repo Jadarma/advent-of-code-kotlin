@@ -3,8 +3,8 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-%237F52FF.svg?style=flat-square&logo=kotlin&logoColor=%237F52FF)](https://kotlinlang.org/)
 [![Kotest](https://img.shields.io/badge/Kotest-6.0.3-%35ED35.svg?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggc3R5bGU9ImZpbGw6IzM1ZWQzNSIgZD0iTTEyIDJoNGwtOCA4IDQgNEg0di00TDAgNmg4WiIvPjwvc3ZnPg==)](https://kotest.io/)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Jadarma/advent-of-code-kotlin/build.yml?style=flat-square&logo=github&label=Build&logoColor=%23171515)](https://github.com/Jadarma/advent-of-code-kotlin/actions/workflows/build.yml)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.jadarma.aockt/aockt-test?style=flat-square&color=blue&logo=apachemaven&logoColor=blue&label=Maven%20Central)](https://central.sonatype.com/namespace/io.github.jadarma.aockt)
-[![Snapshot](https://img.shields.io/nexus/s/io.github.jadarma.aockt/aockt-test?server=https%3A%2F%2Fs01.oss.sonatype.org&style=flat-square&color=orange&logo=apachemaven&logoColor=orange&label=Snapshot)](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/jadarma/aockt/)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.jadarma.aockt/aockt-test?style=flat-square&logo=apachemaven&logoColor=blue&label=Maven%20Central&color=blue)](https://central.sonatype.com/namespace/io.github.jadarma.aockt)
+[![Maven SNAPSHOT](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fio%2Fgithub%2Fjadarma%2Faockt%2Faockt-test%2Fmaven-metadata.xml&strategy=latestProperty&style=flat-square&logo=apachemaven&logoColor=orange&label=Snapshot&color=orange)](https://jadarma.github.io/advent-of-code-kotlin/overview.html#snapshot)
 
 AocKt _(short for Advent of Code - Kotlin)_ is a simple library that makes running and testing your Kotlin solutions to
 [Advent of Code](https://adventofcode.com) puzzles a breeze.

@@ -18,6 +18,7 @@ for testing AoC puzzle solutions with minimal boilerplate.
 
 <tabs>
 <tab id="template" title="AocKt Template Project">
+
 For your convenience, there is an
 <a href="https://github.com/Jadarma/advent-of-code-kotlin-template"><code>advent-of-code-kotlin-template</code></a>
 repository which you can use to generate your own solutions repo.
@@ -28,6 +29,7 @@ _(If you need a working example, check out [my solutions repo](https://github.co
 
 </tab>
 <tab id="standalone" title="Standalone Gradle Project">
+
 To add AocKt to your existing project, simply add the dependencies and configure your unit tests to run with Kotest:
 
 ```kotlin
@@ -49,6 +51,42 @@ tasks.test {
     useJUnitPlatform()
 }
 ```
+</tab>
+<tab id="snapshot" title="SNAPSHOT Builds">
+
+To consume pre-release builds, you must register the snapshot repository.\
+Replace `x.x.x-SNAPSHOT` with the version from the badge below _(if it exists)_:
+
+![Maven SNAPSHOT](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fio%2Fgithub%2Fjadarma%2Faockt%2Faockt-test%2Fmaven-metadata.xml&strategy=latestProperty&style=flat-square&logo=apachemaven&logoColor=orange&label=Snapshot&color=orange)
+
+```kotlin
+plugins {
+    kotlin("jvm") version "%kotlin-version%"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+        content { includeGroup("io.github.jadarma.aockt") }
+    }
+}
+
+dependencies {
+    implementation("io.github.jadarma.aockt:aockt-core:x.x.x-SNAPSHOT")
+    testImplementation("io.github.jadarma.aockt:aockt-test:x.x.x-SNAPSHOT")
+    testImplementation("io.kotest:kotest-runner-junit5:%kotest-version%")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+```
+
+**PS:**
+You can also [submit an issue](https://github.com/Jadarma/advent-of-code-kotlin/issues) if you find bugs or have suggestions.
+Thank you for trying out the latest development build! 💚
+
 </tab>
 </tabs>
 
