@@ -3,7 +3,7 @@ kotlin = "2.2.10"       # https://mvnrepository.com/artifact/org.jetbrains.kotli
 kotest = "6.0.3"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
 
 detekt = "1.23.8"       # https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-gradle-plugin
-dokka = "2.0.0"         # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
+dokka = "2.1.0-Beta"    # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
 bcv = "0.18.1"          # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.binary-compatibility-validator/org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin
 
 [libraries]
