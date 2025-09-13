@@ -48,7 +48,7 @@ publishing.publications.create<MavenPublication>(project.name) {
 
     group = "io.github.jadarma.aockt"
     artifactId = project.name
-    version = project.buildVersion.toString()
+    version = project.buildVersion.get().toString()
 
     pom {
         name.set("Advent of Code Kotlin")
