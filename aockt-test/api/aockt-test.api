@@ -25,11 +25,11 @@ public abstract interface class io/github/jadarma/aockt/test/AdventSpec$PartScop
 	public abstract fun shouldOutput (Ljava/lang/String;Ljava/lang/Object;)V
 }
 
-public final class io/github/jadarma/aockt/test/AocKtExtension : kotlin/coroutines/AbstractCoroutineContextElement, io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/TestCaseExtension {
+public final class io/github/jadarma/aockt/test/AocKtExtension : kotlin/coroutines/AbstractCoroutineContextElement, io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/SpecExtension {
 	public synthetic fun <init> (ZJLio/github/jadarma/aockt/test/ExecMode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (ZJLio/github/jadarma/aockt/test/ExecMode;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun formatter ()Lio/kotest/engine/names/DisplayNameFormatter;
-	public fun intercept (Lio/kotest/core/test/TestCase;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun intercept (Lio/kotest/core/spec/Spec;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class io/github/jadarma/aockt/test/ExecMode : java/lang/Enum {

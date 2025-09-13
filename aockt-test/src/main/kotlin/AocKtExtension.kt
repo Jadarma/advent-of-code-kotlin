@@ -3,10 +3,9 @@ package io.github.jadarma.aockt.test
 import io.github.jadarma.aockt.test.internal.AdventSpecConfig
 import io.github.jadarma.aockt.test.internal.AocktDisplayNameFormatter
 import io.kotest.core.extensions.DisplayNameFormatterExtension
-import io.kotest.core.extensions.TestCaseExtension
-import io.kotest.core.test.TestCase
+import io.kotest.core.extensions.SpecExtension
+import io.kotest.core.spec.Spec
 import io.kotest.engine.names.DisplayNameFormatter
-import io.kotest.engine.test.TestResult
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.AbstractCoroutineContextElement
@@ -44,7 +43,7 @@ public class AocKtExtension(
     private val formatAdventSpecNames: Boolean = true,
     efficiencyBenchmark: Duration = AdventSpecConfig.Default.efficiencyBenchmark,
     executionMode: ExecMode = AdventSpecConfig.Default.executionMode,
-) : TestCaseExtension, DisplayNameFormatterExtension, AbstractCoroutineContextElement(Key) {
+) : SpecExtension, DisplayNameFormatterExtension, AbstractCoroutineContextElement(Key) {
 
     internal val configuration: AdventSpecConfig = AdventSpecConfig(efficiencyBenchmark, executionMode)
 
@@ -52,12 +51,13 @@ public class AocKtExtension(
 
     override fun formatter(): DisplayNameFormatter = displayNameFormatter
 
-    override suspend fun intercept(testCase: TestCase, execute: suspend (TestCase) -> TestResult): TestResult =
-        if (testCase.spec is AdventSpec<*>) {
-            withContext(currentCoroutineContext() + this) { execute(testCase) }
+    override suspend fun intercept(spec: Spec, execute: suspend (Spec) -> Unit) {
+        if (spec is AdventSpec<*>) {
+            withContext(currentCoroutineContext() + this) { execute(spec) }
         } else {
-            execute(testCase)
+            execute(spec)
         }
+    }
 
     internal companion object Key : CoroutineContext.Key<AocKtExtension>
 }
