@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 object CompileOptions {
 
     object Java {
-        val languageVersion: JavaLanguageVersion = JavaLanguageVersion.of(17)
+        val languageVersion: JavaLanguageVersion = JavaLanguageVersion.of(21)
         val jvmVendor: JvmVendorSpec = JvmVendorSpec.ADOPTIUM
     }
 
