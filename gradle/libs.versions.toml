@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.2.10"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+kotlin = "2.2.20"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
 kotest = "6.0.3"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
 
 detekt = "1.23.8"       # https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-gradle-plugin
