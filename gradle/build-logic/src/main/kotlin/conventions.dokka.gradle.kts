@@ -50,10 +50,3 @@ dokka {
 
     dokkaGeneratorIsolation = ClassLoaderIsolation()
 }
-
-tasks.register<Jar>("javadocJar") {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles the Javadoc Jar."
-    from(tasks.dokkaGeneratePublicationHtml.flatMap { it.outputDirectory })
-    archiveClassifier.set("javadoc")
-}

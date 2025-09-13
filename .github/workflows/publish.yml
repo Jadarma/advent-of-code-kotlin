@@ -13,12 +13,12 @@ jobs:
   Publish:
     runs-on: ubuntu-latest
     env:
-      PUBLISHING_ENABLED: true
       RELEASE_BUILD: ${{ inputs.isRelease }}
-      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+      PUBLISHING_ENABLED: true
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v4

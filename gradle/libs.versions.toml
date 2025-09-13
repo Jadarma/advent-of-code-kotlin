@@ -5,6 +5,7 @@ kotest = "6.0.3"        # https://mvnrepository.com/artifact/io.kotest/kotest-fr
 detekt = "1.23.8"       # https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-gradle-plugin
 dokka = "2.1.0-Beta"    # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
 bcv = "0.18.1"          # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.binary-compatibility-validator/org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin
+publishing = "0.34.0"   # https://mvnrepository.com/artifact/com.vanniktech/gradle-maven-publish-plugin
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
@@ -19,7 +20,8 @@ kotlin-plugin-jvm = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", vers
 kotlin-plugin-bcv = { module = "org.jetbrains.kotlinx.binary-compatibility-validator:org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin", version.ref = "bcv" }
 detekt-plugin = { module = "io.gitlab.arturbosch.detekt:io.gitlab.arturbosch.detekt.gradle.plugin", version.ref = "detekt" }
 dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+publishing-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "publishing" }
 
 [bundles]
 kotest = [ "kotest-runner", "kotest-assertions", "kotest-property" ]
-gradlePlugins = [ "kotlin-plugin-jvm", "kotlin-plugin-bcv", "detekt-plugin", "dokka-plugin" ]
+gradlePlugins = [ "kotlin-plugin-jvm", "kotlin-plugin-bcv", "detekt-plugin", "dokka-plugin", "publishing-plugin" ]
