@@ -9,19 +9,18 @@ import io.github.jadarma.aockt.test.internal.AdventPartScopeImpl
 import io.github.jadarma.aockt.test.internal.AocktDsl
 import io.github.jadarma.aockt.test.internal.DuplicatePartDefinitionException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
-import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
 import io.github.jadarma.aockt.test.internal.PuzzleAnswer
 import io.github.jadarma.aockt.test.internal.PuzzleTestData
 import io.github.jadarma.aockt.test.internal.TestData
 import io.github.jadarma.aockt.test.internal.configuration
 import io.github.jadarma.aockt.test.internal.id
+import io.github.jadarma.aockt.test.internal.injectSolution
 import io.github.jadarma.aockt.test.internal.partFunction
 import io.github.jadarma.aockt.test.internal.solutionToPart
 import io.kotest.assertions.AssertionErrorBuilder
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
-import io.kotest.common.reflection.ReflectionInstantiations.newInstanceNoArgConstructorOrObjectInstance
 import io.kotest.common.reflection.annotation
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
@@ -31,11 +30,6 @@ import io.kotest.engine.coroutines.CoroutineDispatcherFactory
 import io.kotest.engine.coroutines.ThreadPerSpecCoroutineContextFactory
 import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.matchers.shouldBe
-import kotlin.reflect.KClass
-import kotlin.reflect.full.isSubtypeOf
-import kotlin.reflect.full.starProjectedType
-import kotlin.reflect.jvm.jvmErasure
-import kotlin.reflect.typeOf
 import kotlin.time.Duration
 import kotlin.time.measureTimedValue
 
@@ -78,21 +72,9 @@ public abstract class AdventSpec<T : Solution>(
     private val testData: PuzzleTestData
     private val definedParts: MutableSet<AdventDayPart> = mutableSetOf()
 
-    // Injected by some reflection magic that while not that pretty, is fine for use in unit tests, and allows for a
-    // more elegant syntax when declaring [AdventSpec]s.
-    /** The instance of the [Solution] to be tested. */
-    @Suppress("MemberVisibilityCanBePrivate", "UnsafeCallOnNullableType")
-    public val solution: Solution = this::class
-        .starProjectedType.jvmErasure.supertypes
-        .first { it.isSubtypeOf(typeOf<AdventSpec<*>>()) }
-        .arguments.first().type!!.jvmErasure
-        .run {
-            @Suppress("UNCHECKED_CAST") // Must be a solution because of AdventSpec bounds.
-            this as KClass<Solution>
-
-            runCatching { newInstanceNoArgConstructorOrObjectInstance(this) }
-                .getOrElse { throw MissingNoArgConstructorException(this) }
-        }
+    /** The instance of the solution to be tested. */
+    @Suppress("MemberVisibilityCanBePrivate")
+    public val solution: Solution
 
     // Enforce some configuration to ensure that all tests within one AdventSpec will be executed sequentially on a
     // single thread.
@@ -104,6 +86,7 @@ public abstract class AdventSpec<T : Solution>(
     init {
         val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
         adventDayId = adventDay.id
+        solution = injectSolution()
         testData = TestData.inputFor(adventDayId)
         body()
     }
@@ -133,7 +116,7 @@ public abstract class AdventSpec<T : Solution>(
         efficiencyBenchmark: Duration?,
         examples: (AdventPartScope.() -> Unit)?,
     ) {
-        if(!definedParts.add(part)) throw DuplicatePartDefinitionException(this::class, part)
+        if (!definedParts.add(part)) throw DuplicatePartDefinitionException(this::class, part)
 
         context("Part $part").config(
             enabled = enabled,
