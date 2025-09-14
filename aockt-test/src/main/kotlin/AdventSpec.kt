@@ -75,6 +75,7 @@ public abstract class AdventSpec<T : Solution>(
 
     private val adventDayId: AdventDayID
     private val testData: PuzzleTestData
+    private val definedParts: MutableSet<AdventDayPart> = mutableSetOf()
 
     // Injected by some reflection magic that while not that pretty, is fine for use in unit tests, and allows for a
     // more elegant syntax when declaring [AdventSpec]s.
@@ -105,10 +106,6 @@ public abstract class AdventSpec<T : Solution>(
         testData = TestData.inputFor(adventDayId)
         body()
     }
-
-    // Flags to prevent the user from defining a part more than once.
-    private var isPartOneDefined: Boolean = false
-    private var isPartTwoDefined: Boolean = false
 
     /** A DSL scope for defining example assertions for puzzle parts. */
     @AocktDsl
@@ -161,17 +158,7 @@ public abstract class AdventSpec<T : Solution>(
         efficiencyBenchmark: Duration?,
         examples: (PartScope.() -> Unit)?,
     ) {
-        when (part) {
-            One -> {
-                if (isPartOneDefined) throw DuplicatePartDefinitionException(this::class, One)
-                isPartOneDefined = true
-            }
-
-            Two -> {
-                if (isPartTwoDefined) throw DuplicatePartDefinitionException(this::class, Two)
-                isPartTwoDefined = true
-            }
-        }
+        if(!definedParts.add(part)) throw DuplicatePartDefinitionException(this::class, part)
 
         context("Part $part").config(
             enabled = enabled,
