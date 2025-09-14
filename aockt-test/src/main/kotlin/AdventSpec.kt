@@ -7,7 +7,6 @@ import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
 import io.github.jadarma.aockt.test.internal.AdventSpecPartScope
 import io.github.jadarma.aockt.test.internal.AocktDsl
-import io.github.jadarma.aockt.test.internal.ConfigurationException
 import io.github.jadarma.aockt.test.internal.DuplicatePartDefinitionException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
 import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
@@ -162,10 +161,6 @@ public abstract class AdventSpec<T : Solution>(
         efficiencyBenchmark: Duration?,
         examples: (PartScope.() -> Unit)?,
     ) {
-        if (efficiencyBenchmark != null && !efficiencyBenchmark.isPositive()) {
-            throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
-        }
-
         when (part) {
             One -> {
                 if (isPartOneDefined) throw DuplicatePartDefinitionException(this::class, One)
@@ -183,10 +178,7 @@ public abstract class AdventSpec<T : Solution>(
             tags = if (expensive) setOf(Expensive) else emptySet(),
         ) {
             val partFunction = solution.partFunction(part)
-
-            val config = configuration()
-            val execMode = executionMode ?: config.executionMode
-            val maxEfficientDuration = efficiencyBenchmark ?: config.efficiencyBenchmark
+            val (benchmark, execMode) = configuration(efficiencyBenchmark, executionMode)
 
             if (examples != null) {
                 context("Validates the examples").config(enabled = execMode != ExecMode.SkipExamples) {
@@ -244,15 +236,15 @@ public abstract class AdventSpec<T : Solution>(
                 val enableSpeedTesting = when {
                     correctAnswer == null -> false
                     answer != correctAnswer -> false
-                    efficiencyBenchmark != null -> true
                     expensive -> false
                     else -> true
                 }
+
                 val durationSuffix = if (answer != null) duration.toString() else "N/A"
                 test("Is reasonably efficient ($durationSuffix)").config(enabled = enableSpeedTesting) {
-                    withClue("The solution did not complete under the configured benchmark of $maxEfficientDuration") {
+                    withClue("The solution did not complete under the configured benchmark of $benchmark") {
                         @Suppress("UnsafeCallOnNullableType")
-                        duration!! shouldBeLessThanOrEqualTo maxEfficientDuration
+                        duration!! shouldBeLessThanOrEqualTo benchmark
                     }
                 }
             }

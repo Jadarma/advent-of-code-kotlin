@@ -27,6 +27,15 @@ internal data class AdventSpecConfig(
         }
     }
 
+    /** Return a copy of this config with all non-null overrides given applied. */
+    fun override(
+        efficiencyBenchmark: Duration?,
+        executionMode: ExecMode?,
+    ): AdventSpecConfig = copy(
+        efficiencyBenchmark = efficiencyBenchmark ?: this.efficiencyBenchmark,
+        executionMode = executionMode ?: this.executionMode,
+    )
+
     companion object Key : CoroutineContext.Key<AdventSpecConfig> {
         /** Sane defaults. */
         val Default: AdventSpecConfig = AdventSpecConfig(
@@ -40,7 +49,13 @@ internal data class AdventSpecConfig(
  * Retrieves the [AdventSpecConfig] for this spec from the test runner coroutine.
  * If an [AocKtExtension] has been registered, use the user-provided configuration.
  * Otherwise, returns the sane defaults.
+ * Additionally, any non-null config parameters passed will be overridden in the final result.
  */
 @Suppress("UnusedReceiverParameter")
-internal suspend fun AdventSpec<*>.configuration(): AdventSpecConfig =
-    currentCoroutineContext()[AdventSpecConfig.Key] ?: AdventSpecConfig.Default
+internal suspend fun AdventSpec<*>.configuration(
+    efficiencyBenchmark: Duration?,
+    executionMode: ExecMode?,
+): AdventSpecConfig =
+    currentCoroutineContext()[AdventSpecConfig.Key]
+        .run { this ?: AdventSpecConfig.Default }
+        .override(efficiencyBenchmark, executionMode)
