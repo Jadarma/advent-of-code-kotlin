@@ -55,9 +55,9 @@ internal object TestData {
 /**
  * Data holder for the test data of a puzzle [Solution].
  *
- * @property input - The actual, user specific puzzle input, read from resources.
- * @property solutionPartOne - The correct solution for part one given the input. If null, is currently unknown.
- * @property solutionPartTwo - The correct solution for part two given the input. If null, is currently unknown.
+ * @property input           The actual, user specific puzzle input, read from resources.
+ * @property solutionPartOne The correct solution for part one given the input. If null, is currently unknown.
+ * @property solutionPartTwo The correct solution for part two given the input. If null, is currently unknown.
  */
 internal data class PuzzleTestData(
     val input: PuzzleInput?,
@@ -67,7 +67,7 @@ internal data class PuzzleTestData(
 
 /** The user-specific input to a puzzle. */
 @JvmInline
-internal value class PuzzleInput(private val input: String): CharSequence by input {
+internal value class PuzzleInput(private val input: String) {
 
     init {
         require(input.isNotBlank()) { "A puzzle input must be a non-blank string!" }

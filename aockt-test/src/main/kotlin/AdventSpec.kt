@@ -1,25 +1,16 @@
 package io.github.jadarma.aockt.test
 
 import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.internal.AdventDayID
 import io.github.jadarma.aockt.test.internal.AdventDayPart
 import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
-import io.github.jadarma.aockt.test.internal.AdventPartScopeImpl
 import io.github.jadarma.aockt.test.internal.AocktDsl
-import io.github.jadarma.aockt.test.internal.DuplicatePartDefinitionException
 import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
-import io.github.jadarma.aockt.test.internal.PuzzleAnswer
 import io.github.jadarma.aockt.test.internal.PuzzleTestData
 import io.github.jadarma.aockt.test.internal.TestData
-import io.github.jadarma.aockt.test.internal.configuration
+import io.github.jadarma.aockt.test.internal.definePart
 import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.injectSolution
-import io.github.jadarma.aockt.test.internal.partFunction
-import io.github.jadarma.aockt.test.internal.solutionToPart
-import io.kotest.assertions.AssertionErrorBuilder
-import io.kotest.assertions.throwables.shouldNotThrowAny
-import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
 import io.kotest.common.reflection.annotation
 import io.kotest.core.spec.IsolationMode
@@ -28,10 +19,7 @@ import io.kotest.core.test.TestCaseOrder
 import io.kotest.engine.concurrency.TestExecutionMode
 import io.kotest.engine.coroutines.CoroutineDispatcherFactory
 import io.kotest.engine.coroutines.ThreadPerSpecCoroutineContextFactory
-import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
-import io.kotest.matchers.shouldBe
 import kotlin.time.Duration
-import kotlin.time.measureTimedValue
 
 /**
  * A [FunSpec] specialized for testing Advent of Code puzzle [Solution]s.
@@ -58,7 +46,7 @@ import kotlin.time.measureTimedValue
  * }
  * ```
  *
- * @param T The implementation class of the [Solution] to be tested.
+ * @param T    The implementation class of the [Solution] to be tested.
  * @param body A context in which to configure the tests.
  */
 @Suppress("UnnecessaryAbstractClass")
@@ -68,13 +56,19 @@ public abstract class AdventSpec<T : Solution>(
     body: AdventSpec<T>.() -> Unit = {},
 ) : FunSpec() {
 
-    private val adventDayId: AdventDayID
-    private val testData: PuzzleTestData
-    private val definedParts: MutableSet<AdventDayPart> = mutableSetOf()
+    internal val testData: PuzzleTestData
+    internal val definedParts: MutableSet<AdventDayPart> = mutableSetOf()
 
     /** The instance of the solution to be tested. */
     @Suppress("MemberVisibilityCanBePrivate")
     public val solution: Solution
+
+    init {
+        val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
+        solution = injectSolution()
+        testData = TestData.inputFor(adventDay.id)
+        body()
+    }
 
     // Enforce some configuration to ensure that all tests within one AdventSpec will be executed sequentially on a
     // single thread.
@@ -83,122 +77,9 @@ public abstract class AdventSpec<T : Solution>(
     final override fun testCaseOrder(): TestCaseOrder = TestCaseOrder.Sequential
     final override fun testExecutionMode(): TestExecutionMode = TestExecutionMode.Sequential
 
-    init {
-        val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
-        adventDayId = adventDay.id
-        solution = injectSolution()
-        testData = TestData.inputFor(adventDayId)
-        body()
-    }
-
-    /**
-     * Provides a context to test the implementation of one of a [Solution]'s part function.
-     *
-     * Will create a context with two tests:
-     *  - Verifies the output, given the input file has been added to the test resources.
-     *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventPartScope], useful for a TDD approach when
-     *    implementing the solution for the first time.
-     *
-     * @param part The part selector.
-     * @param enabled If set to false, part one will not be tested.
-     * @param expensive This part is known to produce answers in a longer timespan.
-     * @param executionMode Specifies which tests defined for this part will be enabled.
-     * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
-     * @param examples Test the solution against example inputs defined in this [AdventPartScope].
-     */
-    @Suppress("LongParameterList", "ThrowsCount", "LongMethod", "CyclomaticComplexMethod")
-    private fun partTest(
-        part: AdventDayPart,
-        enabled: Boolean,
-        expensive: Boolean,
-        executionMode: ExecMode?,
-        efficiencyBenchmark: Duration?,
-        examples: (AdventPartScope.() -> Unit)?,
-    ) {
-        if (!definedParts.add(part)) throw DuplicatePartDefinitionException(this::class, part)
-
-        context("Part $part").config(
-            enabled = enabled,
-            tags = if (expensive) setOf(Expensive) else emptySet(),
-        ) {
-            val partFunction = solution.partFunction(part)
-            val (benchmark, execMode) = configuration(efficiencyBenchmark, executionMode)
-
-            if (examples != null) {
-                context("Validates the examples").config(enabled = execMode != ExecMode.SkipExamples) {
-                    AdventPartScopeImpl().apply(examples).forEachIndexed { index, input, expected ->
-                        test("Example #${index + 1}") {
-                            withClue("Expected answer '$expected' for input: ${input.preview()}") {
-                                val answer = shouldNotThrowAny {
-                                    partFunction(input.toString()).toString()
-                                }
-                                answer shouldBe expected
-                            }
-                        }
-                    }
-                }
-            }
-
-            context("The solution").config(
-                enabled = testData.input != null && execMode != ExecMode.ExamplesOnly,
-            ) {
-                val input = testData.input?.toString()
-                checkNotNull(input) { "Impossible state, test should be disabled on null input." }
-
-                val correctAnswer = testData.solutionToPart(part)
-                val solutionKnown = correctAnswer != null
-
-                var answer: PuzzleAnswer? = null
-                var duration: Duration? = null
-
-                val mainTestName = if (solutionKnown) "Is correct" else "Computes an answer"
-                test(mainTestName) {
-
-                    runCatching {
-                        val (value, time) = measureTimedValue { partFunction(input) }
-                        answer = PuzzleAnswer(value.toString())
-                        duration = time
-                    }.onFailure { error ->
-                        AssertionErrorBuilder.create()
-                            .withMessage("The solution threw an exception before it could return an answer.")
-                            .withCause(error)
-                            .build()
-                    }
-
-                    if (solutionKnown) {
-                        withClue("Got different answer than the known solution.") {
-                            answer shouldBe correctAnswer
-                        }
-                    }
-                }
-
-                // If solution is unverified, create a dummy ignored test to display the value in the test report.
-                if (!solutionKnown && answer != null) {
-                    xtest("Has unverified answer ($answer)") {}
-                }
-
-                val enableSpeedTesting = when {
-                    correctAnswer == null -> false
-                    answer != correctAnswer -> false
-                    expensive -> false
-                    else -> true
-                }
-
-                val durationSuffix = if (answer != null) duration.toString() else "N/A"
-                test("Is reasonably efficient ($durationSuffix)").config(enabled = enableSpeedTesting) {
-                    withClue("The solution did not complete under the configured benchmark of $benchmark") {
-                        @Suppress("UnsafeCallOnNullableType")
-                        duration!! shouldBeLessThanOrEqualTo benchmark
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * Provides a context to test the implementation a [Solution.partOne] function.
-     * Should only be called once per [AdventSpec].
+     * Should be called at most once per [AdventSpec].
      *
      * Will create a context with two tests:
      *  - Verifies the output, given the input file has been added to the test resources.
@@ -206,11 +87,11 @@ public abstract class AdventSpec<T : Solution>(
      *  - Verifies the given examples in an [AdventPartScope], useful for a TDD approach when
      *    implementing the solution for the first time.
      *
-     * @param enabled If set to false, part one will not be tested.
-     * @param expensive This part is known to produce answers in a longer timespan.
-     * @param executionMode Specifies which tests defined for this part will be enabled.
+     * @param enabled             If set to false, part one will not be tested.
+     * @param expensive           This part is known to produce answers in a longer timespan.
+     * @param executionMode       Specifies which tests defined for this part will be enabled.
      * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
-     * @param test Test the solution against example inputs defined in this [AdventPartScope].
+     * @param test                Test the solution against example inputs defined in this [AdventPartScope].
      */
     public fun partOne(
         enabled: Boolean = true,
@@ -218,11 +99,11 @@ public abstract class AdventSpec<T : Solution>(
         executionMode: ExecMode? = null,
         efficiencyBenchmark: Duration? = null,
         test: (AdventPartScope.() -> Unit)? = null,
-    ): Unit = partTest(One, enabled, expensive, executionMode, efficiencyBenchmark, test)
+    ): Unit = definePart(One, enabled, expensive, executionMode, efficiencyBenchmark, test)
 
     /**
      * Provides a context to test the implementation a [Solution.partTwo] function.
-     * Should only be called once per [AdventSpec].
+     * Should be called at most once per [AdventSpec].
      *
      * Will create a context with two tests:
      *  - Verifies the output, given the input file has been added to the test resources.
@@ -230,11 +111,11 @@ public abstract class AdventSpec<T : Solution>(
      *  - Verifies the given examples in an [AdventPartScope], useful for a TDD approach when
      *    implementing the solution for the first time.
      *
-     * @param enabled If set to false, part one will not be tested.
-     * @param expensive This part is known to produce answers in a longer timespan.
-     * @param executionMode Specifies which tests defined for this part will be enabled.
+     * @param enabled             If set to false, part one will not be tested.
+     * @param expensive           This part is known to produce answers in a longer timespan.
+     * @param executionMode       Specifies which tests defined for this part will be enabled.
      * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
-     * @param test Test the solution against example inputs defined in this [AdventPartScope].
+     * @param test                Test the solution against example inputs defined in this [AdventPartScope].
      */
     public fun partTwo(
         enabled: Boolean = true,
@@ -242,5 +123,5 @@ public abstract class AdventSpec<T : Solution>(
         executionMode: ExecMode? = null,
         efficiencyBenchmark: Duration? = null,
         test: (AdventPartScope.() -> Unit)? = null,
-    ): Unit = partTest(Two, enabled, expensive, executionMode, efficiencyBenchmark, test)
+    ): Unit = definePart(Two, enabled, expensive, executionMode, efficiencyBenchmark, test)
 }
