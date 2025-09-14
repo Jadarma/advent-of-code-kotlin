@@ -8,3 +8,7 @@ dependencies {
     implementation(libs.kotest.engine)
     implementation(libs.kotest.assertions)
 }
+
+tasks.test {
+    systemProperty("kotest.framework.config.fqn", "io.github.jadarma.aockt.test.TestConfig")
+}
