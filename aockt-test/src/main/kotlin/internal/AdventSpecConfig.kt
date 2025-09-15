@@ -1,9 +1,7 @@
 package io.github.jadarma.aockt.test.internal
 
 import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.AocKtExtension
 import io.github.jadarma.aockt.test.ExecMode
-import kotlinx.coroutines.currentCoroutineContext
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
@@ -44,18 +42,3 @@ internal data class AdventSpecConfig(
         )
     }
 }
-
-/**
- * Retrieves the [AdventSpecConfig] for this spec from the test runner coroutine.
- * If an [AocKtExtension] has been registered, use the user-provided configuration.
- * Otherwise, returns the sane defaults.
- * Additionally, any non-null config parameters passed will be overridden in the final result.
- */
-@Suppress("UnusedReceiverParameter")
-internal suspend fun AdventSpec<*>.configuration(
-    efficiencyBenchmark: Duration?,
-    executionMode: ExecMode?,
-): AdventSpecConfig =
-    currentCoroutineContext()[AdventSpecConfig.Key]
-        .run { this ?: AdventSpecConfig.Default }
-        .override(efficiencyBenchmark, executionMode)

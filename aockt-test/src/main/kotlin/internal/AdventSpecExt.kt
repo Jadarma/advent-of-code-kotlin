@@ -3,6 +3,7 @@ package io.github.jadarma.aockt.test.internal
 import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.AdventPartScope
 import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.test.AocKtExtension
 import io.github.jadarma.aockt.test.ExecMode
 import io.github.jadarma.aockt.test.Expensive
 import io.kotest.assertions.AssertionErrorBuilder
@@ -13,6 +14,7 @@ import io.kotest.common.reflection.ReflectionInstantiations.newInstanceNoArgCons
 import io.kotest.core.spec.style.scopes.FunSpecContainerScope
 import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.currentCoroutineContext
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
@@ -37,6 +39,21 @@ internal fun AdventSpec<*>.injectSolution(): Solution = this::class
         runCatching { newInstanceNoArgConstructorOrObjectInstance(this) }
             .getOrElse { throw MissingNoArgConstructorException(this) }
     }
+
+/**
+ * Retrieves the [AdventSpecConfig] for this spec from the test runner coroutine.
+ * If an [AocKtExtension] has been registered, use the user-provided configuration.
+ * Otherwise, returns the sane defaults.
+ * Additionally, any non-null config parameters passed will be overridden in the final result.
+ */
+@Suppress("UnusedReceiverParameter")
+internal suspend fun AdventSpec<*>.configuration(
+    efficiencyBenchmark: Duration?,
+    executionMode: ExecMode?,
+): AdventSpecConfig =
+    currentCoroutineContext()[AdventSpecConfig.Key]
+        .run { this ?: AdventSpecConfig.Default }
+        .override(efficiencyBenchmark, executionMode)
 
 /**
  * Defines the rootContext to test the implementation of one [part] of a [Solution].
