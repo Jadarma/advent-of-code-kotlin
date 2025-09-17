@@ -117,16 +117,14 @@ internal fun AdventSpec<*>.definePart(
 @Suppress("SuspendFunWithCoroutineScopeReceiver")
 private suspend fun FunSpecContainerScope.defineExamples(
     config: AdventSpecConfig,
-    partFunction: (String) -> Any,
+    partFunction: PartFunction,
     examples: (AdventPartScope.() -> Unit),
 ) {
     context(name = "Validates the examples").config(enabled = config.executionMode != ExecMode.SkipExamples) {
         AdventPartScopeImpl().apply(examples).forEachIndexed { index, input, expected ->
             test("Example #${index + 1}") {
                 withClue("Expected answer '$expected' for input: ${input.preview()}") {
-                    val answer = shouldNotThrowAny {
-                        partFunction(input.toString()).toString()
-                    }
+                    val answer = shouldNotThrowAny { partFunction(input) }
                     answer shouldBe expected
                 }
             }
@@ -153,7 +151,7 @@ private suspend fun FunSpecContainerScope.defineExamples(
 private suspend fun FunSpecContainerScope.defineInput(
     config: AdventSpecConfig,
     expensive: Boolean,
-    partFunction: (String) -> Any,
+    partFunction: PartFunction,
     input: PuzzleInput,
     correctAnswer: PuzzleAnswer?,
 ) {
@@ -164,9 +162,9 @@ private suspend fun FunSpecContainerScope.defineInput(
 
         test(name = if (isSolutionKnown) "Is correct" else "Computes an answer") {
             runCatching {
-                val (value, time) = measureTimedValue { partFunction(input.toString()) }
-                answer = PuzzleAnswer(value.toString())
-                duration = time
+                val measured = measureTimedValue { partFunction(input) }
+                answer = measured.value
+                duration = measured.duration
             }.onFailure { error ->
                 AssertionErrorBuilder.create()
                     .withMessage("The solution threw an exception before it could return an answer.")
