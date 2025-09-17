@@ -29,9 +29,19 @@ kover {
                 onCheck = true
             }
         }
+        filters {
+            includes {
+                classes("io.github.jadarma.aockt.*")
+            }
+            excludes {
+                classes("*.*\$DefaultImpls")
+            }
+        }
     }
 }
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    // Don't cache tests, make them run again every time.
+    outputs.upToDateWhen { false }
 }

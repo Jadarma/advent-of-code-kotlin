@@ -29,12 +29,12 @@ public interface Solution {
      * Given this [input], computes and returns the resulting answer for part one of the puzzle.
      * The function should be pure.
      */
-    public fun partOne(input: String): Any = TODO("Part 1 not implemented.")
+    public fun partOne(input: String): Any = throw NotImplementedError("Part 1 not implemented.")
 
     /**
      * Given this [input], computes and returns the resulting answer for part two of the puzzle.
      * For days that do not have a part two (25th), this function should not be implemented.
      * The function should be pure.
      */
-    public fun partTwo(input: String): Any = TODO("Part 2 not implemented.")
+    public fun partTwo(input: String): Any = throw NotImplementedError("Part 2 not implemented.")
 }
