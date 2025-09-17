@@ -28,19 +28,19 @@ comments:
 # https://detekt.dev/docs/rules/complexity
 complexity:
   CognitiveComplexMethod:
-    active: true # TODO
+    active: true
   ComplexCondition:
     active: true
   ComplexInterface:
-    active: true # TODO
+    active: true
   CyclomaticComplexMethod:
-    active: true # TODO
+    active: true
   LabeledExpression:
     active: true
   LargeClass:
-    active: true # TODO
+    active: true
   LongMethod:
-    active: true # TODO
+    active: true
   LongParameterList:
     active: true
     ignoreDefaultParameters: true
@@ -487,7 +487,3 @@ style:
     active: true
   WildcardImport:
     active: true
-
-
-
-
