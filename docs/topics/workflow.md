@@ -315,7 +315,7 @@ Run tests often, they will help you know when you made a logic-altering change.
 
 <seealso style="cards">
   <category ref="related">
-    <a href="project-config.md"/>
+    <a href="project-extension.md"/>
     <a href="test-config.md"/>
     <a href="debugging.md"/>
   </category>

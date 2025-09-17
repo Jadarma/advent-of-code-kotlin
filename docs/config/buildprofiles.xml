@@ -21,7 +21,7 @@
     </variables>
 
     <footer>
-        <copyright>2020-2024 Dan Cristian Cîmpianu | "Advent of Code" is a registered trademark of Eric K. Wastl in the United States.</copyright>
+        <copyright>2020-2025 Dan Cristian Cîmpianu | "Advent of Code" is a registered trademark of Eric K. Wastl in the United States.</copyright>
         <link href="https://github.com/Jadarma/advent-of-code-kotlin/tree/v%aockt-version%">Source Code</link>
         <link href="https://github.com/Jadarma/advent-of-code-kotlin/issues">Issue Tracker</link>
         <link href="https://central.sonatype.com/namespace/io.github.jadarma.aockt">Packages</link>

@@ -1,7 +1,27 @@
-# Project-Wide Config
+# Project Extension
 
-AocKt provides an extension you may register in your Kotest project.
-Registering is optional, but recommended.
+<link-summary rel="summary"/>
+<tldr id="summary">
+    You can register the AocKt extension to configure test execution and extend functionality.
+</tldr>
+
+Registering the extension is optional, but recommended.
+It offers the following features:
+
+- **Global Configuration**
+
+    You can configure your own defaults for [test execution](test-config.md) parameters.
+    Otherwise, the same defaults will be used.
+    See [below](#configuration-properties) for a detailed description of each parameter.
+
+- **Display Name Formatting**
+
+    All `AdventSpec`s will have a nicely formatted display name derived from their `@AdventDay` annotation.
+    For example, `@AdventDay(2015, 1, "Not Quite Lisp", "FP")` will become
+    `Y2015D01: Not Quite Lisp (FP)`.
+    All other specs and tests follow the normal Kotest formatting rules.
+
+## Registering The Extension
 
 To register it, add it to your Kotest [project level config](https://kotest.io/docs/framework/project-config.html):
 
@@ -12,20 +32,13 @@ import io.github.jadarma.aockt.test.AocKtExtension
 import io.github.jadarma.aockt.test.ExecMode
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.extensions.Extension
-import kotlin.time.Duration.Companion.seconds
 
 object TestConfig : AbstractProjectConfig() {
     override val extensions = listOf<Extension>(
-        AocKtExtension(
-            formatAdventSpecNames = true,
-            efficiencyBenchmark = 15.seconds,
-            executionMode = ExecMode.All,
-        )
+        AocKtExtension()
     )
 }
 ```
-
-> The constructor parameters provided above are also the default values.
 
 To make Kotest use this configuration, you must register it in the 
 [`kotest.properties`](https://kotest.io/docs/intellij/intellij-properties.html#specifying-the-properties-filename)
@@ -37,29 +50,19 @@ kotest.framework.classpath.scanning.autoscan.disable=true
 kotest.framework.classpath.scanning.config.disable=true
 ```
 
-<link-summary rel="summary"/>
-<tldr id="summary">
-    You can register a Kotest extension to apply the same default settings to all the puzzle tests in your project.
-</tldr>
+You should also register the fqn as a system property for Gradle:
+
+```kotlin
+tasks.test {
+    systemProperty("kotest.framework.config.fqn", "my.aoc.TestConfig")
+}
+```
+
+
 
 ## Configuration Properties
 
-### `formatAdventSpecNames`
-
-When the `AocKtExtension` is registered, it formats the names of all `AdventSpec` classes based on the data provided in
-the `AdventDay` annotation to be more pleasing to view in the test runner.
-
-Set this to `false` in order to opt out of this behavior.
-
-For example, the following class will be formatted as `Y2015D01: Not Quite Lisp` instead of `Y2015D01Test`.
-
-```kotlin
-@AdventDay(2015, 1, "Not Quite Lisp")
-class Y2015D01Test : AdventSpec<Y2015D01>({ /* ... */ })
-```
-
-When using [multiple solutions](multiple-solutions.md), the variant name will also be included in parentheses to help
-distinguishing them.
+Preferences that can be set as constructor arguments.
 
 ### `efficiencyBenchmark`
 

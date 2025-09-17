@@ -400,6 +400,7 @@ style:
     active: false
   ReturnCount:
     active: true
+    max: 3
   SafeCast:
     active: true
   SerialVersionUIDInSerializableClass:

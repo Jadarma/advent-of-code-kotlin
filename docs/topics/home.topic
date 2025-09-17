@@ -19,12 +19,11 @@
             <title>Start Solving Puzzles!</title>
             <a href="workflow.md" type="learn" summary="Learn the typical workflow of solving a puzzle with this library."/>
             <a href="https://github.com/Jadarma/advent-of-code-kotlin-template" type="mixed" summary="Preconfigured project with all you need to get started in minutes!">Project Template</a>
-<!--            <a href="advanced.md" type="settings" summary="Learn how to tweak the way tests behave.">Advanced Configuration</a>-->
         </primary>
 
         <secondary>
             <title>Advanced Use-Cases</title>
-            <a href="project-config.md" type="settings" summary="Apply settings to your whole project."/>
+            <a href="project-extension.md" type="settings" summary="Enable QoL features and project-wide configuration."/>
             <a href="test-config.md" type="experiment" summary="Tweak the way individual tests behave."/>
             <a href="multiple-solutions.md" type="branch" summary="Share puzzle tests between multiple solutions."/>
             <a href="debugging.md" type="bug" summary="Learn how to tweak the way tests behave."/>

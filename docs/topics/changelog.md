@@ -2,11 +2,13 @@
 
 ## 0.3.0-SNAPSHOT
 
-- Updated minimum JDK to 21.
-- Updated Kotlin to `2.2.10` and Kotest to `6.0.3`.
-- There are no breaking changes to AocKt itself, but there are for configuring 
-  [Kotest 6.0](https://kotest.io/docs/release6).
-  If you use the `AocKtExtension`, see [](project-config.md). 
+**Breaking Changes:**
+- Minimum JDK is now 21.
+- Minimum Kotlin version is now `2.0`.
+- Minimum Kotest version is now `6.0`. Check the [release notes](https://kotest.io/docs/release6), and how to
+  [configure](project-extension.md) the extension.
+- Removed `formatAdventSpecNames` configuration property.
+  Formatting is automatically enabled when using the project extension.  
 
 ## 0.2.1
 

@@ -46,5 +46,5 @@ abstract class Y9999D01Spec<T : Solution> : AdventSpec<T>({
 ```
 
 > You can provide a `variant` argument to the `@AdventDay` annotation.
-> This is purely for aesthetics when using [spec name formatting](project-config.md#formatadventspecnames).
+> This is purely for aesthetics when formatting the display name.
 > {style="note"}

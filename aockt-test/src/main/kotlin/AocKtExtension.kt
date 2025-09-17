@@ -17,12 +17,10 @@ import kotlin.time.Duration
  *
  * ```kotlin
  * object TestConfig : AbstractProjectConfig() {
- *     override fun extensions() = listOf<Extension>(AocktExtension())
+ *     override val extensions = listOf<Extension>(AocktExtension())
  * }
  * ```
  *
- * @param formatAdventSpecNames Whether to pretty print the names of the AdventSpec in the test output.
- *   Enabled by default.
  * @param efficiencyBenchmark What is the maximum runtime a solution can have while being considered efficient by
  *   the time tests.
  *   Can be overridden on a per-test basis.
@@ -38,7 +36,6 @@ import kotlin.time.Duration
  *   Default is `All`.
  */
 public class AocKtExtension(
-    private val formatAdventSpecNames: Boolean = true,
     efficiencyBenchmark: Duration = AdventSpecConfig.Default.efficiencyBenchmark,
     executionMode: ExecMode = AdventSpecConfig.Default.executionMode,
 ) : SpecExtension, DisplayNameFormatterExtension {
@@ -46,8 +43,8 @@ public class AocKtExtension(
     /** The project-level config that will apply to all [AdventSpec]s. */
     private val configuration: AdventSpecConfig = AdventSpecConfig(efficiencyBenchmark, executionMode)
 
-    /** The formatter to use for [AdventSpec] names, if [formatAdventSpecNames] is enabled. */
-    private val displayNameFormatter = AocktDisplayNameFormatter(disabled = formatAdventSpecNames.not())
+    /** The formatter to use for [AdventSpec] names. */
+    private val displayNameFormatter = AocktDisplayNameFormatter
 
     /** Provide the custom formatter to the extension. */
     override fun formatter(): DisplayNameFormatter = displayNameFormatter

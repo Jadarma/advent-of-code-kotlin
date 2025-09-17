@@ -9,20 +9,14 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 /** A name formatter extension that adjusts the names of [AdventSpec]s with the info of their [AdventDay]. */
-internal class AocktDisplayNameFormatter(private val disabled: Boolean = false) : DisplayNameFormatter {
+internal object AocktDisplayNameFormatter : DisplayNameFormatter {
 
     // Test cases are not formatted.
     override fun format(testCase: TestCase) = null
 
-    @Suppress("ReturnCount")
     override fun format(kclass: KClass<*>): String? {
-        if (disabled) return null
-
-        val annotation = kclass.annotation<AdventDay>()
-
-        if (annotation == null || !kclass.isSubclassOf(AdventSpec::class)) {
-            return null
-        }
+        val annotation = kclass.annotation<AdventDay>() ?: return null
+        if (!kclass.isSubclassOf(AdventSpec::class)) return null
 
         return with(annotation) {
             buildString {

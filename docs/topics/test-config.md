@@ -34,7 +34,7 @@ Parts that are marked as expensive will skip the efficiency benchmark test.
 
 ### `executionMode`
 
-Override the globally set [`executionMode`](project-config.md#executionmode).
+Override the globally set [`executionMode`](project-extension.md#executionmode).
 
 This may come in handy during refactoring.
 If your solution is working, but expensive, you might want to execute example inputs only first, to save time during
@@ -42,7 +42,7 @@ incremental sanity check test runs.
 
 ### `efficiencyBenchmark`
 
-Override the globally set [`efficiencyBenchmark`](project-config.md#efficiencybenchmark).
+Override the globally set [`efficiencyBenchmark`](project-extension.md#efficiencybenchmark).
 
 If you decided to set a lower global value to challenge yourself, but you did not manage to optimize this puzzle enough,
 you can provide a different setting for this puzzle only.

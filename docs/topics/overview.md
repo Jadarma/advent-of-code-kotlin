@@ -133,6 +133,6 @@ In the above example:
 <seealso style="cards">
   <category ref="related">
     <a href="workflow.md"/>
-    <a href="project-config.md"/>
+    <a href="project-extension.md"/>
   </category>
 </seealso>

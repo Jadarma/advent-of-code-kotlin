@@ -11,7 +11,6 @@ object TestConfig : AbstractProjectConfig() {
 
     override val extensions = listOf<Extension>(
         AocKtExtension(
-            formatAdventSpecNames = true,
             efficiencyBenchmark = 100.milliseconds,
         )
     )
