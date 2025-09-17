@@ -1,3 +1,5 @@
+import CompileOptions.AocKt.GROUP_ID
+
 plugins {
     id("conventions.kotlin")
     id("conventions.kotest")
@@ -7,5 +9,5 @@ plugins {
     id("org.jetbrains.kotlinx.binary-compatibility-validator")
 }
 
-group = "io.github.jadarma.aockt"
+group = GROUP_ID
 version = buildVersion.get()

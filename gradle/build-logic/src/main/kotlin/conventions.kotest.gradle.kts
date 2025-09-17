@@ -1,3 +1,4 @@
+import CompileOptions.AocKt.GROUP_ID
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
@@ -31,7 +32,7 @@ kover {
         }
         filters {
             includes {
-                classes("io.github.jadarma.aockt.*")
+                classes("$GROUP_ID.*")
             }
             excludes {
                 classes("*.*\$DefaultImpls")

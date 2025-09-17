@@ -1,11 +1,10 @@
+import CompileOptions.AocKt.CURRENT
+import CompileOptions.AocKt.NEXT
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 import org.gradle.api.provider.ValueSource
 import org.gradle.api.provider.ValueSourceParameters
 import org.gradle.kotlin.dsl.of
-
-private const val CURRENT: String = "0.2.1" // Last released version.
-private const val NEXT: String = "0.3.0"    // Current Snapshot.
 
 /**
  * A typesafe and validated build version to be shared across the project.

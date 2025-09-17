@@ -1,3 +1,4 @@
+import CompileOptions.AocKt.GROUP_ID
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
 
@@ -20,7 +21,7 @@ mavenPublishing {
     )
 
     coordinates(
-        groupId = "io.github.jadarma.aockt",
+        groupId = GROUP_ID,
         artifactId = project.name,
         version = buildVersion.get().toString(),
     )

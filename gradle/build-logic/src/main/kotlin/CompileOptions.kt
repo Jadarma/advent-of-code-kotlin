@@ -9,6 +9,12 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
  */
 object CompileOptions {
 
+    object AocKt {
+        const val GROUP_ID: String = "io.github.jadarma.aockt"
+        const val CURRENT: String = "0.2.1" // Last released version.
+        const val NEXT: String = "0.3.0" // Current snapshot.
+    }
+
     object Java {
         val languageVersion: JavaLanguageVersion = JavaLanguageVersion.of(21)
         val jvmVendor: JvmVendorSpec = JvmVendorSpec.ADOPTIUM
