@@ -7,6 +7,7 @@ detekt = "2.0.0-alpha.0"# https://mvnrepository.com/artifact/dev.detekt/detekt-g
 dokka = "2.1.0-Beta"    # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
 kover = "0.9.1"         # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.kover/org.jetbrains.kotlinx.kover.gradle.plugin
 publishing = "0.34.0"   # https://mvnrepository.com/artifact/com.vanniktech/gradle-maven-publish-plugin
+toolchains = "1.0.0"    # https://plugins.gradle.org/plugin/org.gradle.toolchains.foojay-resolver-convention
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
@@ -23,6 +24,7 @@ gradlePluginDep-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", ve
 gradlePluginDep-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradlePluginDep-kover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
 gradlePluginDep-publishing = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "publishing" }
+gradlePluginDep-toolchains = { module = "org.gradle.toolchains.foojay-resolver-convention:org.gradle.toolchains.foojay-resolver-convention.gradle.plugin", version.ref = "toolchains" }
 
 [bundles]
 # Bundles all plugins needed in `buildLogic` so they can be imported in bulk.
@@ -33,4 +35,5 @@ gradlePlugins = [
     "gradlePluginDep-kotlin",
     "gradlePluginDep-kover",
     "gradlePluginDep-publishing",
+    "gradlePluginDep-toolchains",
 ]
