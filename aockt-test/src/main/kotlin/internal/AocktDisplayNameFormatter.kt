@@ -24,16 +24,18 @@ internal class AocktDisplayNameFormatter(private val disabled: Boolean = false) 
             return null
         }
 
-        return buildString {
-            append(AdventDayID(annotation.year, annotation.day))
-            if (annotation.title.isNotEmpty()) {
-                append(": ")
-                append(annotation.title)
-            }
-            if (annotation.variant != "default") {
-                append(" (")
-                append(annotation.variant)
-                append(')')
+        return with(annotation) {
+            buildString {
+                append(AdventDayID(year, day))
+                if (title.isNotEmpty()) {
+                    append(": ")
+                    append(title)
+                }
+                if (variant != "default") {
+                    append(" (")
+                    append(variant)
+                    append(')')
+                }
             }
         }
     }

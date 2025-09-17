@@ -20,7 +20,7 @@ internal data class AdventDayID(
 
     override fun toString(): String = "Y${year}D${day.toString().padStart(2, '0')}"
 
-    @Suppress("MagicNumber")
+    @Suppress("MagicNumber", "UnnamedParameterUse")
     override fun compareTo(other: AdventDayID): Int = compareValuesBy(this, other) { year * 100 + day }
 
     private companion object {

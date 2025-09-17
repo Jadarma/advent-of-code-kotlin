@@ -16,6 +16,6 @@ internal class AdventPartScopeImpl : AdventPartScope {
     }
 
     /** Applies the [block] function for each registered example. */
-    inline fun forEachIndexed(block: (Int, PuzzleInput, String) -> Unit) =
+    inline fun forEachIndexed(block: (Int, PuzzleInput, String) -> Unit): Unit =
         examples.forEachIndexed { index, example -> block(index, example.first, example.second) }
 }

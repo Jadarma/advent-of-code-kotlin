@@ -3,7 +3,7 @@ kotlin = "2.2.20"       # https://mvnrepository.com/artifact/org.jetbrains.kotli
 kotest = "6.0.3"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
 
 bcv = "0.18.1"          # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.binary-compatibility-validator/org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin
-detekt = "1.23.8"       # https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-gradle-plugin
+detekt = "2.0.0-alpha.0"# https://mvnrepository.com/artifact/dev.detekt/detekt-gradle-plugin
 dokka = "2.1.0-Beta"    # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
 kover = "0.9.1"         # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.kover/org.jetbrains.kotlinx.kover.gradle.plugin
 publishing = "0.34.0"   # https://mvnrepository.com/artifact/com.vanniktech/gradle-maven-publish-plugin
@@ -18,7 +18,7 @@ kotest-assertions = { module = "io.kotest:kotest-assertions-core-jvm", version.r
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 
 gradlePluginDep-bcv = { module = "org.jetbrains.kotlinx.binary-compatibility-validator:org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin", version.ref = "bcv" }
-gradlePluginDep-detekt = { module = "io.gitlab.arturbosch.detekt:io.gitlab.arturbosch.detekt.gradle.plugin", version.ref = "detekt" }
+gradlePluginDep-detekt = { module = "dev.detekt:dev.detekt.gradle.plugin", version.ref = "detekt" }
 gradlePluginDep-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 gradlePluginDep-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradlePluginDep-kover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }

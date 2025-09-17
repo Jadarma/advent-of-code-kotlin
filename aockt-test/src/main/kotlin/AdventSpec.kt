@@ -49,7 +49,7 @@ import kotlin.time.Duration
  * @param T    The implementation class of the [Solution] to be tested.
  * @param body A context in which to configure the tests.
  */
-@Suppress("UnnecessaryAbstractClass")
+@Suppress("AbstractClassCanBeConcreteClass")
 @OptIn(ExperimentalKotest::class)
 @AocktDsl
 public abstract class AdventSpec<T : Solution>(

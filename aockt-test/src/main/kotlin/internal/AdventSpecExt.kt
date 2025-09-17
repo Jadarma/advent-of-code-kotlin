@@ -114,6 +114,7 @@ internal fun AdventSpec<*>.definePart(
  * @param examples     A configuration block defining the example values.
  */
 @OptIn(ExperimentalKotest::class)
+@Suppress("SuspendFunWithCoroutineScopeReceiver")
 private suspend fun FunSpecContainerScope.defineExamples(
     config: AdventSpecConfig,
     partFunction: (String) -> Any,
@@ -148,6 +149,7 @@ private suspend fun FunSpecContainerScope.defineExamples(
  * @param correctAnswer The actual puzzle solution, if known.
  */
 @OptIn(ExperimentalKotest::class)
+@Suppress("SuspendFunWithCoroutineScopeReceiver")
 private suspend fun FunSpecContainerScope.defineInput(
     config: AdventSpecConfig,
     expensive: Boolean,
@@ -156,11 +158,11 @@ private suspend fun FunSpecContainerScope.defineInput(
     correctAnswer: PuzzleAnswer?,
 ) {
     context("The solution").config(enabled = config.executionMode != ExecMode.ExamplesOnly) {
-        val solutionKnown = correctAnswer != null
+        val isSolutionKnown = correctAnswer != null
         var answer: PuzzleAnswer? = null
         var duration: Duration? = null
 
-        test(name = if (solutionKnown) "Is correct" else "Computes an answer") {
+        test(name = if (isSolutionKnown) "Is correct" else "Computes an answer") {
             runCatching {
                 val (value, time) = measureTimedValue { partFunction(input.toString()) }
                 answer = PuzzleAnswer(value.toString())
@@ -172,7 +174,7 @@ private suspend fun FunSpecContainerScope.defineInput(
                     .build()
             }
 
-            if (solutionKnown) {
+            if (isSolutionKnown) {
                 withClue("Got different answer than the known solution.") {
                     answer shouldBe correctAnswer
                 }
@@ -180,7 +182,7 @@ private suspend fun FunSpecContainerScope.defineInput(
         }
 
         // If solution is unverified, create a dummy ignored test to display the value in the test report.
-        if (!solutionKnown && answer != null) {
+        if (!isSolutionKnown && answer != null) {
             xtest("Has unverified answer ($answer)") {}
         }
 
@@ -192,7 +194,7 @@ private suspend fun FunSpecContainerScope.defineInput(
         }
 
         val benchmark = config.efficiencyBenchmark
-        val durationSuffix = if (answer != null) duration.toString() else "N/A"
+        val durationSuffix = duration?.takeIf { answer != null }?.toString() ?: "N/A"
         test("Is reasonably efficient ($durationSuffix)").config(enabled = enableSpeedTesting) {
             withClue("The solution did not complete under the configured benchmark of $benchmark") {
                 @Suppress("UnsafeCallOnNullableType")

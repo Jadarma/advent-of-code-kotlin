@@ -46,7 +46,7 @@ class Y9999D01SequencesTest : Y9999D01Spec<Y9999D01UsingSequences>()
  * Part 2: Return the product of the numbers.
  * ```
  */
-@Suppress("UnnecessaryAbstractClass")
+@Suppress("AbstractClassCanBeInterface")
 abstract class Y9999D01Spec<T : Solution> : AdventSpec<T>({
 
     partOne {

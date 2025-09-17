@@ -1,4 +1,5 @@
 package io.github.jadarma.aockt.test.internal
+
 import io.github.jadarma.aockt.core.Solution
 
 /**

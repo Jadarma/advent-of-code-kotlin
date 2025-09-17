@@ -26,6 +26,7 @@ internal data class AdventSpecConfig(
     }
 
     /** Return a copy of this config with all non-null overrides given applied. */
+    @Suppress("DataClassContainsFunctions")
     fun override(
         efficiencyBenchmark: Duration?,
         executionMode: ExecMode?,
