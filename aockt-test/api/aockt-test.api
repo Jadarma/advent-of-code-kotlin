@@ -25,11 +25,12 @@ public abstract class io/github/jadarma/aockt/test/AdventSpec : io/kotest/core/s
 	public final fun testExecutionMode ()Lio/kotest/engine/concurrency/TestExecutionMode;
 }
 
-public final class io/github/jadarma/aockt/test/AocKtExtension : io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/SpecExtension {
+public final class io/github/jadarma/aockt/test/AocKtExtension : io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/SpecExecutionOrderExtension, io/kotest/core/extensions/SpecExtension {
 	public synthetic fun <init> (JLio/github/jadarma/aockt/test/ExecMode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JLio/github/jadarma/aockt/test/ExecMode;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun formatter ()Lio/kotest/engine/names/DisplayNameFormatter;
 	public fun intercept (Lio/kotest/core/spec/Spec;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun sort (Ljava/util/List;)Ljava/util/List;
 }
 
 public final class io/github/jadarma/aockt/test/ExecMode : java/lang/Enum {

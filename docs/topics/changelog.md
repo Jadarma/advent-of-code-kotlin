@@ -2,13 +2,11 @@
 
 ## 0.3.0-SNAPSHOT
 
-**Breaking Changes:**
-- Minimum JDK is now 21.
-- Minimum Kotlin version is now `2.0`.
-- Minimum Kotest version is now `6.0`. Check the [release notes](https://kotest.io/docs/release6), and how to
-  [configure](project-extension.md) the extension.
+- New minimum requirements: JDK 21, Kotlin `2.0`, and Kotest `6.0`.
+  Check the [release notes](https://kotest.io/docs/release6), and how to [configure](project-extension.md) the extension.
 - Removed `formatAdventSpecNames` configuration property.
-  Formatting is automatically enabled when using the project extension.  
+  Formatting is automatically enabled when using the project extension.
+- Advent specs are guaranteed to be executed chronologically when the project extension is registered.
 
 ## 0.2.1
 

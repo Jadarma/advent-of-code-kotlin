@@ -21,18 +21,18 @@ It offers the following features:
     `Y2015D01: Not Quite Lisp (FP)`.
     All other specs and tests follow the normal Kotest formatting rules.
 
+- **Automatic Execution Ordering**
+
+    `AdventSpec`s will always execute in chronological order.
+    All other specs will run before them, in the order they were discovered.
+    Note that this overrides Kotest's own [spec ordering`](https://kotest.io/docs/framework/spec-ordering.html).
+
 ## Registering The Extension
 
-To register it, add it to your Kotest [project level config](https://kotest.io/docs/framework/project-config.html):
+To register it, add it to your Kotest [project level config](https://kotest.io/docs/framework/project-config.html), for
+example in `src/test/my/aoc/TestConfig.kt`:
 
 ```kotlin
-package my.aoc
-
-import io.github.jadarma.aockt.test.AocKtExtension
-import io.github.jadarma.aockt.test.ExecMode
-import io.kotest.core.config.AbstractProjectConfig
-import io.kotest.core.extensions.Extension
-
 object TestConfig : AbstractProjectConfig() {
     override val extensions = listOf<Extension>(
         AocKtExtension()
@@ -57,8 +57,6 @@ tasks.test {
     systemProperty("kotest.framework.config.fqn", "my.aoc.TestConfig")
 }
 ```
-
-
 
 ## Configuration Properties
 

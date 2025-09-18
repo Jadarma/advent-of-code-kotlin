@@ -1,6 +1,7 @@
 package io.github.jadarma.aockt.test.internal
 
 import io.github.jadarma.aockt.core.Solution
+import io.github.jadarma.aockt.test.AdventDay
 import io.github.jadarma.aockt.test.AdventPartScope
 import io.github.jadarma.aockt.test.AdventSpec
 import io.github.jadarma.aockt.test.AocKtExtension
@@ -16,12 +17,17 @@ import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.currentCoroutineContext
 import kotlin.reflect.KClass
+import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.jvmErasure
 import kotlin.reflect.typeOf
 import kotlin.time.Duration
 import kotlin.time.measureTimedValue
+
+/** Return the required-to-be-registered [AdventDay] annotation for this spec. */
+internal val KClass<out AdventSpec<*>>.adventDay: AdventDay
+    get() = findAnnotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this)
 
 /**
  * Construct and inject a solution instance for this [AdventSpec].

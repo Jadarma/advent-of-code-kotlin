@@ -5,14 +5,13 @@ import io.github.jadarma.aockt.test.internal.AdventDayPart
 import io.github.jadarma.aockt.test.internal.AdventDayPart.One
 import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
 import io.github.jadarma.aockt.test.internal.AocktDsl
-import io.github.jadarma.aockt.test.internal.MissingAdventDayAnnotationException
 import io.github.jadarma.aockt.test.internal.PuzzleTestData
 import io.github.jadarma.aockt.test.internal.TestData
+import io.github.jadarma.aockt.test.internal.adventDay
 import io.github.jadarma.aockt.test.internal.definePart
 import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.injectSolution
 import io.kotest.common.ExperimentalKotest
-import io.kotest.common.reflection.annotation
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.test.TestCaseOrder
@@ -64,7 +63,7 @@ public abstract class AdventSpec<T : Solution>(
     public val solution: Solution
 
     init {
-        val adventDay = this::class.annotation<AdventDay>() ?: throw MissingAdventDayAnnotationException(this::class)
+        val adventDay = this::class.adventDay
         solution = injectSolution()
         testData = TestData.inputFor(adventDay.id)
         body()

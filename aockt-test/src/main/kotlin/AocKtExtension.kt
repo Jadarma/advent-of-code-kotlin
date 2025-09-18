@@ -1,10 +1,13 @@
 package io.github.jadarma.aockt.test
 
 import io.github.jadarma.aockt.test.internal.AdventSpecConfig
-import io.github.jadarma.aockt.test.internal.AocktDisplayNameFormatter
+import io.github.jadarma.aockt.test.internal.AocKtDisplayNameFormatter
+import io.github.jadarma.aockt.test.internal.SpecOrderer
 import io.kotest.core.extensions.DisplayNameFormatterExtension
+import io.kotest.core.extensions.SpecExecutionOrderExtension
 import io.kotest.core.extensions.SpecExtension
 import io.kotest.core.spec.Spec
+import io.kotest.core.spec.SpecRef
 import io.kotest.engine.names.DisplayNameFormatter
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
@@ -38,16 +41,10 @@ import kotlin.time.Duration
 public class AocKtExtension(
     efficiencyBenchmark: Duration = AdventSpecConfig.Default.efficiencyBenchmark,
     executionMode: ExecMode = AdventSpecConfig.Default.executionMode,
-) : SpecExtension, DisplayNameFormatterExtension {
+) : SpecExtension, DisplayNameFormatterExtension, SpecExecutionOrderExtension {
 
     /** The project-level config that will apply to all [AdventSpec]s. */
     private val configuration: AdventSpecConfig = AdventSpecConfig(efficiencyBenchmark, executionMode)
-
-    /** The formatter to use for [AdventSpec] names. */
-    private val displayNameFormatter = AocktDisplayNameFormatter
-
-    /** Provide the custom formatter to the extension. */
-    override fun formatter(): DisplayNameFormatter = displayNameFormatter
 
     /**
      * Intercept the [spec] execution.
@@ -60,6 +57,12 @@ public class AocKtExtension(
             execute(spec)
         }
     }
+
+    /** Provide the custom formatter to the extension. */
+    override fun formatter(): DisplayNameFormatter = AocKtDisplayNameFormatter
+
+    /** Provide the custom execution order. */
+    override fun sort(specs: List<SpecRef>): List<SpecRef> = specs.sortedWith(SpecOrderer)
 }
 
 /** Configures which inputs the tests will run on. */
