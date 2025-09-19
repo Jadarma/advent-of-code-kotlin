@@ -1,16 +1,12 @@
 package io.github.jadarma.aockt.test
 
-import io.github.jadarma.aockt.test.internal.AdventSpecConfig
+import io.github.jadarma.aockt.test.internal.AdventProjectConfig
 import io.github.jadarma.aockt.test.internal.AocKtDisplayNameFormatter
 import io.github.jadarma.aockt.test.internal.SpecOrderer
 import io.kotest.core.extensions.DisplayNameFormatterExtension
 import io.kotest.core.extensions.SpecExecutionOrderExtension
-import io.kotest.core.extensions.SpecExtension
-import io.kotest.core.spec.Spec
 import io.kotest.core.spec.SpecRef
 import io.kotest.engine.names.DisplayNameFormatter
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.withContext
 import kotlin.time.Duration
 
 /**
@@ -39,24 +35,12 @@ import kotlin.time.Duration
  *   Default is `All`.
  */
 public class AocKtExtension(
-    efficiencyBenchmark: Duration = AdventSpecConfig.Default.efficiencyBenchmark,
-    executionMode: ExecMode = AdventSpecConfig.Default.executionMode,
-) : SpecExtension, DisplayNameFormatterExtension, SpecExecutionOrderExtension {
+    efficiencyBenchmark: Duration = AdventProjectConfig.Default.efficiencyBenchmark,
+    executionMode: ExecMode = AdventProjectConfig.Default.executionMode,
+) : DisplayNameFormatterExtension, SpecExecutionOrderExtension {
 
     /** The project-level config that will apply to all [AdventSpec]s. */
-    private val configuration: AdventSpecConfig = AdventSpecConfig(efficiencyBenchmark, executionMode)
-
-    /**
-     * Intercept the [spec] execution.
-     * If it is an [AdventSpec], add the project-level config to its coroutine context.
-     */
-    override suspend fun intercept(spec: Spec, execute: suspend (Spec) -> Unit) {
-        if (spec is AdventSpec<*>) {
-            withContext(currentCoroutineContext() + configuration) { execute(spec) }
-        } else {
-            execute(spec)
-        }
-    }
+    internal val configuration: AdventProjectConfig = AdventProjectConfig(efficiencyBenchmark, executionMode)
 
     /** Provide the custom formatter to the extension. */
     override fun formatter(): DisplayNameFormatter = AocKtDisplayNameFormatter

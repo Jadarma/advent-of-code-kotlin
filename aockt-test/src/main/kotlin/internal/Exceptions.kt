@@ -3,6 +3,8 @@ package io.github.jadarma.aockt.test.internal
 import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.AdventSpec
 import io.github.jadarma.aockt.test.AdventDay
+import io.github.jadarma.aockt.test.AdventRootScope
+import io.github.jadarma.aockt.test.AdventDebugScope
 import io.kotest.common.reflection.bestName
 import kotlin.reflect.KClass
 
@@ -29,10 +31,12 @@ internal class MissingNoArgConstructorException(kclass: KClass<out Solution>) : 
     message = "Class ${kclass.bestName()} is a Solution but it is missing a no-arg constructor.",
 )
 
-/**
- * An [AdventSpec] declared the same part scope twice.
- * The [AdventSpec.partOne] and [AdventSpec.partTwo] should be used at most once per spec.
- */
-internal class DuplicatePartDefinitionException(spec: KClass<*>, part: AdventDayPart) : AocktException(
-    message = "In ${spec.bestName()}, part$part has been declared twice.",
+/** An [AdventRootScope] declared the same function twice. */
+internal class DuplicateDefinitionException(spec: KClass<*>, definition: String) : AocktException(
+    message = "In ${spec.bestName()}, $definition has been declared twice.",
+)
+
+/** An [AdventDebugScope] requested the use of the puzzle input but the input is not available. */
+internal class MissingInputException : AocktException(
+    message = "Input requested but not provided.",
 )

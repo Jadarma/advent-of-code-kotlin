@@ -5,7 +5,8 @@ import io.github.jadarma.aockt.test.AdventPartScope
 /** A simple part scope implementation that builds a list of example inputs. */
 internal class AdventPartScopeImpl : AdventPartScope {
 
-    private val examples =  mutableListOf<Pair<PuzzleInput, PuzzleAnswer>>()
+    private val examples = mutableListOf<Pair<PuzzleInput, PuzzleAnswer>>()
+    val testCases: List<Pair<PuzzleInput, PuzzleAnswer>> get() = examples
 
     override infix fun String.shouldOutput(expected: Any) {
         examples.add(PuzzleInput(this) to PuzzleAnswer(expected.toString()))
@@ -14,8 +15,4 @@ internal class AdventPartScopeImpl : AdventPartScope {
     override infix fun Iterable<String>.shouldAllOutput(expected: Any) {
         forEach { it shouldOutput expected }
     }
-
-    /** Applies the [block] function for each registered example. */
-    inline fun forEachIndexed(block: (Int, PuzzleInput, PuzzleAnswer) -> Unit): Unit =
-        examples.forEachIndexed { index, example -> block(index, example.first, example.second) }
 }

@@ -53,6 +53,7 @@ complexity:
     active: true
   NestedScopeFunctions:
     active: true
+    allowedDepth: 2
   ReplaceSafeCallChainWithRun:
     active: true
   StringLiteralDuplication:
@@ -437,6 +438,7 @@ style:
     active: true
   UnnecessaryParentheses:
     active: true
+    allowForUnclearPrecedence: true
   UnnecessaryReversed:
     active: true
   UnusedImport:

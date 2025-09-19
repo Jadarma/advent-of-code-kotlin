@@ -7,6 +7,8 @@
 - Removed `formatAdventSpecNames` configuration property.
   Formatting is automatically enabled when using the project extension.
 - Advent specs are guaranteed to be executed chronologically when the project extension is registered.
+- Spec definition now uses a dedicated DSL.
+- Isolated debug runs can be configured from the DSL.
 
 ## 0.2.1
 

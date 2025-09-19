@@ -2,20 +2,18 @@ package io.github.jadarma.aockt.test.internal
 
 import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventPartScope
 import io.github.jadarma.aockt.test.AdventSpec
 import io.github.jadarma.aockt.test.AocKtExtension
-import io.github.jadarma.aockt.test.ExecMode
 import io.github.jadarma.aockt.test.Expensive
 import io.kotest.assertions.AssertionErrorBuilder
 import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.assertions.throwables.shouldNotThrowAnyUnit
 import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
 import io.kotest.common.reflection.ReflectionInstantiations.newInstanceNoArgConstructorOrObjectInstance
 import io.kotest.core.spec.style.scopes.FunSpecContainerScope
 import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.currentCoroutineContext
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.isSubtypeOf
@@ -47,87 +45,49 @@ internal fun AdventSpec<*>.injectSolution(): Solution = this::class
     }
 
 /**
- * Retrieves the [AdventSpecConfig] for this spec from the test runner coroutine.
- * If an [AocKtExtension] has been registered, use the user-provided configuration.
- * Otherwise, returns the sane defaults.
- * Additionally, any non-null config parameters passed will be overridden in the final result.
- */
-@Suppress("UnusedReceiverParameter")
-internal suspend fun AdventSpec<*>.configuration(
-    efficiencyBenchmark: Duration?,
-    executionMode: ExecMode?,
-): AdventSpecConfig =
-    currentCoroutineContext()[AdventSpecConfig.Key]
-        .run { this ?: AdventSpecConfig.Default }
-        .override(efficiencyBenchmark, executionMode)
-
-/**
- * Defines the rootContext to test the implementation of one [part] of a [Solution].
+ * Register a root context to test the implementation of one part of a [Solution].
  *
- * Will create a context with two tests:
- *  - Verifies the output, given the input file has been added to the test resources.
- *    If the solution is known as well, also validates the answer matches it.
- *  - Verifies the given examples in an [AdventPartScope], useful for a TDD approach when
- *    implementing the solution for the first time.
- *
- * @param part                The part selector.
- * @param enabled             If set to false, part one will not be tested.
- * @param expensive           This part is known to produce answers in a longer timespan.
- * @param executionMode       Specifies which tests defined for this part will be enabled.
- * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
- * @param examples            Test the solution against example inputs defined in this [AdventPartScope].
+ * Will create two sub-contexts:
+ *  - The examples, as defined by [registerExamples].
+ *  - The solution, as defined by [registerInput].
  */
-@Suppress("LongParameterList")
-internal fun AdventSpec<*>.definePart(
-    part: AdventDayPart,
-    enabled: Boolean,
-    expensive: Boolean,
-    executionMode: ExecMode?,
-    efficiencyBenchmark: Duration?,
-    examples: (AdventPartScope.() -> Unit)?,
-) {
-    if (!definedParts.add(part)) throw DuplicatePartDefinitionException(this::class, part)
-
+internal fun AdventSpec<*>.registerTest(config: AdventTestConfig): Unit = with(config) {
     context("Part $part").config(
         enabled = enabled,
         tags = if (expensive) setOf(Expensive) else emptySet(),
     ) {
-        val partFunction = solution.partFunction(part)
-        val config = configuration(efficiencyBenchmark, executionMode)
-
-        if (examples != null) {
-            defineExamples(config, partFunction, examples)
-        }
-
-        if (testData.input != null) {
-            defineInput(
-                config = config,
-                expensive = expensive,
-                partFunction = partFunction,
-                input = testData.input,
-                correctAnswer = testData.solutionToPart(part),
-            )
-        }
+        val projectConfig = extensions
+            .filterIsInstance<AocKtExtension>()
+            .firstOrNull()
+            ?.configuration
+            ?: AdventProjectConfig.Default
+        registerExamples(config.forExamples(projectConfig))
+        registerInput(config.forInput(projectConfig, testData))
     }
 }
 
 /**
- * Define an example context, generating a separate test for each example given.
- * Examples are defined with the [AdventPartScope] DSL.
- *
- * @param config       The user's preferences for this test run.
- * @param partFunction The user's implementation of the solution.
- * @param examples     A configuration block defining the example values.
+ * Register a focused root test to help debugging a [Solution].
+ * All other tests will be ignored.
  */
 @OptIn(ExperimentalKotest::class)
+internal fun AdventSpec<*>.registerDebug(config: AdventDebugConfig): Unit = with(config) {
+    test(name = "f:Debug") {
+        withClue("Debug run completed exceptionally.") {
+            shouldNotThrowAnyUnit {
+                AdventDebugScopeImpl(solution, testData.input).run(test)
+            }
+        }
+    }
+}
+
+/** Define an example context, generating a separate test for each example given. */
+@OptIn(ExperimentalKotest::class)
 @Suppress("SuspendFunWithCoroutineScopeReceiver")
-private suspend fun FunSpecContainerScope.defineExamples(
-    config: AdventSpecConfig,
-    partFunction: PartFunction,
-    examples: (AdventPartScope.() -> Unit),
-) {
-    context(name = "Validates the examples").config(enabled = config.executionMode != ExecMode.SkipExamples) {
-        AdventPartScopeImpl().apply(examples).forEachIndexed { index, input, expected ->
+private suspend fun FunSpecContainerScope.registerExamples(config: AdventTestConfig.ForExamples): Unit = with(config) {
+    if (examples.isEmpty()) return
+    context(name = "Validates the examples").config(enabled = enabled) {
+        examples.forEachIndexed { index, (input, expected) ->
             test("Example #${index + 1}") {
                 withClue("Expected answer '$expected' for input: ${input.preview()}") {
                     val answer = shouldNotThrowAny { partFunction(input) }
@@ -140,28 +100,18 @@ private suspend fun FunSpecContainerScope.defineExamples(
 
 /**
  * Define a context to test against the user's own input.
- * Generates up to three nested tests:
- * - The solution output, validated against the [correctAnswer] if known.
- * - Unverified solution, always ignored, only shows when the solution is computed but the [correctAnswer] is unknown.
+ * Sets up the following tests:
+ * - The solution output is validated against the correct answer if known.
+ * - Unverified solution, always ignored, only shows when the solution is computed but the correct answer is unknown.
  * - Efficiency benchmark, ignored if either the solution was not computed, the solution is unverified, or is marked as
- *   [expensive].
- *
- * @param config        The user's preferences for this test run.
- * @param expensive     Whether this solution is known to be inefficient.
- * @param partFunction  The user's implementation of the solution.
- * @param input         The user's custom puzzle input.
- * @param correctAnswer The actual puzzle solution, if known.
+ *   expensive.
  */
 @OptIn(ExperimentalKotest::class)
-@Suppress("SuspendFunWithCoroutineScopeReceiver")
-private suspend fun FunSpecContainerScope.defineInput(
-    config: AdventSpecConfig,
-    expensive: Boolean,
-    partFunction: PartFunction,
-    input: PuzzleInput,
-    correctAnswer: PuzzleAnswer?,
-) {
-    context("The solution").config(enabled = config.executionMode != ExecMode.ExamplesOnly) {
+@Suppress("SuspendFunWithCoroutineScopeReceiver", "CognitiveComplexMethod")
+private suspend fun FunSpecContainerScope.registerInput(config: AdventTestConfig.ForInput): Unit = with(config) {
+    if (input == null) return
+
+    context("The solution").config(enabled = enabled) {
         val isSolutionKnown = correctAnswer != null
         var answer: PuzzleAnswer? = null
         var duration: Duration? = null

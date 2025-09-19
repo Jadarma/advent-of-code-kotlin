@@ -5,9 +5,27 @@ public abstract interface annotation class io/github/jadarma/aockt/test/AdventDa
 	public abstract fun year ()I
 }
 
+public abstract interface class io/github/jadarma/aockt/test/AdventDebugScope {
+	public abstract fun getInput ()Ljava/lang/String;
+	public abstract fun getSolution ()Lio/github/jadarma/aockt/core/Solution;
+}
+
 public abstract interface class io/github/jadarma/aockt/test/AdventPartScope {
 	public abstract fun shouldAllOutput (Ljava/lang/Iterable;Ljava/lang/Object;)V
 	public abstract fun shouldOutput (Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public abstract interface class io/github/jadarma/aockt/test/AdventRootScope {
+	public abstract fun debug (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun partOne-BZiP2OM (ZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;ZLkotlin/jvm/functions/Function1;)V
+	public static synthetic fun partOne-BZiP2OM$default (Lio/github/jadarma/aockt/test/AdventRootScope;ZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public abstract fun partTwo-BZiP2OM (ZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;ZLkotlin/jvm/functions/Function1;)V
+	public static synthetic fun partTwo-BZiP2OM$default (Lio/github/jadarma/aockt/test/AdventRootScope;ZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class io/github/jadarma/aockt/test/AdventRootScope$DefaultImpls {
+	public static synthetic fun partOne-BZiP2OM$default (Lio/github/jadarma/aockt/test/AdventRootScope;ZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun partTwo-BZiP2OM$default (Lio/github/jadarma/aockt/test/AdventRootScope;ZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
 public abstract class io/github/jadarma/aockt/test/AdventSpec : io/kotest/core/spec/style/FunSpec {
@@ -15,21 +33,15 @@ public abstract class io/github/jadarma/aockt/test/AdventSpec : io/kotest/core/s
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun coroutineDispatcherFactory ()Lio/kotest/engine/coroutines/CoroutineDispatcherFactory;
-	public final fun getSolution ()Lio/github/jadarma/aockt/core/Solution;
 	public final fun isolationMode ()Lio/kotest/core/spec/IsolationMode;
-	public final fun partOne-51bEbmg (ZZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun partOne-51bEbmg$default (Lio/github/jadarma/aockt/test/AdventSpec;ZZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public final fun partTwo-51bEbmg (ZZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun partTwo-51bEbmg$default (Lio/github/jadarma/aockt/test/AdventSpec;ZZLio/github/jadarma/aockt/test/ExecMode;Lkotlin/time/Duration;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun testCaseOrder ()Lio/kotest/core/test/TestCaseOrder;
 	public final fun testExecutionMode ()Lio/kotest/engine/concurrency/TestExecutionMode;
 }
 
-public final class io/github/jadarma/aockt/test/AocKtExtension : io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/SpecExecutionOrderExtension, io/kotest/core/extensions/SpecExtension {
+public final class io/github/jadarma/aockt/test/AocKtExtension : io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/SpecExecutionOrderExtension {
 	public synthetic fun <init> (JLio/github/jadarma/aockt/test/ExecMode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JLio/github/jadarma/aockt/test/ExecMode;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun formatter ()Lio/kotest/engine/names/DisplayNameFormatter;
-	public fun intercept (Lio/kotest/core/spec/Spec;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sort (Ljava/util/List;)Ljava/util/List;
 }
 

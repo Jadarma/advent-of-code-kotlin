@@ -1,16 +1,14 @@
 package io.github.jadarma.aockt.test
 
 import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.internal.AdventDayPart
-import io.github.jadarma.aockt.test.internal.AdventDayPart.One
-import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
-import io.github.jadarma.aockt.test.internal.AocktDsl
+import io.github.jadarma.aockt.test.internal.AdventRootScopeImpl
 import io.github.jadarma.aockt.test.internal.PuzzleTestData
 import io.github.jadarma.aockt.test.internal.TestData
 import io.github.jadarma.aockt.test.internal.adventDay
-import io.github.jadarma.aockt.test.internal.definePart
 import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.injectSolution
+import io.github.jadarma.aockt.test.internal.registerDebug
+import io.github.jadarma.aockt.test.internal.registerTest
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
@@ -18,7 +16,6 @@ import io.kotest.core.test.TestCaseOrder
 import io.kotest.engine.concurrency.TestExecutionMode
 import io.kotest.engine.coroutines.CoroutineDispatcherFactory
 import io.kotest.engine.coroutines.ThreadPerSpecCoroutineContextFactory
-import kotlin.time.Duration
 
 /**
  * A [FunSpec] specialized for testing Advent of Code puzzle [Solution]s.
@@ -50,23 +47,19 @@ import kotlin.time.Duration
  */
 @Suppress("AbstractClassCanBeConcreteClass")
 @OptIn(ExperimentalKotest::class)
-@AocktDsl
 public abstract class AdventSpec<T : Solution>(
-    body: AdventSpec<T>.() -> Unit = {},
+    body: AdventRootScope.() -> Unit = {},
 ) : FunSpec() {
 
-    internal val testData: PuzzleTestData
-    internal val definedParts: MutableSet<AdventDayPart> = mutableSetOf()
-
-    /** The instance of the solution to be tested. */
-    @Suppress("MemberVisibilityCanBePrivate")
-    public val solution: Solution
+    internal val testData: PuzzleTestData = TestData.inputFor(this::class.adventDay.id)
 
     init {
-        val adventDay = this::class.adventDay
-        solution = injectSolution()
-        testData = TestData.inputFor(adventDay.id)
-        body()
+        AdventRootScopeImpl(owner = this::class, solution = injectSolution()).apply {
+            body()
+            partOne?.let(::registerTest)
+            partTwo?.let(::registerTest)
+            debug?.let(::registerDebug)
+        }
     }
 
     // Enforce some configuration to ensure that all tests within one AdventSpec will be executed sequentially on a
@@ -75,52 +68,4 @@ public abstract class AdventSpec<T : Solution>(
     final override fun isolationMode(): IsolationMode = IsolationMode.SingleInstance
     final override fun testCaseOrder(): TestCaseOrder = TestCaseOrder.Sequential
     final override fun testExecutionMode(): TestExecutionMode = TestExecutionMode.Sequential
-
-    /**
-     * Provides a context to test the implementation a [Solution.partOne] function.
-     * Should be called at most once per [AdventSpec].
-     *
-     * Will create a context with two tests:
-     *  - Verifies the output, given the input file has been added to the test resources.
-     *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventPartScope], useful for a TDD approach when
-     *    implementing the solution for the first time.
-     *
-     * @param enabled             If set to false, part one will not be tested.
-     * @param expensive           This part is known to produce answers in a longer timespan.
-     * @param executionMode       Specifies which tests defined for this part will be enabled.
-     * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
-     * @param test                Test the solution against example inputs defined in this [AdventPartScope].
-     */
-    public fun partOne(
-        enabled: Boolean = true,
-        expensive: Boolean = false,
-        executionMode: ExecMode? = null,
-        efficiencyBenchmark: Duration? = null,
-        test: (AdventPartScope.() -> Unit)? = null,
-    ): Unit = definePart(One, enabled, expensive, executionMode, efficiencyBenchmark, test)
-
-    /**
-     * Provides a context to test the implementation a [Solution.partTwo] function.
-     * Should be called at most once per [AdventSpec].
-     *
-     * Will create a context with two tests:
-     *  - Verifies the output, given the input file has been added to the test resources.
-     *    If the solution is known as well, also validates the answer matches it.
-     *  - Verifies the given examples in an [AdventPartScope], useful for a TDD approach when
-     *    implementing the solution for the first time.
-     *
-     * @param enabled             If set to false, part one will not be tested.
-     * @param expensive           This part is known to produce answers in a longer timespan.
-     * @param executionMode       Specifies which tests defined for this part will be enabled.
-     * @param efficiencyBenchmark The maximum amount of time a solution can take to finish to be considered efficient.
-     * @param test                Test the solution against example inputs defined in this [AdventPartScope].
-     */
-    public fun partTwo(
-        enabled: Boolean = true,
-        expensive: Boolean = false,
-        executionMode: ExecMode? = null,
-        efficiencyBenchmark: Duration? = null,
-        test: (AdventPartScope.() -> Unit)? = null,
-    ): Unit = definePart(Two, enabled, expensive, executionMode, efficiencyBenchmark, test)
 }
