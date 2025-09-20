@@ -13,6 +13,10 @@ complexity:
   StringLiteralDuplication:
     active: false
 
+potential-bugs:
+  UnnamedParameterUse:
+    active: false
+
 style:
   MagicNumber:
     active: false

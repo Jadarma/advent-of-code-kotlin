@@ -6,27 +6,18 @@ import io.github.jadarma.aockt.test.AdventDay
  * Identifies an Advent of Code problem.
  *
  * @property year The year this problem appeared in.
- * @property day The day associated with this problem.
+ * @property day  The day associated with this problem.
  */
-internal data class AdventDayID(
-    val year: Int,
-    val day: Int,
-) : Comparable<AdventDayID> {
+@Suppress("MagicNumber")
+internal data class AdventDayID(val year: Int, val day: Int) : Comparable<AdventDayID> {
 
     init {
-        require(year in VALID_YEAR_RANGE) { "Invalid year: '$year'." }
-        require(day in VALID_DAY_RANGE) { "Invalid day: '$day'. " }
+        require(year in 2015..9999) { "Invalid year: '$year'." }
+        require(day in 1..25) { "Invalid day: '$day'. " }
     }
 
     override fun toString(): String = "Y${year}D${day.toString().padStart(2, '0')}"
-
-    @Suppress("MagicNumber", "UnnamedParameterUse")
-    override fun compareTo(other: AdventDayID): Int = compareValuesBy(this, other) { year * 100 + day }
-
-    private companion object {
-        val VALID_DAY_RANGE = 1 .. 25
-        val VALID_YEAR_RANGE = 2015 .. 9999
-    }
+    override fun compareTo(other: AdventDayID): Int = compareValuesBy(a = this, b = other) { it.year * 100 + it.day }
 }
 
 /** The internal typesafe [AdventDayID] for this [AdventDay]. */
