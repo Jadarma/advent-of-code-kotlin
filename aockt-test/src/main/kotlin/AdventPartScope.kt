@@ -1,9 +1,9 @@
 package io.github.jadarma.aockt.test
 
-import io.github.jadarma.aockt.test.internal.AocktDsl
+import io.github.jadarma.aockt.test.internal.AocKtDsl
 
 /** A DSL scope for defining example assertions for puzzle parts. */
-@AocktDsl
+@AocKtDsl
 public interface AdventPartScope {
 
     /**

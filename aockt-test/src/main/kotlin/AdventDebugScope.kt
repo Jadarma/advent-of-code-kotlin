@@ -1,10 +1,10 @@
 package io.github.jadarma.aockt.test
 
 import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.internal.AocktDsl
+import io.github.jadarma.aockt.test.internal.AocKtDsl
 
 /** A DSL scope for defining an isolated run for debugging. */
-@AocktDsl
+@AocKtDsl
 public interface AdventDebugScope {
 
     /** The instance of the solution being tested. */

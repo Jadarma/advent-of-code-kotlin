@@ -9,16 +9,16 @@ import io.kotest.common.reflection.bestName
 import kotlin.reflect.KClass
 
 /** Base [Exception] type for all exceptions related to AocKt. */
-internal sealed class AocktException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
+internal sealed class AocKtException(message: String? = null, cause: Throwable? = null) : Exception(message, cause)
 
 /** A general exception thrown upon a misconfiguration event. */
-internal class ConfigurationException(message: String? = null) : AocktException(message = message)
+internal class ConfigurationException(message: String? = null) : AocKtException(message = message)
 
 /**
  * An [AdventSpec] was declared without an [AdventDay] annotation.
  * It is required in order to determine test input.
  */
-internal class MissingAdventDayAnnotationException(kclass: KClass<out AdventSpec<*>>) : AocktException(
+internal class MissingAdventDayAnnotationException(kclass: KClass<out AdventSpec<*>>) : AocKtException(
     message = "Class ${kclass.bestName()} is an AdventSpec but is missing the AdventDay annotation.",
 )
 
@@ -27,16 +27,16 @@ internal class MissingAdventDayAnnotationException(kclass: KClass<out AdventSpec
  * which is required since [Solution]s should not be stateful.
  * Add a no-arg constructor to it or declare it as an object.
  */
-internal class MissingNoArgConstructorException(kclass: KClass<out Solution>) : AocktException(
+internal class MissingNoArgConstructorException(kclass: KClass<out Solution>) : AocKtException(
     message = "Class ${kclass.bestName()} is a Solution but it is missing a no-arg constructor.",
 )
 
 /** An [AdventRootScope] declared the same function twice. */
-internal class DuplicateDefinitionException(spec: KClass<*>, definition: String) : AocktException(
+internal class DuplicateDefinitionException(spec: KClass<*>, definition: String) : AocKtException(
     message = "In ${spec.bestName()}, $definition has been declared twice.",
 )
 
 /** An [AdventDebugScope] requested the use of the puzzle input but the input is not available. */
-internal class MissingInputException : AocktException(
+internal class MissingInputException : AocKtException(
     message = "Input requested but not provided.",
 )
