@@ -4,6 +4,8 @@ import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.AdventDebugScope
 import io.github.jadarma.aockt.test.AdventSpec
 import io.github.jadarma.aockt.test.ExecMode
+import kotlin.coroutines.AbstractCoroutineContextElement
+import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -17,14 +19,14 @@ import kotlin.time.Duration.Companion.seconds
 internal data class AdventProjectConfig(
     val efficiencyBenchmark: Duration,
     val executionMode: ExecMode,
-) {
+) : AbstractCoroutineContextElement(Key) {
     init {
         if (efficiencyBenchmark.isPositive().not()) {
             throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
         }
     }
 
-    companion object {
+    companion object Key : CoroutineContext.Key<AdventProjectConfig>{
         /** Sane defaults. */
         val Default: AdventProjectConfig = AdventProjectConfig(
             efficiencyBenchmark = 15.seconds,

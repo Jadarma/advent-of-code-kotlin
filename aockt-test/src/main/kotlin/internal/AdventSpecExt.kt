@@ -3,7 +3,6 @@ package io.github.jadarma.aockt.test.internal
 import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.AdventDay
 import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.AocKtExtension
 import io.github.jadarma.aockt.test.Expensive
 import io.kotest.assertions.AssertionErrorBuilder
 import io.kotest.assertions.throwables.shouldNotThrowAny
@@ -14,6 +13,7 @@ import io.kotest.common.reflection.ReflectionInstantiations.newInstanceNoArgCons
 import io.kotest.core.spec.style.scopes.FunSpecContainerScope
 import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.currentCoroutineContext
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.isSubtypeOf
@@ -56,11 +56,7 @@ internal fun AdventSpec<*>.registerTest(config: AdventTestConfig): Unit = with(c
         enabled = enabled,
         tags = if (expensive) setOf(Expensive) else emptySet(),
     ) {
-        val projectConfig = extensions
-            .filterIsInstance<AocKtExtension>()
-            .firstOrNull()
-            ?.configuration
-            ?: AdventProjectConfig.Default
+        val projectConfig = currentCoroutineContext()[AdventProjectConfig.Key] ?: AdventProjectConfig.Default
         registerExamples(config.forExamples(projectConfig))
         registerInput(config.forInput(projectConfig, testData))
     }

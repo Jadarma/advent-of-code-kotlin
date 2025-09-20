@@ -5,8 +5,12 @@ import io.github.jadarma.aockt.test.internal.AocKtDisplayNameFormatter
 import io.github.jadarma.aockt.test.internal.SpecOrderer
 import io.kotest.core.extensions.DisplayNameFormatterExtension
 import io.kotest.core.extensions.SpecExecutionOrderExtension
+import io.kotest.core.extensions.SpecExtension
+import io.kotest.core.spec.Spec
 import io.kotest.core.spec.SpecRef
 import io.kotest.engine.names.DisplayNameFormatter
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.withContext
 import kotlin.time.Duration
 
 /**
@@ -37,7 +41,7 @@ import kotlin.time.Duration
 public class AocKtExtension(
     efficiencyBenchmark: Duration = AdventProjectConfig.Default.efficiencyBenchmark,
     executionMode: ExecMode = AdventProjectConfig.Default.executionMode,
-) : DisplayNameFormatterExtension, SpecExecutionOrderExtension {
+) : DisplayNameFormatterExtension, SpecExecutionOrderExtension, SpecExtension {
 
     /** The project-level config that will apply to all [AdventSpec]s. */
     internal val configuration: AdventProjectConfig = AdventProjectConfig(efficiencyBenchmark, executionMode)
@@ -47,6 +51,18 @@ public class AocKtExtension(
 
     /** Provide the custom execution order. */
     override fun sort(specs: List<SpecRef>): List<SpecRef> = specs.sortedWith(SpecOrderer)
+
+    /** Provide project-level config to scopes of all advent specs. */
+    override suspend fun intercept(
+        spec: Spec,
+        execute: suspend (Spec) -> Unit
+    ) {
+        if (spec is AdventSpec<*>) {
+            withContext(currentCoroutineContext() + configuration) { execute(spec) }
+        } else {
+            execute(spec)
+        }
+    }
 }
 
 /** Configures which inputs the tests will run on. */
