@@ -6,7 +6,6 @@ import io.github.jadarma.aockt.test.internal.PuzzleTestData
 import io.github.jadarma.aockt.test.internal.TestData
 import io.github.jadarma.aockt.test.internal.adventDay
 import io.github.jadarma.aockt.test.internal.id
-import io.github.jadarma.aockt.test.internal.injectSolution
 import io.github.jadarma.aockt.test.internal.registerDebug
 import io.github.jadarma.aockt.test.internal.registerTest
 import io.kotest.common.ExperimentalKotest
@@ -54,7 +53,7 @@ public abstract class AdventSpec<T : Solution>(
     internal val testData: PuzzleTestData = TestData.inputFor(this::class.adventDay.id)
 
     init {
-        AdventRootScopeImpl(owner = this::class, solution = injectSolution()).apply {
+        AdventRootScopeImpl(owner = this::class).apply {
             body()
             partOne?.let(::registerTest)
             partTwo?.let(::registerTest)

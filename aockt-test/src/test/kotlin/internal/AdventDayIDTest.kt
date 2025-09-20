@@ -1,6 +1,8 @@
 package io.github.jadarma.aockt.test.internal
 
+import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.AdventDay
+import io.github.jadarma.aockt.test.AdventSpec
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
@@ -54,4 +56,13 @@ class AdventDayIDTest : FunSpec({
         val annotation = AdventDay(2015, 25)
         annotation.id shouldBe AdventDayID(2015, 25)
     }
+
+    @Suppress("MaxLineLength")
+    test("Must be present on AdventSpecs") {
+        shouldThrowExactly<MissingAdventDayAnnotationException> { UnannotatedSpec::class.adventDay }
+            .message
+            .shouldBe("Class io.github.jadarma.aockt.test.internal.UnannotatedSpec is an AdventSpec but is missing the AdventDay annotation.")
+    }
 })
+
+private class UnannotatedSpec : AdventSpec<Solution>()

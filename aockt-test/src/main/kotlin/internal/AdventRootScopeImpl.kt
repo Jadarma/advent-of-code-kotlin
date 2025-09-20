@@ -11,8 +11,9 @@ import kotlin.time.Duration
 
 internal class AdventRootScopeImpl(
     private val owner: KClass<out AdventSpec<*>>,
-    private val solution: Solution,
 ) : AdventRootScope {
+
+    private val solution: Solution = owner.injectSolution()
 
     var partOne: AdventTestConfig? = null
     var partTwo: AdventTestConfig? = null
@@ -44,7 +45,7 @@ internal class AdventRootScopeImpl(
         expensive: Boolean,
         examples: AdventPartScope.() -> Unit
     ) {
-        if (partTwo != null) throw DuplicateDefinitionException(owner::class, "partTwo")
+        if (partTwo != null) throw DuplicateDefinitionException(owner, "partTwo")
         partTwo = AdventTestConfig(
             part = AdventDayPart.Two,
             partFunction = solution.partFunction(AdventDayPart.Two),
@@ -57,7 +58,7 @@ internal class AdventRootScopeImpl(
     }
 
     override fun debug(test: AdventDebugScope.() -> Unit) {
-        if (debug != null) throw DuplicateDefinitionException(owner::class, "debug")
+        if (debug != null) throw DuplicateDefinitionException(owner, "debug")
         debug = AdventDebugConfig(solution, test)
     }
 }

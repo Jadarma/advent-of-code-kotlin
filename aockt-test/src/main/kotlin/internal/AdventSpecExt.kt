@@ -34,7 +34,7 @@ internal val KClass<out AdventSpec<*>>.adventDay: AdventDay
  * when declaring specs.
  */
 @Suppress("UNCHECKED_CAST", "UnsafeCallOnNullableType")
-internal fun AdventSpec<*>.injectSolution(): Solution = this::class
+internal fun KClass<out AdventSpec<*>>.injectSolution(): Solution = this
     .starProjectedType.jvmErasure.supertypes
     .first { it.isSubtypeOf(typeOf<AdventSpec<*>>()) }
     .arguments.first().type!!.jvmErasure
