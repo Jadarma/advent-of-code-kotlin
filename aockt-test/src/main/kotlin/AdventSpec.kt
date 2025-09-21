@@ -2,10 +2,6 @@ package io.github.jadarma.aockt.test
 
 import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.internal.AdventRootScopeImpl
-import io.github.jadarma.aockt.test.internal.PuzzleTestData
-import io.github.jadarma.aockt.test.internal.TestData
-import io.github.jadarma.aockt.test.internal.adventDay
-import io.github.jadarma.aockt.test.internal.id
 import io.github.jadarma.aockt.test.internal.registerDebug
 import io.github.jadarma.aockt.test.internal.registerTest
 import io.kotest.common.ExperimentalKotest
@@ -49,8 +45,6 @@ import io.kotest.engine.coroutines.ThreadPerSpecCoroutineContextFactory
 public abstract class AdventSpec<T : Solution>(
     body: AdventRootScope.() -> Unit = {},
 ) : FunSpec() {
-
-    internal val testData: PuzzleTestData = TestData.inputFor(this::class.adventDay.id)
 
     init {
         AdventRootScopeImpl(owner = this::class).apply {

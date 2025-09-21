@@ -1,6 +1,7 @@
 package io.github.jadarma.aockt.test.internal
 
 import io.github.jadarma.aockt.core.Solution
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Reads [PuzzleTestData]s from classpath resources.
@@ -21,16 +22,15 @@ import io.github.jadarma.aockt.core.Solution
  */
 internal object TestData {
 
+    private val data: ConcurrentHashMap<AdventDayID, PuzzleTestData> = ConcurrentHashMap()
+
     /** Returns the available [PuzzleTestData] for a given [AdventDayID] by reading it from the resources. */
-    fun inputFor(adventDayID: AdventDayID): PuzzleTestData {
+    fun inputFor(adventDayID: AdventDayID): PuzzleTestData = data.computeIfAbsent(adventDayID) {
         val path = with(adventDayID) { "/aockt/y$year/d${day.toString().padStart(2, '0')}" }
-        return PuzzleTestData(
+        PuzzleTestData(
             input = readResourceAsTextOrNull("$path/input.txt").toPuzzleInput(),
             solutionPartOne = readResourceAsTextOrNull("$path/solution_part1.txt").toPuzzleAnswer(),
-            solutionPartTwo = when(adventDayID.day) {
-                25 -> PuzzleAnswer.NO_SOLUTION
-                else -> readResourceAsTextOrNull("$path/solution_part2.txt").toPuzzleAnswer()
-            },
+            solutionPartTwo = readResourceAsTextOrNull("$path/solution_part2.txt").toPuzzleAnswer(),
         )
     }
 
@@ -41,13 +41,13 @@ internal object TestData {
             ?.use { String(it.readAllBytes()).trimEnd() }
 
     /** Wraps a [String] into a [PuzzleAnswer] type. */
-    private fun String?.toPuzzleAnswer(): PuzzleAnswer? = when(this) {
+    private fun String?.toPuzzleAnswer(): PuzzleAnswer? = when (this) {
         null -> null
         else -> PuzzleAnswer(this)
     }
 
     /** Wraps a [String] into a [PuzzleInput] type. */
-    private fun String?.toPuzzleInput(): PuzzleInput? = when(this) {
+    private fun String?.toPuzzleInput(): PuzzleInput? = when (this) {
         null -> null
         else -> PuzzleInput(this)
     }
@@ -78,9 +78,9 @@ internal value class PuzzleInput(private val input: String) {
 
     /** Formats the input in a printable friendly manner. */
     @Suppress("MagicNumber")
-    fun preview(): String = when(input.count { it == '\n' }) {
+    fun preview(): String = when (input.count { it == '\n' }) {
         0 -> input
-        in 1 .. 5 -> "\n$input\n"
+        in 1..5 -> "\n$input\n"
         else -> buildString {
             val lines = input.lines()
             appendLine()
@@ -95,9 +95,4 @@ internal value class PuzzleInput(private val input: String) {
 @JvmInline
 internal value class PuzzleAnswer(private val answer: String) {
     override fun toString() = answer
-
-    companion object {
-        /** In the case of some days, there is no part two requirement. */
-        val NO_SOLUTION = PuzzleAnswer("=== No Solution ===")
-    }
 }

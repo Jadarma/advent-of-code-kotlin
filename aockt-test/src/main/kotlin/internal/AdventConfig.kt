@@ -20,6 +20,7 @@ internal data class AdventProjectConfig(
     val efficiencyBenchmark: Duration,
     val executionMode: ExecMode,
 ) : AbstractCoroutineContextElement(Key) {
+
     init {
         if (efficiencyBenchmark.isPositive().not()) {
             throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
@@ -37,6 +38,7 @@ internal data class AdventProjectConfig(
 
 @Suppress("BooleanPropertyNaming")
 internal data class AdventTestConfig(
+    val id: AdventDayID,
     val part: AdventDayPart,
     val partFunction: PartFunction,
     val enabled: Boolean,
@@ -53,33 +55,34 @@ internal data class AdventTestConfig(
     )
 
     data class ForInput(
+        val id: AdventDayID,
+        val part: AdventDayPart,
         val enabled: Boolean,
         val partFunction: PartFunction,
         val expensive: Boolean,
         val efficiencyBenchmark: Duration,
-        val input: PuzzleInput?,
-        val correctAnswer: PuzzleAnswer?,
     )
 }
 
 internal data class AdventDebugConfig(
+    val id: AdventDayID,
     val solution: Solution,
     val test: AdventDebugScope.() -> Unit,
 )
 
-internal fun AdventTestConfig.forExamples(defaults: AdventProjectConfig) =
+internal fun AdventTestConfig.forExamples(defaults: AdventProjectConfig): AdventTestConfig.ForExamples =
     AdventTestConfig.ForExamples(
         enabled = (executionMode ?: defaults.executionMode) != ExecMode.SkipExamples,
         partFunction = partFunction,
         examples = examples,
     )
 
-internal fun AdventTestConfig.forInput(defaults: AdventProjectConfig, testData: PuzzleTestData) =
+internal fun AdventTestConfig.forInput(defaults: AdventProjectConfig): AdventTestConfig.ForInput =
     AdventTestConfig.ForInput(
+        id = id,
+        part = part,
         enabled = (executionMode ?: defaults.executionMode) != ExecMode.ExamplesOnly,
         partFunction = partFunction,
         expensive = expensive,
-        efficiencyBenchmark = efficiencyBenchmark ?: defaults.efficiencyBenchmark,
-        input = testData.input,
-        correctAnswer = testData.solutionToPart(part),
+        efficiencyBenchmark = efficiencyBenchmark ?: defaults.efficiencyBenchmark
     )

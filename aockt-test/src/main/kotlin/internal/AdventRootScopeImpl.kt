@@ -28,13 +28,14 @@ internal class AdventRootScopeImpl(
     ) {
         if (partOne != null) throw DuplicateDefinitionException(owner, "partOne")
         partOne = AdventTestConfig(
+            id = owner.adventDay.id,
             part = AdventDayPart.One,
             partFunction = solution.partFunction(AdventDayPart.One),
             enabled = enabled,
             expensive = expensive,
             executionMode = executionMode,
             efficiencyBenchmark = efficiencyBenchmark,
-            examples = AdventPartScopeImpl().apply(examples).testCases
+            examples = AdventPartScopeImpl().apply(examples).testCases,
         )
     }
 
@@ -47,18 +48,23 @@ internal class AdventRootScopeImpl(
     ) {
         if (partTwo != null) throw DuplicateDefinitionException(owner, "partTwo")
         partTwo = AdventTestConfig(
+            id = owner.adventDay.id,
             part = AdventDayPart.Two,
             partFunction = solution.partFunction(AdventDayPart.Two),
             enabled = enabled,
             expensive = expensive,
             executionMode = executionMode,
             efficiencyBenchmark = efficiencyBenchmark,
-            examples = AdventPartScopeImpl().apply(examples).testCases
+            examples = AdventPartScopeImpl().apply(examples).testCases,
         )
     }
 
     override fun debug(test: AdventDebugScope.() -> Unit) {
         if (debug != null) throw DuplicateDefinitionException(owner, "debug")
-        debug = AdventDebugConfig(solution, test)
+        debug = AdventDebugConfig(
+            id = owner.adventDay.id,
+            solution = solution,
+            test = test,
+        )
     }
 }

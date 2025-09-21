@@ -58,7 +58,7 @@ internal fun AdventSpec<*>.registerTest(config: AdventTestConfig): Unit = with(c
     ) {
         val projectConfig = currentCoroutineContext()[AdventProjectConfig.Key] ?: AdventProjectConfig.Default
         registerExamples(config.forExamples(projectConfig))
-        registerInput(config.forInput(projectConfig, testData))
+        registerInput(config.forInput(projectConfig))
     }
 }
 
@@ -66,9 +66,9 @@ internal fun AdventSpec<*>.registerTest(config: AdventTestConfig): Unit = with(c
  * Register a focused root test to help debugging a [Solution].
  * All other tests will be ignored.
  */
-@OptIn(ExperimentalKotest::class)
 internal fun AdventSpec<*>.registerDebug(config: AdventDebugConfig): Unit = with(config) {
     test(name = "f:Debug") {
+        val testData = TestData.inputFor(config.id)
         withClue("Debug run completed exceptionally.") {
             shouldNotThrowAnyUnit {
                 AdventDebugScopeImpl(solution, testData.input).run(test)
@@ -105,7 +105,10 @@ private suspend fun FunSpecContainerScope.registerExamples(config: AdventTestCon
 @OptIn(ExperimentalKotest::class)
 @Suppress("SuspendFunWithCoroutineScopeReceiver", "CognitiveComplexMethod")
 private suspend fun FunSpecContainerScope.registerInput(config: AdventTestConfig.ForInput): Unit = with(config) {
-    if (input == null) return
+
+    val data = TestData.inputFor(config.id)
+    val input = data.input ?: return
+    val correctAnswer = data.solutionToPart(config.part)
 
     context("The solution").config(enabled = enabled) {
         val isSolutionKnown = correctAnswer != null
