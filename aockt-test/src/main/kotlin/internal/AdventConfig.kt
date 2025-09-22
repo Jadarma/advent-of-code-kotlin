@@ -27,7 +27,7 @@ internal data class AdventProjectConfig(
         }
     }
 
-    companion object Key : CoroutineContext.Key<AdventProjectConfig>{
+    companion object Key : CoroutineContext.Key<AdventProjectConfig> {
         /** Sane defaults. */
         val Default: AdventProjectConfig = AdventProjectConfig(
             efficiencyBenchmark = 15.seconds,
@@ -72,7 +72,7 @@ internal data class AdventDebugConfig(
 
 internal fun AdventTestConfig.forExamples(defaults: AdventProjectConfig): AdventTestConfig.ForExamples =
     AdventTestConfig.ForExamples(
-        enabled = (executionMode ?: defaults.executionMode) != ExecMode.SkipExamples,
+        enabled = if (!enabled) false else (executionMode ?: defaults.executionMode) != ExecMode.SkipExamples,
         partFunction = partFunction,
         examples = examples,
     )
@@ -81,7 +81,7 @@ internal fun AdventTestConfig.forInput(defaults: AdventProjectConfig): AdventTes
     AdventTestConfig.ForInput(
         id = id,
         part = part,
-        enabled = (executionMode ?: defaults.executionMode) != ExecMode.ExamplesOnly,
+        enabled = if (!enabled) false else (executionMode ?: defaults.executionMode) != ExecMode.ExamplesOnly,
         partFunction = partFunction,
         expensive = expensive,
         efficiencyBenchmark = efficiencyBenchmark ?: defaults.efficiencyBenchmark

@@ -2,6 +2,8 @@ package io.github.jadarma.aockt.test.integration
 
 import io.github.jadarma.aockt.test.AdventDay
 import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.test.internal.MissingInputException
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.test.TestCase
 import io.kotest.engine.test.TestResult
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -10,7 +12,7 @@ import io.kotest.matchers.shouldBe
 
 private var didExecute = false
 
-@AdventDay(3000, 6, "DebugMode")
+@AdventDay(9999, 2, "DebugMode")
 class DebugMode : AdventSpec<ObjectSolution>({
 
     partOne {
@@ -19,6 +21,7 @@ class DebugMode : AdventSpec<ObjectSolution>({
 
     debug {
         didExecute = true
+        input shouldBe "ABC"
     }
 }) {
 
@@ -38,3 +41,11 @@ class DebugMode : AdventSpec<ObjectSolution>({
         }
     }
 }
+
+@AdventDay(3000, 6, "DebugMode", variant = "With missing input")
+class DebugMode2 : AdventSpec<ObjectSolution>({
+
+    debug {
+        shouldThrowExactly<MissingInputException>{ input }
+    }
+})

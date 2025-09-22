@@ -102,6 +102,61 @@ class DslTest : FunSpec({
             }
         }
     }
+
+    context("Configurations compute final test configs") {
+        val configA = AdventTestConfig(
+            id = AdventDayID(9999, 2),
+            part = AdventDayPart.One,
+            partFunction = ObjectSolution.partFunction(AdventDayPart.One),
+            enabled = true,
+            expensive = true,
+            executionMode = ExecMode.SkipExamples,
+            efficiencyBenchmark = 10.seconds,
+            examples = listOf(PuzzleInput("B") to PuzzleAnswer("1:B"))
+        )
+        val configB = AdventTestConfig(
+            id = AdventDayID(9999, 2),
+            part = AdventDayPart.Two,
+            partFunction = ObjectSolution.partFunction(AdventDayPart.Two),
+            enabled = false,
+            expensive = false,
+            executionMode = null,
+            efficiencyBenchmark = null,
+            examples = emptyList(),
+        )
+
+        test("for examples") {
+            configA.forExamples(AdventProjectConfig.Default).should { finalConfig ->
+                finalConfig.enabled shouldBe false
+                finalConfig.examples shouldBe configA.examples
+                finalConfig.partFunction.invoke(PuzzleInput("B")) shouldBe PuzzleAnswer("1:B")
+            }
+            configB.forExamples(AdventProjectConfig.Default).should { finalConfig ->
+                finalConfig.enabled shouldBe false
+                finalConfig.examples shouldBe emptyList()
+                finalConfig.partFunction.invoke(PuzzleInput("B")) shouldBe PuzzleAnswer("2:1")
+            }
+        }
+
+        test("for input") {
+            configA.forInput(AdventProjectConfig.Default).should { finalConfig ->
+                finalConfig.id shouldBe configA.id
+                finalConfig.part shouldBe configA.part
+                finalConfig.enabled shouldBe true
+                finalConfig.partFunction.invoke(PuzzleInput("B")) shouldBe PuzzleAnswer("1:B")
+                finalConfig.expensive shouldBe true
+                finalConfig.efficiencyBenchmark shouldBe configA.efficiencyBenchmark
+            }
+            configB.forInput(AdventProjectConfig.Default).should { finalConfig ->
+                finalConfig.id shouldBe configB.id
+                finalConfig.part shouldBe configB.part
+                finalConfig.enabled shouldBe false
+                finalConfig.partFunction.invoke(PuzzleInput("B")) shouldBe PuzzleAnswer("2:1")
+                finalConfig.expensive shouldBe false
+                finalConfig.efficiencyBenchmark shouldBe AdventProjectConfig.Default.efficiencyBenchmark
+            }
+        }
+    }
 })
 
 @AdventDay(3000, 3)
