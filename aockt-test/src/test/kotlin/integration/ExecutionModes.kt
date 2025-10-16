@@ -4,7 +4,7 @@ import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.AdventDay
 import io.github.jadarma.aockt.test.AdventSpec
 import io.github.jadarma.aockt.test.ExecMode
-import io.kotest.assertions.AssertionErrorBuilder.Companion.fail
+import io.kotest.assertions.fail
 
 class OnlyAcceptsExamples : Solution {
 
