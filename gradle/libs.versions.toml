@@ -1,11 +1,11 @@
 [versions]
-kotlin = "2.2.20"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+kotlin = "2.2.21"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
 kotest = "6.0.4"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
 
 bcv = "0.18.1"          # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.binary-compatibility-validator/org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin
-detekt = "2.0.0-alpha.0"# https://mvnrepository.com/artifact/dev.detekt/detekt-gradle-plugin
+detekt = "2.0.0-alpha.1"# https://mvnrepository.com/artifact/dev.detekt/detekt-gradle-plugin
 dokka = "2.1.0"         # https://mvnrepository.com/artifact/org.jetbrains.dokka/dokka-gradle-plugin
-kover = "0.9.2"         # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.kover/org.jetbrains.kotlinx.kover.gradle.plugin
+kover = "0.9.3"         # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.kover/org.jetbrains.kotlinx.kover.gradle.plugin
 publishing = "0.34.0"   # https://mvnrepository.com/artifact/com.vanniktech/gradle-maven-publish-plugin
 toolchains = "1.0.0"    # https://plugins.gradle.org/plugin/org.gradle.toolchains.foojay-resolver-convention
 

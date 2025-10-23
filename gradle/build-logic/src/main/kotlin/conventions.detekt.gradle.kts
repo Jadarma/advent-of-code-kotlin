@@ -37,8 +37,8 @@ tasks {
         reports {
             html.required = true
             sarif.required = true
-            md.required = false
-            xml.required = false
+            markdown.required = false
+            checkstyle.required = false
         }
     }
 }

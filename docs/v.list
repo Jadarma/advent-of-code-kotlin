@@ -3,5 +3,5 @@
 <vars>
     <var name="aockt-version" value="0.3.0-SNAPSHOT"/>
     <var name="kotest-version" value="6.0.4"/>
-    <var name="kotlin-version" value="2.2.20"/>
+    <var name="kotlin-version" value="2.2.21"/>
 </vars>
