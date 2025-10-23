@@ -29,11 +29,19 @@ class AdventDayIDTest : FunSpec({
                 }
             }
         }
+
+        for (invalidDay in listOf(-1, 0, 13, 25)) {
+            withClue("Did not reject invalid day: $invalidDay") {
+                shouldThrowExactly<IllegalArgumentException> {
+                    AdventDayID(2025, invalidDay)
+                }
+            }
+        }
     }
 
     test("Is properly formatted") {
         AdventDayID(2015, 1).toString() shouldBe "Y2015D01"
-        AdventDayID(2345, 16).toString() shouldBe "Y2345D16"
+        AdventDayID(2345, 12).toString() shouldBe "Y2345D12"
     }
 
     test("Is chronologically ordered") {

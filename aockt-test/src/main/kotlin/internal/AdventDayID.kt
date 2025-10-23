@@ -14,6 +14,7 @@ internal data class AdventDayID(val year: Int, val day: Int) : Comparable<Advent
     init {
         require(year in 2015..9999) { "Invalid year: '$year'." }
         require(day in 1..25) { "Invalid day: '$day'. " }
+        require(year < 2025 || day <= 12) { "Invalid day: '$day' for year: '$year'." }
     }
 
     override fun toString(): String = "Y${year}D${day.toString().padStart(2, '0')}"
