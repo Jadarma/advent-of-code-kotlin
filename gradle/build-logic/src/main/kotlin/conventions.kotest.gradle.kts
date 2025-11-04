@@ -43,6 +43,13 @@ kover {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+
     // Don't cache tests, make them run again every time.
     outputs.upToDateWhen { false }
+
+    // Pass along system properties for Kotest.
+    systemProperties = System.getProperties()
+        .asIterable()
+        .filter { it.key.toString().startsWith("kotest.") }
+        .associate { it.key.toString() to it.value }
 }
