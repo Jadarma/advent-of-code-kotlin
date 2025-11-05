@@ -11,6 +11,7 @@ import io.kotest.assertions.withClue
 import io.kotest.common.ExperimentalKotest
 import io.kotest.common.reflection.ReflectionInstantiations.newInstanceNoArgConstructorOrObjectInstance
 import io.kotest.core.spec.style.scopes.FunSpecContainerScope
+import io.kotest.core.test.parents
 import io.kotest.matchers.comparables.shouldBeLessThanOrEqualTo
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.currentCoroutineContext
@@ -54,7 +55,7 @@ internal fun KClass<out AdventSpec<*>>.injectSolution(): Solution = this
 internal fun AdventSpec<*>.registerTest(config: AdventTestConfig): Unit = with(config) {
     context("Part $part").config(
         enabled = enabled,
-        tags = if (expensive) setOf(Expensive) else emptySet(),
+        tags = if (expensive) setOf(Expensive) else null,
     ) {
         val projectConfig = currentCoroutineContext()[AdventProjectConfig.Key] ?: AdventProjectConfig.Default
         registerExamples(config.forExamples(projectConfig))
@@ -142,7 +143,7 @@ private suspend fun FunSpecContainerScope.registerInput(config: AdventTestConfig
         val enableSpeedTesting = when {
             correctAnswer == null -> false
             answer != correctAnswer -> false
-            expensive -> false
+            testCase.parents().any { Expensive in it.config?.tags.orEmpty() } -> false
             else -> true
         }
 

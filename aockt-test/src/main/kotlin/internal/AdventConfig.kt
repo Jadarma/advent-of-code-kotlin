@@ -59,7 +59,6 @@ internal data class AdventTestConfig(
         val part: AdventDayPart,
         val enabled: Boolean,
         val partFunction: PartFunction,
-        val expensive: Boolean,
         val efficiencyBenchmark: Duration,
     )
 }
@@ -83,6 +82,5 @@ internal fun AdventTestConfig.forInput(defaults: AdventProjectConfig): AdventTes
         part = part,
         enabled = if (!enabled) false else (executionMode ?: defaults.executionMode) != ExecMode.ExamplesOnly,
         partFunction = partFunction,
-        expensive = expensive,
         efficiencyBenchmark = efficiencyBenchmark ?: defaults.efficiencyBenchmark
     )

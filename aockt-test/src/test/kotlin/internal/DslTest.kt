@@ -144,7 +144,6 @@ class DslTest : FunSpec({
                 finalConfig.part shouldBe configA.part
                 finalConfig.enabled shouldBe true
                 finalConfig.partFunction.invoke(PuzzleInput("B")) shouldBe PuzzleAnswer("1:B")
-                finalConfig.expensive shouldBe true
                 finalConfig.efficiencyBenchmark shouldBe configA.efficiencyBenchmark
             }
             configB.forInput(AdventProjectConfig.Default).should { finalConfig ->
@@ -152,7 +151,6 @@ class DslTest : FunSpec({
                 finalConfig.part shouldBe configB.part
                 finalConfig.enabled shouldBe false
                 finalConfig.partFunction.invoke(PuzzleInput("B")) shouldBe PuzzleAnswer("2:1")
-                finalConfig.expensive shouldBe false
                 finalConfig.efficiencyBenchmark shouldBe AdventProjectConfig.Default.efficiencyBenchmark
             }
         }
