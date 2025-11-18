@@ -96,7 +96,7 @@ In the above example:
    Inside the lambda you can define test cases.
    The `Solution` functions will only be invoked if the relevant part DSL is used.
    If you have not yet implemented the second part, or it doesn't exist
-   _(e.g.: Every year, part two of the last day just requires collecting all other 49 stars)_,
+   _(e.g.: Every year, part two of the last day just requires collecting all other stars)_,
    then you may simply omit it.
 5. To define a test case, use the `shouldOutput` function.
    Each usage will define another test case.

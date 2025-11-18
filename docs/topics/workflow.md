@@ -29,8 +29,8 @@ projectDir
 │  └── aockt
 │     └── y2015
 │        └── d01
-│           └── input.txt
-│           └── solution_part1.txt
+│           ├── input.txt
+│           ├── solution_part1.txt
 │           └── solution_part2.txt
 ├── solutions
 │  └── aockt
@@ -80,7 +80,7 @@ projectDir
     - Each day has a directory as a base path: `/aockt/y[year]/d[twoDigitDay]`
     - In that directory, the input is in the `input.txt` file.
     - The solutions use `solution_part1.txt` and `solution_part2.txt`.
-      They are added in as discovered.
+      They are added in gradually, as discovered.
 
 > ***DO NOT Commit Puzzle Inputs!***
 > 
@@ -121,7 +121,7 @@ object Y2015D01 : Solution
 
 > Your class _must have_ a zero-arg constructor.
 
-Following the same logic, create its `tests` analog:
+Following the same logic, create its `tests` counterpart:
 
 ```kotlin
 package aockt.y2015
@@ -155,7 +155,7 @@ class Y2015D01Test : AdventSpec<Y2015D01>({
 })
 ```
 
-Like many other puzzles, this day provides you with example inputs and outputs to test your solution.
+Like many other puzzles, this day provides you with example inputs and outputs to test your solution with.
 
 If that is the case, you can define them in a lambda.
 The syntax is `"string" shouldOutput "output"`, the output can be a string, or a number, it will be checked against its
@@ -188,7 +188,7 @@ Your first run should look like this:
 
 Each example has its own test, and since you added your input, it also tests against that.
 
-> If you're not interested in running on our input until validating the examples, you can
+> If you're not interested in running against your input until validating the examples first, you can
 > [ignore your input](test-config.md#executionmode) by setting:
 > 
 > `partOne(executionMode = ExecMode.ExamplesOnly)`
@@ -251,7 +251,7 @@ Go back to the website and submit it.
 
 **Congratulations on collecting the first star!** ⭐
 
-If not, try to look at what's special in your input, or hunt down any bugs.
+If not, try to look at what's special in your input, or [hunt down bugs](debugging.md).
 
 Once you have verified the right answer, paste it in `inputs/aockt/y2015/d01/solution_part1.txt`.
 Now, when you run the test, your code will be tested against the known answer:

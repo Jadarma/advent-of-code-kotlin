@@ -33,7 +33,7 @@ class Y9999D01 : AdventSpec<Y9999D01>({
         solution.partOne(input)
     }
     
-    // Every other declarations are effectively ignored ...
+    // Any other declarations are effectively ignored ...
 })
 ```
 

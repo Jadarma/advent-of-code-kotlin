@@ -1,7 +1,7 @@
 # Multiple Solutions
 
 You sometimes might want to implement multiple solutions to the same puzzle.
-For example to compare imperative vs. functional code styles, or test different data structures, or algorithms.
+For example, to compare imperative vs. functional code styles, or test different data structures and algorithms.
 
 Since all these different implementations solve the same puzzle, they should have identical test cases.
 The `AdventSpec` is designed to test a single `Solution` at a time.

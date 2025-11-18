@@ -25,7 +25,7 @@ It offers the following features:
 
     `AdventSpec`s will always execute in chronological order.
     All other specs will run before them, in the order they were discovered.
-    Note that this overrides Kotest's own [spec ordering`](https://kotest.io/docs/framework/spec-ordering.html).
+    Note that this overrides Kotest's own [spec ordering](https://kotest.io/docs/framework/spec-ordering.html).
 
 ## Registering The Extension
 
@@ -40,17 +40,7 @@ object TestConfig : AbstractProjectConfig() {
 }
 ```
 
-To make Kotest use this configuration, you must register it in the 
-[`kotest.properties`](https://kotest.io/docs/intellij/intellij-properties.html#specifying-the-properties-filename)
-file in your `src/test/resources`:
-
-```properties
-kotest.framework.config.fqn=my.aoc.TestConfig
-kotest.framework.classpath.scanning.autoscan.disable=true
-kotest.framework.classpath.scanning.config.disable=true
-```
-
-You should also register the fqn as a system property for Gradle:
+To make Kotest use this configuration, you must register the FQN as a system property for Gradle:
 
 ```kotlin
 tasks.test {
