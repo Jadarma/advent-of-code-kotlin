@@ -2,7 +2,5 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>BooleanPropertyNaming:AocKtExtension.kt:AocKtExtension$private val formatAdventSpecNames: Boolean = true</ID>
-    <ID>BooleanPropertyNaming:AocktDisplayNameFormatter.kt:AocktDisplayNameFormatter$private val disabled: Boolean = false</ID>
   </CurrentIssues>
 </SmellBaseline>
