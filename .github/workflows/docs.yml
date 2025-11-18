@@ -16,12 +16,14 @@ jobs:
     env:
       INSTANCE: 'docs/aockt'
       ARTIFACT: 'webHelpAOCKT2-all.zip'
+      WRS_VERSION: '2025.04.8412'
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - name: 'Build Writerside Docs'
         uses: JetBrains/writerside-github-action@73f8f377e7c6a64cce73ca73fe07bbba9a34d556
         with:
+          docker-version: ${{ env.WRS_VERSION }}
           instance: ${{ env.INSTANCE }}
           artifact: ${{ env.ARTIFACT }}
       - name: 'Test Writerside Docs'

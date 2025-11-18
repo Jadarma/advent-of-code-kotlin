@@ -31,4 +31,5 @@
 
     <build-profile instance="aockt"/>
 
+    <sitemap priority="0.35" change-frequency="monthly"/>
 </buildprofiles>
