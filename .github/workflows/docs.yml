@@ -5,7 +5,7 @@ name: 'Documentation Site'
 # actions/upload-pages-artifact       - 7b1f4a764d45c48632c6b24a0339c27f5614fb0b - v4.0.0 - https://github.com/actions/upload-pages-artifact/releases
 # actions/deploy-pages                - d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e - v4.0.5 - https://github.com/actions/deploy-pages/releases
 # JetBrains/writerside-github-action  - 73f8f377e7c6a64cce73ca73fe07bbba9a34d556 - v4     - https://github.com/JetBrains/writerside-github-action/releases
-# JetBrains/writerside-checker-action - 23e928973d7703bc49a3f8ea9f7cb699aac56134 - v1     - https://github.com/JetBrains/writerside-checker-action/releases
+# JetBrains/writerside-checker-action - 79ff89902dcd3d5c5a3f26a79bc35830377f38c5 - v1     - https://github.com/JetBrains/writerside-checker-action/releases
 
 on:
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
           instance: ${{ env.INSTANCE }}
           artifact: ${{ env.ARTIFACT }}
       - name: 'Test Writerside Docs'
-        uses: JetBrains/writerside-checker-action@23e928973d7703bc49a3f8ea9f7cb699aac56134
+        uses: JetBrains/writerside-checker-action@79ff89902dcd3d5c5a3f26a79bc35830377f38c5
         with:
           instance: artifacts/${{ env.INSTANCE }}
       - name: 'Unzip Artifact'
