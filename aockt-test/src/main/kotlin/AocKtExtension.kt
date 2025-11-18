@@ -20,7 +20,7 @@ import kotlin.time.Duration
  *
  * ```kotlin
  * object TestConfig : AbstractProjectConfig() {
- *     override val extensions = listOf<Extension>(AocktExtension())
+ *     override val extensions = listOf<Extension>(AocKtExtension())
  * }
  * ```
  *
@@ -55,7 +55,7 @@ public class AocKtExtension(
     /** Provide project-level config to scopes of all advent specs. */
     override suspend fun intercept(
         spec: Spec,
-        execute: suspend (Spec) -> Unit
+        execute: suspend (Spec) -> Unit,
     ) {
         if (spec is AdventSpec<*>) {
             withContext(currentCoroutineContext() + configuration) { execute(spec) }

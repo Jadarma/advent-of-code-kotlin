@@ -112,7 +112,7 @@ class DslTest : FunSpec({
             expensive = true,
             executionMode = ExecMode.SkipExamples,
             efficiencyBenchmark = 10.seconds,
-            examples = listOf(PuzzleInput("B") to PuzzleAnswer("1:B"))
+            examples = listOf(PuzzleInput("B") to PuzzleAnswer("1:B")),
         )
         val configB = AdventTestConfig(
             id = AdventDayID(9999, 2),

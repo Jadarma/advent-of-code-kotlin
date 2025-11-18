@@ -34,7 +34,7 @@ import io.kotest.engine.coroutines.ThreadPerSpecCoroutineContextFactory
  *         ")" shouldOutput 1
  *         "()())" shouldOutput 5
  *     }
- * }
+ * })
  * ```
  *
  * @param T    The implementation class of the [Solution] to be tested.

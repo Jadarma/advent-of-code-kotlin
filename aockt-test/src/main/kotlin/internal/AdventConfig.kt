@@ -82,5 +82,5 @@ internal fun AdventTestConfig.forInput(defaults: AdventProjectConfig): AdventTes
         part = part,
         enabled = if (!enabled) false else (executionMode ?: defaults.executionMode) != ExecMode.ExamplesOnly,
         partFunction = partFunction,
-        efficiencyBenchmark = efficiencyBenchmark ?: defaults.efficiencyBenchmark
+        efficiencyBenchmark = efficiencyBenchmark ?: defaults.efficiencyBenchmark,
     )

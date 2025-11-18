@@ -24,7 +24,7 @@ internal class AdventRootScopeImpl(
         executionMode: ExecMode?,
         efficiencyBenchmark: Duration?,
         expensive: Boolean,
-        examples: AdventPartScope.() -> Unit
+        examples: AdventPartScope.() -> Unit,
     ) {
         if (partOne != null) throw DuplicateDefinitionException(owner, "partOne")
         partOne = AdventTestConfig(
@@ -44,7 +44,7 @@ internal class AdventRootScopeImpl(
         executionMode: ExecMode?,
         efficiencyBenchmark: Duration?,
         expensive: Boolean,
-        examples: AdventPartScope.() -> Unit
+        examples: AdventPartScope.() -> Unit,
     ) {
         if (partTwo != null) throw DuplicateDefinitionException(owner, "partTwo")
         partTwo = AdventTestConfig(
