@@ -1,6 +1,8 @@
 # Change Log
 
-## 0.3.0-SNAPSHOT
+## 0.3.0
+
+_[Released 2025-11-19](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.3.0)_
 
 - New minimum requirements: JDK 21, Kotlin `2.0`, and Kotest `6.0`.
   Check the [release notes](https://kotest.io/docs/release6), and how to [configure](project-extension.md) the extension.
