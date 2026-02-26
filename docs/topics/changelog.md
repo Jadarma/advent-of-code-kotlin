@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.0-SNAPSHOT
+
+- Fix issue wherein solutions completing exceptionally would not fail the test.
+
 ## 0.3.0
 
 _[Released 2025-11-19](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.3.0)_

@@ -122,7 +122,7 @@ private suspend fun FunSpecContainerScope.registerInput(config: AdventTestConfig
                 answer = measured.value
                 duration = measured.duration
             }.onFailure { error ->
-                AssertionErrorBuilder.create()
+                throw AssertionErrorBuilder.create()
                     .withMessage("The solution threw an exception before it could return an answer.")
                     .withCause(error)
                     .build()
