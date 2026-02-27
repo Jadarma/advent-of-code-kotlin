@@ -15,11 +15,12 @@ import io.kotest.property.checkAll
 class SpecOrdererTest : FunSpec({
 
     test("Orders specs correctly") {
-        val otherSpecs = listOf(OtherA::class, OtherB::class).map(SpecRef::Reference)
+        val otherSpecs = listOf(OtherA::class, OtherB::class)
+            .map { SpecRef.Reference(it, requireNotNull(it.qualifiedName)) }
         val adventSpecs = listOf(
             SpecA::class, SpecB::class, SpecC::class, SpecD::class,
             SpecE::class, SpecF::class, SpecG::class, SpecH::class,
-        ).map(SpecRef::Reference)
+        ).map { SpecRef.Reference(it, requireNotNull(it.qualifiedName)) }
         val allSpecs: List<SpecRef> = adventSpecs + otherSpecs
 
         checkAll(iterations = 128, Arb.shuffle(allSpecs)) { discoveryOrder ->

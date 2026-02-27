@@ -21,8 +21,8 @@ object CompileOptions {
     }
 
     object Kotlin {
-        val languageVersion: KotlinVersion = KotlinVersion.KOTLIN_2_2
-        val apiVersion: KotlinVersion = KotlinVersion.KOTLIN_2_0
+        val languageVersion: KotlinVersion = KotlinVersion.KOTLIN_2_3
+        val apiVersion: KotlinVersion = KotlinVersion.KOTLIN_2_1
         val jvmTarget: JvmTarget = JvmTarget.fromTarget(Java.languageVersion.asInt().toString())
     }
 }

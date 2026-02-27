@@ -2,6 +2,7 @@
 
 ## 0.4.0-SNAPSHOT
 
+- Update Kotlin to `2.3` and Kotest to `6.1`.
 - Fix issue wherein solutions completing exceptionally would not fail the test.
 
 ## 0.3.0

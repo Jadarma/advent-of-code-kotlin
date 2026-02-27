@@ -1,6 +1,7 @@
 import CompileOptions.AocKt.GROUP_ID
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.SourcesJar
 
 plugins {
     id("com.vanniktech.maven.publish")
@@ -15,7 +16,7 @@ mavenPublishing {
 
     configure(
         KotlinJvm(
-            sourcesJar = true,
+            sourcesJar = SourcesJar.Sources(),
             javadocJar = JavadocJar.Dokka("dokkaGeneratePublicationHtml"),
         )
     )

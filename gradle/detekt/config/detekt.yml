@@ -5,12 +5,12 @@
 comments:
   AbsentOrWrongFileLicense:
     active: false
-  CommentOverPrivateFunction:
-    active: false
-  CommentOverPrivateProperty:
-    active: false
   DeprecatedBlockTag:
     active: true
+  DocumentationOverPrivateFunction:
+    active: false
+  DocumentationOverPrivateProperty:
+    active: false
   EndOfSentenceFormat:
     active: true
   KDocReferencesNonPublicProperty:
@@ -417,8 +417,6 @@ style:
   TrimMultilineRawString:
     active: true
   UnderscoresInNumericLiterals:
-    active: true
-  UnnecessaryAnnotationUseSiteTarget:
     active: true
   UnnecessaryAny:
     active: true
