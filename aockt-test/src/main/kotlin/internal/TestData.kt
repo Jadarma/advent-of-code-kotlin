@@ -35,10 +35,15 @@ internal object TestData {
     }
 
     /** Reads a resource at the given [path] and returns its contents as text, if it exists. */
-    private fun readResourceAsTextOrNull(path: String): String? =
-        this::class.java
-            .getResourceAsStream(path)
-            ?.use { String(it.readAllBytes()).trimEnd() }
+    private fun readResourceAsTextOrNull(path: String): String? {
+        val text = this::class.java.getResourceAsStream(path)?.use { String(it.readAllBytes()) }
+        return when {
+            text == null -> null
+            text.endsWith("\r\n") -> text.removeSuffix("\r\n")
+            text.endsWith("\n") -> text.removeSuffix("\n")
+            else -> text
+        }
+    }
 
     /** Wraps a [String] into a [PuzzleAnswer] type. */
     private fun String?.toPuzzleAnswer(): PuzzleAnswer? = when (this) {
