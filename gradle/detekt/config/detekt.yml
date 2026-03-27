@@ -4,7 +4,10 @@
 # https://detekt.dev/docs/rules/comments
 comments:
   AbsentOrWrongFileLicense:
-    active: false
+    active: true
+    licenseTemplate: |
+      // Copyright © 2020 Dan Cîmpianu
+      // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
   DeprecatedBlockTag:
     active: true
   DocumentationOverPrivateFunction:
