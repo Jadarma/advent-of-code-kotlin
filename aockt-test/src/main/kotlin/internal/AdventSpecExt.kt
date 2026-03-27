@@ -10,7 +10,6 @@ import io.kotest.assertions.AssertionErrorBuilder
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldNotThrowAnyUnit
 import io.kotest.assertions.withClue
-import io.kotest.common.ExperimentalKotest
 import io.kotest.common.reflection.ReflectionInstantiations.newInstanceNoArgConstructorOrObjectInstance
 import io.kotest.core.spec.style.scopes.FunSpecContainerScope
 import io.kotest.core.test.parents
@@ -81,7 +80,6 @@ internal fun AdventSpec<*>.registerDebug(config: AdventDebugConfig): Unit = with
 }
 
 /** Define an example context, generating a separate test for each example given. */
-@OptIn(ExperimentalKotest::class)
 @Suppress("SuspendFunWithCoroutineScopeReceiver")
 private suspend fun FunSpecContainerScope.registerExamples(config: AdventTestConfig.ForExamples): Unit = with(config) {
     if (examples.isEmpty()) return
@@ -105,7 +103,6 @@ private suspend fun FunSpecContainerScope.registerExamples(config: AdventTestCon
  * - Efficiency benchmark, ignored if either the solution was not computed, the solution is unverified, or is marked as
  *   expensive.
  */
-@OptIn(ExperimentalKotest::class)
 @Suppress("SuspendFunWithCoroutineScopeReceiver", "CognitiveComplexMethod")
 private suspend fun FunSpecContainerScope.registerInput(config: AdventTestConfig.ForInput): Unit = with(config) {
 

@@ -6,7 +6,6 @@ import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.internal.AdventRootScopeImpl
 import io.github.jadarma.aockt.test.internal.registerDebug
 import io.github.jadarma.aockt.test.internal.registerTest
-import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.test.TestCaseOrder
@@ -43,7 +42,6 @@ import io.kotest.engine.coroutines.ThreadPerSpecCoroutineContextFactory
  * @param body A context in which to configure the tests.
  */
 @Suppress("AbstractClassCanBeConcreteClass")
-@OptIn(ExperimentalKotest::class)
 public abstract class AdventSpec<T : Solution>(
     body: AdventRootScope.() -> Unit = {},
 ) : FunSpec() {
