@@ -1,6 +1,5 @@
 import CompileOptions.Java
 import CompileOptions.Kotlin
-import org.gradle.kotlin.dsl.dependencies
 
 plugins {
     kotlin("jvm")
@@ -20,8 +19,4 @@ kotlin {
     }
 
     explicitApi()
-}
-
-dependencies {
-    implementation(libs.kotlin.stdlib)
 }

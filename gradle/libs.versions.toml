@@ -10,7 +10,6 @@ publishing = "0.36.0"   # https://mvnrepository.com/artifact/com.vanniktech/grad
 toolchains = "1.0.0"    # https://plugins.gradle.org/plugin/org.gradle.toolchains.foojay-resolver-convention
 
 [libraries]
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
 kotest-engine = { module = "io.kotest:kotest-framework-engine-jvm", version.ref = "kotest" }

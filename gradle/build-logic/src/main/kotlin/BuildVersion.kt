@@ -32,9 +32,7 @@ data class BuildVersion(val version: String, val type: Type) {
     }
 
     init {
-        require(version.matches(semVer)) {
-            "Invalid version: $version."
-        }
+        require(version.matches(semVer)) { "Invalid version: $version." }
     }
 
     override fun toString(): String = type.format(version)
@@ -52,7 +50,7 @@ data class BuildVersion(val version: String, val type: Type) {
     internal companion object {
         private val semVer = Regex("""^\d+\.\d+\.\d+$""")
 
-        private val versions: Map<Type, BuildVersion> = Type.values().associateWith {
+        private val versions: Map<Type, BuildVersion> = Type.entries.associateWith {
             BuildVersion(
                 version = if (it == Type.RELEASE) CURRENT else NEXT,
                 type = it,

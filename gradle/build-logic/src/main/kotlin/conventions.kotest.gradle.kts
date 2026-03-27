@@ -35,7 +35,7 @@ kover {
                 classes("$GROUP_ID.*")
             }
             excludes {
-                classes("*.*\$DefaultImpls")
+                classes($$"*.*$DefaultImpls")
             }
         }
     }
