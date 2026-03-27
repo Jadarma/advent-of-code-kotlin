@@ -5,6 +5,7 @@ import org.gradle.kotlin.dsl.withType
 
 plugins {
     kotlin("jvm")
+    id("io.kotest")
     id("org.jetbrains.kotlinx.kover")
 }
 
@@ -43,8 +44,10 @@ kover {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    failOnNoDiscoveredTests = true
 
     // Don't cache tests, make them run again every time.
+    logger.lifecycle("UP-TO-DATE check for $name is disabled, forcing it to run.")
     outputs.upToDateWhen { false }
 
     // Pass along system properties for Kotest.

@@ -20,6 +20,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 gradlePluginDep-bcv = { module = "org.jetbrains.kotlinx.binary-compatibility-validator:org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin", version.ref = "bcv" }
 gradlePluginDep-detekt = { module = "dev.detekt:dev.detekt.gradle.plugin", version.ref = "detekt" }
 gradlePluginDep-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+gradlePluginDep-kotest = { module = "io.kotest:io.kotest.gradle.plugin", version.ref = "kotest" }
 gradlePluginDep-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradlePluginDep-kover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
 gradlePluginDep-publishing = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "publishing" }
@@ -31,6 +32,7 @@ gradlePlugins = [
     "gradlePluginDep-bcv",
     "gradlePluginDep-detekt",
     "gradlePluginDep-dokka",
+    "gradlePluginDep-kotest",
     "gradlePluginDep-kotlin",
     "gradlePluginDep-kover",
     "gradlePluginDep-publishing",
