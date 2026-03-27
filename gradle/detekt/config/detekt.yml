@@ -210,6 +210,8 @@ performance:
     active: true
   SpreadOperator:
     active: true
+  UnnecessaryInitOnArray:
+    active: true
   UnnecessaryPartOfBinaryExpression:
     active: true
   UnnecessaryTemporaryInstantiation:
@@ -430,6 +432,8 @@ style:
   UnnecessaryBracesAroundTrailingLambda:
     active: true
   UnnecessaryFilter:
+    active: true
+  UnnecessaryFullyQualifiedName:
     active: true
   UnnecessaryInheritance:
     active: true
