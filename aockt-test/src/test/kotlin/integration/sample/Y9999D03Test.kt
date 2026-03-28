@@ -1,7 +1,7 @@
-package io.github.jadarma.aockt.test.integration.sample
+package io.github.jadarma.aockt.integration.sample
 
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.integration.*
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.integration.*
 
 @AdventDay(9999, 3, "Sample", "Empty")
 class Y9999D03EmptyTest : SampleSpec<SampleEmpty>() {

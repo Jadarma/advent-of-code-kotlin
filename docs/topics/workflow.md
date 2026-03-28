@@ -114,7 +114,7 @@ In your `solutions`, create:
 ```kotlin
 package aockt.y2015
 
-import io.github.jadarma.aockt.core.Solution
+import io.github.jadarma.aockt.Solution
 
 object Y2015D01 : Solution
 ```
@@ -126,8 +126,8 @@ Following the same logic, create its `tests` counterpart:
 ```kotlin
 package aockt.y2015
 
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
 
 @AdventDay(2015, 1, "Not Quite Lisp")
 class Y2015D01Test : AdventSpec<Y2015D01>({})
@@ -146,8 +146,8 @@ Let's start with part one:
 ```kotlin
 package aockt.y2015
 
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
 
 @AdventDay(2015, 1, "Not Quite Lisp")
 class Y2015D01Test : AdventSpec<Y2015D01>({
@@ -165,8 +165,8 @@ For multiple inputs, `listOf("string") shouldAllOutput "output"` is synonymous.
 ```kotlin
 package aockt.y2015
 
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
 
 @AdventDay(2015, 1, "Not Quite Lisp")
 class Y2015D01Test : AdventSpec<Y2015D01>({
@@ -205,7 +205,7 @@ Have a try at the problem:
 ```kotlin
 package aockt.y2015
 
-import io.github.jadarma.aockt.core.Solution
+import io.github.jadarma.aockt.Solution
 
 object Y2015D01 : Solution {
     override fun partOne(input: String): Int = spoilers()
@@ -280,8 +280,8 @@ After completing the puzzle, your test should look like this:
 ```kotlin
 package aockt.y2015
 
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
 
 @AdventDay(2015, 1, "Not Quite Lisp")
 class Y2015D01Test : AdventSpec<Y2015D01>({

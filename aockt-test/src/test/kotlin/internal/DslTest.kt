@@ -1,9 +1,9 @@
-package io.github.jadarma.aockt.test.internal
+package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.ExecMode
-import io.github.jadarma.aockt.test.integration.ObjectSolution
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
+import io.github.jadarma.aockt.ExecMode
+import io.github.jadarma.aockt.integration.ObjectSolution
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -26,17 +26,17 @@ class DslTest : FunSpec({
         test("partOne scopes") {
             shouldThrowExactly<DuplicateDefinitionException> { scope.partOne() }
                 .message
-                .shouldBe("In io.github.jadarma.aockt.test.internal.SomeSpec, partOne has been declared twice.")
+                .shouldBe("In io.github.jadarma.aockt.internal.SomeSpec, partOne has been declared twice.")
         }
         test("partTwo scopes") {
             shouldThrowExactly<DuplicateDefinitionException> { scope.partTwo() }
                 .message
-                .shouldBe("In io.github.jadarma.aockt.test.internal.SomeSpec, partTwo has been declared twice.")
+                .shouldBe("In io.github.jadarma.aockt.internal.SomeSpec, partTwo has been declared twice.")
         }
         test("debug scopes") {
             shouldThrowExactly<DuplicateDefinitionException> { scope.debug {} }
                 .message
-                .shouldBe("In io.github.jadarma.aockt.test.internal.SomeSpec, debug has been declared twice.")
+                .shouldBe("In io.github.jadarma.aockt.internal.SomeSpec, debug has been declared twice.")
         }
     }
 

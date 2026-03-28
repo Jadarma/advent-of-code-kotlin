@@ -1,4 +1,1 @@
-naming:
-  InvalidPackageDeclaration:
-    rootPackage: 'io.github.jadarma.aockt.test'
-    requireRootInDeclaration: true
+# Nothing to override.

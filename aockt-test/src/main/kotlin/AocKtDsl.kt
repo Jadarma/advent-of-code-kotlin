@@ -1,9 +1,8 @@
 // Copyright © 2020 Dan Cîmpianu
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
-package io.github.jadarma.aockt.test
+package io.github.jadarma.aockt
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.internal.AocKtDsl
+import io.github.jadarma.aockt.internal.AocKtDsl
 import kotlin.time.Duration
 
 /** A DSL scope for enabling and tweaking configs of part tests. */

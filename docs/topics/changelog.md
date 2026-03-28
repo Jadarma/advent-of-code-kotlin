@@ -3,6 +3,8 @@
 ## 0.4.0-SNAPSHOT
 
 - Update Kotlin to `2.3` and Kotest to `6.1`.
+- Changed package structure. The `core` and `test` packages are gone and instead both should be replaced by just
+  `io.github.jadarma.aockt`.
 - The `Expensive` tag object now has internal visibility.
 - Fix issue wherein solutions completing exceptionally would not fail the test.
 - Reading test data now only trims new lines at end of file instead of all whitespace.

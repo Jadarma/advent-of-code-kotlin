@@ -1,6 +1,6 @@
-package io.github.jadarma.aockt.test.integration
+package io.github.jadarma.aockt.integration
 
-import io.github.jadarma.aockt.core.Solution
+import io.github.jadarma.aockt.Solution
 
 /**
  * The Sample problem:

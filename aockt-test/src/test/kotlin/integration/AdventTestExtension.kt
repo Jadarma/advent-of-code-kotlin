@@ -1,6 +1,6 @@
-package io.github.jadarma.aockt.test.integration
+package io.github.jadarma.aockt.integration
 
-import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.AdventSpec
 import io.kotest.assertions.fail
 import io.kotest.common.KotestInternal
 import io.kotest.core.descriptors.DescriptorPaths

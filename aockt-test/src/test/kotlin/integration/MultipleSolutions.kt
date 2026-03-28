@@ -1,8 +1,8 @@
-package io.github.jadarma.aockt.test.integration
+package io.github.jadarma.aockt.integration
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.Solution
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
 
 /** A solution to a fictitious puzzle used for testing using collections. */
 class Y9999D01UsingCollections : Solution {

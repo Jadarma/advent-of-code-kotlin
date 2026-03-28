@@ -176,7 +176,8 @@ naming:
   FunctionParameterNaming:
     active: true
   InvalidPackageDeclaration:
-    active: false # Configure per module.
+    rootPackage: 'io.github.jadarma.aockt'
+    requireRootInDeclaration: true
   LambdaParameterNaming:
     active: true
   MatchingDeclarationName:

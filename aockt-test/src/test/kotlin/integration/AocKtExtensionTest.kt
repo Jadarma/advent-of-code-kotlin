@@ -1,11 +1,11 @@
-package io.github.jadarma.aockt.test.integration
+package io.github.jadarma.aockt.integration
 
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.AocKtExtension
-import io.github.jadarma.aockt.test.ExecMode
-import io.github.jadarma.aockt.test.internal.AdventProjectConfig
-import io.github.jadarma.aockt.test.internal.ConfigurationException
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
+import io.github.jadarma.aockt.AocKtExtension
+import io.github.jadarma.aockt.ExecMode
+import io.github.jadarma.aockt.internal.AdventProjectConfig
+import io.github.jadarma.aockt.internal.ConfigurationException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.should

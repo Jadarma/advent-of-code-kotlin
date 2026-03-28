@@ -1,4 +1,4 @@
-package io.github.jadarma.aockt.core
+package io.github.jadarma.aockt
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec

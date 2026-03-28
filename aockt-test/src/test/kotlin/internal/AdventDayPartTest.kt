@@ -1,8 +1,8 @@
-package io.github.jadarma.aockt.test.internal
+package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.internal.AdventDayPart.One
-import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
+import io.github.jadarma.aockt.Solution
+import io.github.jadarma.aockt.internal.AdventDayPart.One
+import io.github.jadarma.aockt.internal.AdventDayPart.Two
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 

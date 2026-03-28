@@ -1,8 +1,8 @@
 // Copyright © 2020 Dan Cîmpianu
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
-package io.github.jadarma.aockt.test.internal
+package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.test.AdventDay
+import io.github.jadarma.aockt.AdventDay
 
 /**
  * Identifies an Advent of Code problem.

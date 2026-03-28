@@ -1,10 +1,10 @@
 // Copyright © 2020 Dan Cîmpianu
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
-package io.github.jadarma.aockt.test.internal
+package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.internal.AdventDayPart.One
-import io.github.jadarma.aockt.test.internal.AdventDayPart.Two
+import io.github.jadarma.aockt.Solution
+import io.github.jadarma.aockt.internal.AdventDayPart.One
+import io.github.jadarma.aockt.internal.AdventDayPart.Two
 
 /** Selector for a specific part of a [Solution]. */
 internal enum class AdventDayPart { One, Two }

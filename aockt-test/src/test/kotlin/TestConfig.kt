@@ -1,4 +1,4 @@
-package io.github.jadarma.aockt.test
+package io.github.jadarma.aockt
 
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.extensions.Extension

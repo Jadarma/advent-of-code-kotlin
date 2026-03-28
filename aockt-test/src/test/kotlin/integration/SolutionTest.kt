@@ -1,10 +1,10 @@
-package io.github.jadarma.aockt.test.integration
+package io.github.jadarma.aockt.integration
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.internal.MissingNoArgConstructorException
-import io.github.jadarma.aockt.test.internal.injectSolution
+import io.github.jadarma.aockt.Solution
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
+import io.github.jadarma.aockt.internal.MissingNoArgConstructorException
+import io.github.jadarma.aockt.internal.injectSolution
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -36,7 +36,7 @@ class SolutionTest : FunSpec({
         @Suppress("MaxLineLength")
         test("but not from a complex class") {
             shouldThrowExactly<MissingNoArgConstructorException> { ConstructedSolutionSpec::class.injectSolution() }
-                .message.shouldBe("Class io.github.jadarma.aockt.test.integration.ConstructedSolution is a Solution but it is missing a no-arg constructor.")
+                .message.shouldBe("Class io.github.jadarma.aockt.integration.ConstructedSolution is a Solution but it is missing a no-arg constructor.")
         }
     }
 })

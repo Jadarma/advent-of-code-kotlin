@@ -1,8 +1,8 @@
-package io.github.jadarma.aockt.test.internal
+package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.Solution
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec
@@ -69,7 +69,7 @@ class AdventDayIDTest : FunSpec({
     test("Must be present on AdventSpecs") {
         shouldThrowExactly<MissingAdventDayAnnotationException> { UnannotatedSpec::class.adventDay }
             .message
-            .shouldBe("Class io.github.jadarma.aockt.test.internal.UnannotatedSpec is an AdventSpec but is missing the AdventDay annotation.")
+            .shouldBe("Class io.github.jadarma.aockt.internal.UnannotatedSpec is an AdventSpec but is missing the AdventDay annotation.")
     }
 })
 

@@ -1,7 +1,7 @@
-package io.github.jadarma.aockt.test.integration.sample
+package io.github.jadarma.aockt.integration.sample
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.AdventSpec
+import io.github.jadarma.aockt.Solution
+import io.github.jadarma.aockt.AdventSpec
 
 @Suppress("AbstractClassCanBeInterface")
 abstract class SampleSpec<T : Solution> : AdventSpec<T>({

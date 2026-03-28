@@ -1,10 +1,10 @@
 // Copyright © 2020 Dan Cîmpianu
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
-package io.github.jadarma.aockt.test
+package io.github.jadarma.aockt
 
-import io.github.jadarma.aockt.test.internal.AdventProjectConfig
-import io.github.jadarma.aockt.test.internal.AocKtDisplayNameFormatter
-import io.github.jadarma.aockt.test.internal.SpecOrderer
+import io.github.jadarma.aockt.internal.AdventProjectConfig
+import io.github.jadarma.aockt.internal.AocKtDisplayNameFormatter
+import io.github.jadarma.aockt.internal.SpecOrderer
 import io.kotest.core.extensions.DisplayNameFormatterExtension
 import io.kotest.core.extensions.SpecExecutionOrderExtension
 import io.kotest.core.extensions.SpecExtension

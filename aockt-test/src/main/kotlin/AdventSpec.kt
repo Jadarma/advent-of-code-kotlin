@@ -1,11 +1,10 @@
 // Copyright © 2020 Dan Cîmpianu
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
-package io.github.jadarma.aockt.test
+package io.github.jadarma.aockt
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.internal.AdventRootScopeImpl
-import io.github.jadarma.aockt.test.internal.registerDebug
-import io.github.jadarma.aockt.test.internal.registerTest
+import io.github.jadarma.aockt.internal.AdventRootScopeImpl
+import io.github.jadarma.aockt.internal.registerDebug
+import io.github.jadarma.aockt.internal.registerTest
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.test.TestCaseOrder
@@ -19,9 +18,9 @@ import io.kotest.engine.coroutines.ThreadPerSpecCoroutineContextFactory
  *
  * Example:
  * ```kotlin
- * import io.github.jadarma.aockt.core.Solution
- * import io.github.jadarma.aockt.test.AdventSpec
- * import io.github.jadarma.aockt.test.AdventDay
+ * import io.github.jadarma.aockt.Solution
+ * import io.github.jadarma.aockt.AdventSpec
+ * import io.github.jadarma.aockt.AdventDay
  *
  * @AdventDay(2015, 1, "Not Quite Lisp")
  * class Y2015D01Test : AdventSpec<Y2015D01>({

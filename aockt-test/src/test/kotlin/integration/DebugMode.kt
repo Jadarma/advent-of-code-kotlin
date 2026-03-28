@@ -1,8 +1,8 @@
-package io.github.jadarma.aockt.test.integration
+package io.github.jadarma.aockt.integration
 
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.internal.MissingInputException
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
+import io.github.jadarma.aockt.internal.MissingInputException
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.test.TestCase
 import io.kotest.engine.test.TestResult

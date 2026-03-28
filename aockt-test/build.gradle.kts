@@ -10,5 +10,5 @@ dependencies {
 }
 
 tasks.test {
-    systemProperty("kotest.framework.config.fqn", "io.github.jadarma.aockt.test.TestConfig")
+    systemProperty("kotest.framework.config.fqn", "io.github.jadarma.aockt.TestConfig")
 }

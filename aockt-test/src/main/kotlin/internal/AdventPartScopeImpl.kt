@@ -1,8 +1,8 @@
 // Copyright © 2020 Dan Cîmpianu
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
-package io.github.jadarma.aockt.test.internal
+package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.test.AdventPartScope
+import io.github.jadarma.aockt.AdventPartScope
 
 /** A simple part scope implementation that builds a list of example inputs. */
 internal class AdventPartScopeImpl : AdventPartScope {

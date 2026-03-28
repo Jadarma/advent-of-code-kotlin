@@ -1,9 +1,9 @@
-package io.github.jadarma.aockt.test.integration
+package io.github.jadarma.aockt.integration
 
-import io.github.jadarma.aockt.core.Solution
-import io.github.jadarma.aockt.test.AdventDay
-import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.ExecMode
+import io.github.jadarma.aockt.Solution
+import io.github.jadarma.aockt.AdventDay
+import io.github.jadarma.aockt.AdventSpec
+import io.github.jadarma.aockt.ExecMode
 import io.kotest.assertions.fail
 
 class OnlyAcceptsExamples : Solution {

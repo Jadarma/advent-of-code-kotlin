@@ -1,8 +1,3 @@
-naming:
-  InvalidPackageDeclaration:
-    rootPackage: 'io.github.jadarma.aockt.core'
-    requireRootInDeclaration: true
-
 exceptions:
   NotImplementedDeclaration:
     active: false # The solution is intentionally a stub.

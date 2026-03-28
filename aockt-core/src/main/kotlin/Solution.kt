@@ -1,18 +1,18 @@
 // Copyright © 2020 Dan Cîmpianu
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
-package io.github.jadarma.aockt.core
+package io.github.jadarma.aockt
 
 /**
- * An API for a solution to an Advent Day puzzle.
+ * A contract for a solution to an Advent Day puzzle.
  *
  * An implementation **must**:
  * - be an `object` or have a no-arg constructor.
- * - have independent functions (i.e.: it should be able to solve the second part of the puzzle without having invoked
- *   the first).
+ * - have independent functions
+ *   _(i.e.: it should be able to solve the second part of the puzzle without having invoked the first)_.
  *
  * Best practice recommendations:
  * - The part functions should be stateless and have no side effects.
- * - Keep as much of the solution within your type (except very generic helpers you don't wish to copy-paste).
+ * - Keep as much of the solution within your type _(except very generic helpers you don't wish to copy-paste)_.
  * - Keep all other members, inner classes, and helper functions as `private`, to simulate a black-box approach.
  * - Include the puzzle date in the name of the class, to make it easier to search for when sharing your solutions.
  *
