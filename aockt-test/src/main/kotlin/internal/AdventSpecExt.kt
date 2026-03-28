@@ -5,7 +5,6 @@ package io.github.jadarma.aockt.test.internal
 import io.github.jadarma.aockt.core.Solution
 import io.github.jadarma.aockt.test.AdventDay
 import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.Expensive
 import io.kotest.assertions.AssertionErrorBuilder
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldNotThrowAnyUnit

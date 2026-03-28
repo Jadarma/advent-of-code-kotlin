@@ -1,6 +1,6 @@
 // Copyright © 2020 Dan Cîmpianu
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
-package io.github.jadarma.aockt.test
+package io.github.jadarma.aockt.test.internal
 
 import io.kotest.core.Tag
 
@@ -10,4 +10,4 @@ import io.kotest.core.Tag
  * Useful for marking the test specs for some days (like brute force challenges) so they can be excluded conditionally
  * in bulk test executions.
  */
-public object Expensive : Tag()
+internal object Expensive : Tag()

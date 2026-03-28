@@ -2,7 +2,7 @@ package io.github.jadarma.aockt.test.integration
 
 import io.github.jadarma.aockt.test.AdventDay
 import io.github.jadarma.aockt.test.AdventSpec
-import io.github.jadarma.aockt.test.Expensive
+import io.github.jadarma.aockt.test.internal.Expensive
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.isRootTest
 import io.kotest.core.test.parents

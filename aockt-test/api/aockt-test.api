@@ -55,7 +55,3 @@ public final class io/github/jadarma/aockt/test/ExecMode : java/lang/Enum {
 	public static fun values ()[Lio/github/jadarma/aockt/test/ExecMode;
 }
 
-public final class io/github/jadarma/aockt/test/Expensive : io/kotest/core/Tag {
-	public static final field INSTANCE Lio/github/jadarma/aockt/test/Expensive;
-}
-
