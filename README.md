@@ -112,7 +112,7 @@ If you'd like to help out:
 - Report bugs and submit feature requests via an [issue](https://github.com/Jadarma/advent-of-code-kotlin/issues).
 - If this helped you unlock some stars, consider giving one to this repo! ⭐
 
-## ⚖ License
+## ⚖️ License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) for details.\
 _Advent of Code_ is a registered trademark of Eric K. Wastl in the United States.
