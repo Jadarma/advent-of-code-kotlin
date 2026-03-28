@@ -24,3 +24,5 @@ potential-bugs:
 style:
   MagicNumber:
     active: false
+  WildcardImport:
+    active: false
