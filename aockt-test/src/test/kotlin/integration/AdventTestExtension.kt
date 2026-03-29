@@ -6,6 +6,7 @@ import io.kotest.common.KotestInternal
 import io.kotest.core.descriptors.DescriptorPaths
 import io.kotest.core.extensions.TestCaseExtension
 import io.kotest.core.listeners.AfterSpecListener
+import io.kotest.core.listeners.IgnoredTestListener
 import io.kotest.core.spec.Spec
 import io.kotest.core.test.TestCase
 import io.kotest.core.test.TestType
@@ -18,11 +19,11 @@ import kotlin.time.Duration
  * @param expectedTests Pairs of test descriptors to type of expected output.
  *                      Descriptors are the names of tests _(excluding trailing parens)_, separated by ` -- ` for each
  *                      depth level, e.g.: `Part One -- The solution -- Is correct`.
- *                      Output types are one of: `Error`, `Failure`, or `Success`.
+ *                      Output types are one of: `Error`, `Failure`, `Ignored`, or `Success`.
  */
 class AdventTestExtension(
     private val expectedTests: Map<String, String>
-) : TestCaseExtension, AfterSpecListener {
+) : TestCaseExtension, IgnoredTestListener, AfterSpecListener {
 
     private val actualTests = mutableMapOf<String, String>()
 
@@ -58,15 +59,38 @@ class AdventTestExtension(
         }
     }
 
+    override suspend fun ignoredTest(testCase: TestCase, reason: String?) {
+        val descriptor = testCase.descriptorPath
+        actualTests[descriptor] = "Ignored"
+    }
+
     override suspend fun afterSpec(spec: Spec) {
-        val missingTests = expectedTests.keys - actualTests.keys
-        if(missingTests.isEmpty()) return
-        fail("Expected tests were not registered: ${missingTests.joinToString()}")
+        val problems = mutableListOf<String>()
+        (expectedTests.keys - actualTests.keys).forEach { missingTest ->
+            problems.add("Expected but not registered: $missingTest")
+        }
+        (actualTests.keys - expectedTests.keys).forEach { extraTest ->
+            problems.add("Unexpected test registered: $extraTest")
+        }
+        expectedTests.forEach { (test, expected) ->
+            when (val actual = actualTests[test]) {
+                null, expected -> Unit
+                else -> problems.add("Expected $expected but got $actual: $test")
+            }
+        }
+
+        if (problems.isEmpty()) return
+        fail(
+            """
+                Detected ${problems.size} issues:
+                 - ${problems.joinToString("\n - ")}
+            """.trimIndent()
+        )
     }
 
     private companion object {
 
-        val validOutcomes = setOf("Error", "Failure", "Success")
+        val validOutcomes = setOf("Error", "Failure", "Ignored", "Success")
 
         /**
          * Gets the rendered descriptor path of the test, removing the spec ID and any output hints, like the actual

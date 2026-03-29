@@ -10,9 +10,11 @@ class Y9999D03EmptyTest : SampleSpec<SampleEmpty>() {
             "Part One -- Validates the examples -- Example #1" to "Failure",
             "Part One -- Validates the examples -- Example #2" to "Failure",
             "Part One -- The solution -- Is correct" to "Failure",
+            "Part One -- The solution -- Is reasonably efficient" to "Ignored",
             "Part Two -- Validates the examples -- Example #1" to "Failure",
             "Part Two -- Validates the examples -- Example #2" to "Failure",
             "Part Two -- The solution -- Computes an answer" to "Failure",
+            "Part Two -- The solution -- Is reasonably efficient" to "Ignored",
         )
     }
 }
@@ -28,6 +30,7 @@ class Y9999D03PartialTest : SampleSpec<SamplePartial>() {
             "Part Two -- Validates the examples -- Example #1" to "Failure",
             "Part Two -- Validates the examples -- Example #2" to "Failure",
             "Part Two -- The solution -- Computes an answer" to "Failure",
+            "Part Two -- The solution -- Is reasonably efficient" to "Ignored",
         )
     }
 }
@@ -43,6 +46,8 @@ class Y9999D03CorrectTest : SampleSpec<SampleCorrect>() {
             "Part Two -- Validates the examples -- Example #1" to "Success",
             "Part Two -- Validates the examples -- Example #2" to "Success",
             "Part Two -- The solution -- Computes an answer" to "Success",
+            "Part Two -- The solution -- Has unverified answer" to "Ignored",
+            "Part Two -- The solution -- Is reasonably efficient" to "Ignored",
         )
     }
 }
@@ -54,9 +59,12 @@ class Y9999D03OnlyExampleTest : SampleSpec<SampleOnlyExample>() {
             "Part One -- Validates the examples -- Example #1" to "Failure",
             "Part One -- Validates the examples -- Example #2" to "Success",
             "Part One -- The solution -- Is correct" to "Failure",
+            "Part One -- The solution -- Is reasonably efficient" to "Ignored",
             "Part Two -- Validates the examples -- Example #1" to "Failure",
             "Part Two -- Validates the examples -- Example #2" to "Success",
             "Part Two -- The solution -- Computes an answer" to "Success",
+            "Part Two -- The solution -- Has unverified answer" to "Ignored",
+            "Part Two -- The solution -- Is reasonably efficient" to "Ignored",
         )
     }
 }
@@ -68,9 +76,12 @@ class Y9999D03OnlyEdgeCaseTest : SampleSpec<SampleOnlyEdgeCase>() {
             "Part One -- Validates the examples -- Example #1" to "Success",
             "Part One -- Validates the examples -- Example #2" to "Success",
             "Part One -- The solution -- Is correct" to "Failure",
+            "Part One -- The solution -- Is reasonably efficient" to "Ignored",
             "Part Two -- Validates the examples -- Example #1" to "Success",
             "Part Two -- Validates the examples -- Example #2" to "Success",
             "Part Two -- The solution -- Computes an answer" to "Success",
+            "Part Two -- The solution -- Has unverified answer" to "Ignored",
+            "Part Two -- The solution -- Is reasonably efficient" to "Ignored",
         )
     }
 }
@@ -86,6 +97,8 @@ class Y9999D03OnlyInputTest : SampleSpec<SampleOnlyInput>() {
             "Part Two -- Validates the examples -- Example #1" to "Failure",
             "Part Two -- Validates the examples -- Example #2" to "Failure",
             "Part Two -- The solution -- Computes an answer" to "Success",
+            "Part Two -- The solution -- Has unverified answer" to "Ignored",
+            "Part Two -- The solution -- Is reasonably efficient" to "Ignored",
         )
     }
 }
@@ -97,9 +110,11 @@ class Y9999D03ErrorTest : SampleSpec<SampleError>() {
             "Part One -- Validates the examples -- Example #1" to "Failure",
             "Part One -- Validates the examples -- Example #2" to "Failure",
             "Part One -- The solution -- Is correct" to "Failure",
+            "Part One -- The solution -- Is reasonably efficient" to "Ignored",
             "Part Two -- Validates the examples -- Example #1" to "Failure",
             "Part Two -- Validates the examples -- Example #2" to "Failure",
             "Part Two -- The solution -- Computes an answer" to "Failure",
+            "Part Two -- The solution -- Is reasonably efficient" to "Ignored",
         )
     }
 }
