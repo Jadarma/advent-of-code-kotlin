@@ -5,9 +5,7 @@ package io.github.jadarma.aockt.internal
 import io.kotest.core.Tag
 
 /**
- * A tag that marks a spec or test as containing expensive computations.
- *
- * Useful for marking the test specs for some days (like brute force challenges) so they can be excluded conditionally
- * in bulk test executions.
+ * A tag that marks advent tests as containing expensive computations.
+ * Applied when setting the `expensive` parameter of advent parts to `true`.
  */
 internal object Expensive : Tag()

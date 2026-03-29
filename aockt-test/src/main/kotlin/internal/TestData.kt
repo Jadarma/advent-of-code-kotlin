@@ -30,9 +30,9 @@ internal object TestData {
     fun inputFor(adventDayID: AdventDayID): PuzzleTestData = data.computeIfAbsent(adventDayID) {
         val path = with(adventDayID) { "/aockt/y$year/d${day.toString().padStart(2, '0')}" }
         PuzzleTestData(
-            input = readResourceAsTextOrNull("$path/input.txt").toPuzzleInput(),
-            solutionPartOne = readResourceAsTextOrNull("$path/solution_part1.txt").toPuzzleAnswer(),
-            solutionPartTwo = readResourceAsTextOrNull("$path/solution_part2.txt").toPuzzleAnswer(),
+            input = readResourceAsTextOrNull("$path/input.txt")?.let(::PuzzleInput),
+            solutionPartOne = readResourceAsTextOrNull("$path/solution_part1.txt")?.let(::PuzzleAnswer),
+            solutionPartTwo = readResourceAsTextOrNull("$path/solution_part2.txt")?.let(::PuzzleAnswer),
         )
     }
 
@@ -45,18 +45,6 @@ internal object TestData {
             text.endsWith("\n") -> text.removeSuffix("\n")
             else -> text
         }
-    }
-
-    /** Wraps a [String] into a [PuzzleAnswer] type. */
-    private fun String?.toPuzzleAnswer(): PuzzleAnswer? = when (this) {
-        null -> null
-        else -> PuzzleAnswer(this)
-    }
-
-    /** Wraps a [String] into a [PuzzleInput] type. */
-    private fun String?.toPuzzleInput(): PuzzleInput? = when (this) {
-        null -> null
-        else -> PuzzleInput(this)
     }
 }
 

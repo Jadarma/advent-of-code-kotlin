@@ -4,7 +4,6 @@ package io.github.jadarma.aockt.internal
 
 import io.github.jadarma.aockt.AdventPartScope
 
-/** A simple part scope implementation that builds a list of example inputs. */
 internal class AdventPartScopeImpl : AdventPartScope {
 
     private val examples = mutableListOf<Pair<PuzzleInput, PuzzleAnswer>>()

@@ -11,5 +11,5 @@ internal class AdventDebugScopeImpl(
 ) : AdventDebugScope {
 
     override val input: String
-        get() = (puzzleInput ?: throw MissingInputException()).toString()
+        get() = puzzleInput?.toString() ?: throw MissingInputException()
 }
