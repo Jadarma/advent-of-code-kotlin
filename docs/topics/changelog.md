@@ -9,6 +9,7 @@
 - Fix issue wherein solutions completing exceptionally would not fail the test.
 - Reading test data now only trims new lines at end of file instead of all whitespace.
   This makes some problems, like [Y2025D06](https://adventofcode.com/2025/day/6) easier to parse.
+- An `AdventSpec` missing its `AdventDay` annotation will now only fail the spec instead of the entire suite.
 
 ## 0.3.0
 

@@ -17,22 +17,29 @@ class SpecOrdererTest : FunSpec({
     test("Orders specs correctly") {
         val otherSpecs = listOf(OtherA::class, OtherB::class)
             .map { SpecRef.Reference(it, requireNotNull(it.qualifiedName)) }
+        val unannotatedSpecs = listOf(SpecI::class, SpecJ::class)
+            .map { SpecRef.Reference(it, requireNotNull(it.qualifiedName)) }
         val adventSpecs = listOf(
             SpecA::class, SpecB::class, SpecC::class, SpecD::class,
             SpecE::class, SpecF::class, SpecG::class, SpecH::class,
         ).map { SpecRef.Reference(it, requireNotNull(it.qualifiedName)) }
-        val allSpecs: List<SpecRef> = adventSpecs + otherSpecs
+        val allSpecs: List<SpecRef> = otherSpecs + unannotatedSpecs + adventSpecs
 
         checkAll(iterations = 128, Arb.shuffle(allSpecs)) { discoveryOrder ->
             val otherOrder = discoveryOrder.filter { it in otherSpecs }
+            val unannotatedOrder = discoveryOrder.filter { it in unannotatedSpecs }
             val sortedOrder = discoveryOrder.sortedWith(SpecOrderer)
 
             withClue("Sorting changed the relative order of non-AdventSpecs") {
                 sortedOrder.shouldContainInOrder(otherOrder)
             }
 
+            withClue("Sorting changed the relative order of non-annotated AdventSpecs") {
+                sortedOrder.shouldContainInOrder(unannotatedOrder)
+            }
+
             withClue("Final sort order is incorrect.") {
-                val expectedOrder = otherOrder + adventSpecs
+                val expectedOrder = otherOrder + unannotatedOrder + adventSpecs
                 sortedOrder.shouldBe(expectedOrder)
             }
         }
@@ -66,3 +73,9 @@ private class SpecG : AdventSpec<Solution>()
 
 @AdventDay(3001, 1)
 private class SpecH : AdventSpec<Solution>()
+
+// Unannotated on purpose
+private class SpecI : AdventSpec<Solution>()
+
+// Unannotated on purpose
+private class SpecJ : AdventSpec<Solution>()

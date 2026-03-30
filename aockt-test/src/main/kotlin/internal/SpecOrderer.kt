@@ -7,12 +7,14 @@ import io.github.jadarma.aockt.AdventSpec
 import io.kotest.core.spec.Spec
 import io.kotest.core.spec.SpecRef
 import kotlin.reflect.KClass
+import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.isSubclassOf
 
 /**
- * Defines the execution order of [SpecRef]s.
- * All non-[AdventSpec] are executed first in the order they were discovered.
- * Advent specs are then executed in chronological order.
+ * Defines the execution order of [SpecRef]s:
+ * - All non-[AdventSpec]s executed first, in discovery order.
+ * - All [AdventSpec]s missing their [AdventDay] annotation are executed next, in discovery order _(they will fail!)_.
+ * - All remaining [AdventSpec]s in chronological order.
  */
 internal object SpecOrderer : Comparator<SpecRef> {
 
@@ -26,12 +28,12 @@ internal object SpecOrderer : Comparator<SpecRef> {
             false to true -> -1
             false to false -> 0
             else -> compareValuesBy(
-                a = (specA as KClass<out AdventSpec<*>>).adventDay,
-                b = (specB as KClass<out AdventSpec<*>>).adventDay,
-                AdventDay::year,
-                AdventDay::day,
-                AdventDay::title,
-                AdventDay::variant,
+                a = (specA as KClass<out AdventSpec<*>>).findAnnotation<AdventDay>(),
+                b = (specB as KClass<out AdventSpec<*>>).findAnnotation<AdventDay>(),
+                { it?.year },
+                { it?.day },
+                { it?.title },
+                { it?.variant },
             )
         }
     }
