@@ -7,6 +7,7 @@ import io.github.jadarma.aockt.AdventSpec
 import io.kotest.core.test.TestCase
 import io.kotest.engine.names.DisplayNameFormatter
 import kotlin.reflect.KClass
+import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.isSubclassOf
 
 /** A name formatter extension that adjusts the names of [AdventSpec]s with the info of their [AdventDay]. */
@@ -17,9 +18,10 @@ internal object AocKtDisplayNameFormatter : DisplayNameFormatter {
 
     override fun format(kclass: KClass<*>): String? {
         if (!kclass.isSubclassOf(AdventSpec::class)) return null
+        val adventDay = kclass.findAnnotation<AdventDay>() ?: return null
 
         @Suppress("UNCHECKED_CAST")
-        return with((kclass as KClass<out AdventSpec<*>>).adventDay) {
+        return with(adventDay) {
             buildString {
                 append(AdventDayID(year, day))
                 if (title.isNotEmpty()) append(": ", title)
