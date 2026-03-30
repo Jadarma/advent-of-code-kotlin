@@ -2,6 +2,6 @@
 <!DOCTYPE vars SYSTEM "https://resources.jetbrains.com/writerside/1.0/vars.dtd">
 <vars>
     <var name="aockt-version" value="0.4.0-SNAPSHOT"/>
-    <var name="kotest-version" value="6.1.9"/>
+    <var name="kotest-version" value="6.1.10"/>
     <var name="kotlin-version" value="2.3.20"/>
 </vars>
