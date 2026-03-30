@@ -81,8 +81,8 @@ class AdventTestExtension(
         if (problems.isEmpty()) return
         fail(
             """
-            |Detected ${problems.size} issues:
-            | - ${problems.joinToString("\n - ")}
+                |Detected ${problems.size} issues:
+                | - ${problems.joinToString("\n - ")}
             """.trimMargin()
         )
     }
