@@ -41,13 +41,12 @@ class AdventTestExtension(
         if (testCase.type == TestType.Container) return actualResult
 
         val descriptor = testCase.descriptorPath
+        actualTests[descriptor] = actualResult.name
 
         val expectedResult = expectedTests[descriptor] ?: return TestResult.Failure(
             duration = Duration.ZERO,
             cause = AssertionError("Unexpected test registered: $descriptor"),
         )
-
-        actualTests[descriptor] = actualResult.name
 
         return if (expectedResult == actualResult.name) {
             TestResult.Success(actualResult.duration)
@@ -82,9 +81,9 @@ class AdventTestExtension(
         if (problems.isEmpty()) return
         fail(
             """
-                Detected ${problems.size} issues:
-                 - ${problems.joinToString("\n - ")}
-            """.trimIndent()
+            |Detected ${problems.size} issues:
+            | - ${problems.joinToString("\n - ")}
+            """.trimMargin()
         )
     }
 

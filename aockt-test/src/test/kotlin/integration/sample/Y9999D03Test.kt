@@ -118,3 +118,20 @@ class Y9999D03ErrorTest : SampleSpec<SampleError>() {
         )
     }
 }
+
+@AdventDay(9999, 3, "Sample", "Expensive")
+class Y9999D03ExpensiveTest : SampleSpec<SampleExpensive>() {
+    init {
+        testExtension(
+            "Part One -- Validates the examples -- Example #1" to "Success",
+            "Part One -- Validates the examples -- Example #2" to "Success",
+            "Part One -- The solution -- Is correct" to "Success",
+            "Part One -- The solution -- Is reasonably efficient" to "Failure",
+            "Part Two -- Validates the examples -- Example #1" to "Success",
+            "Part Two -- Validates the examples -- Example #2" to "Success",
+            "Part Two -- The solution -- Computes an answer" to "Success",
+            "Part Two -- The solution -- Has unverified answer" to "Ignored",
+            "Part Two -- The solution -- Is reasonably efficient" to "Ignored",
+        )
+    }
+}

@@ -51,3 +51,9 @@ object SampleError : Solution {
     override fun partOne(input: String) = throw NullPointerException("Boom!")
     override fun partTwo(input: String) = throw ArithmeticException("Boom!")
 }
+
+/** Returns the correct answer but after a delay. */
+object SampleExpensive : Solution {
+    override fun partOne(input: String): Any = Thread.sleep(100).run { "1:$input" }
+    override fun partTwo(input: String): Any = Thread.sleep(100).run { "2:${input.length}" }
+}

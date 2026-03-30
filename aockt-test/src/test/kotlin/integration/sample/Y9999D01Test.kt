@@ -86,3 +86,15 @@ class Y9999D01ErrorTest : SampleSpec<SampleError>() {
         )
     }
 }
+
+@AdventDay(9999, 1, "Sample", "Expensive")
+class Y9999D01ExpensiveTest : SampleSpec<SampleExpensive>() {
+    init {
+        testExtension(
+            "Part One -- Validates the examples -- Example #1" to "Success",
+            "Part One -- Validates the examples -- Example #2" to "Success",
+            "Part Two -- Validates the examples -- Example #1" to "Success",
+            "Part Two -- Validates the examples -- Example #2" to "Success",
+        )
+    }
+}
