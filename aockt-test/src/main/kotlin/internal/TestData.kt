@@ -89,5 +89,10 @@ internal value class PuzzleInput(private val input: String) {
 /** An answer given by a [Solution] that was given a [PuzzleInput]. */
 @JvmInline
 internal value class PuzzleAnswer(private val answer: String) {
+
+    init {
+        require(answer.isNotBlank()) { "A puzzle answer must be a non-blank string!" }
+    }
+
     override fun toString() = answer
 }
