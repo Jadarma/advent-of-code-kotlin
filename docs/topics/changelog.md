@@ -5,11 +5,13 @@
 - Update Kotlin to `2.3` and Kotest to `6.1`.
 - Changed package structure. The `core` and `test` packages are gone and instead both should be replaced by just
   `io.github.jadarma.aockt`.
-- The `Expensive` tag object now has internal visibility.
-- Fix issue wherein solutions completing exceptionally would not fail the test.
 - Reading test data now only trims new lines at end of file instead of all whitespace.
   This makes some problems, like [Y2025D06](https://adventofcode.com/2025/day/6) easier to parse.
-- An `AdventSpec` missing its `AdventDay` annotation will now only fail the spec instead of the entire suite.
+- The `Expensive` tag object now has internal visibility.
+- Fix issue where solutions completing exceptionally would not fail the test.
+- Fix issue where an `AdventSpec` missing its `AdventDay` annotation would cause the entire suite to fail instead of
+  just that spec.
+- Fix issue where per-spec efficiency benchmarks could be overridden with non-positive values.
 
 ## 0.3.0
 

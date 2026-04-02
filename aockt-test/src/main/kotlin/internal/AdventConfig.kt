@@ -24,7 +24,7 @@ internal data class AdventProjectConfig(
 ) : AbstractCoroutineContextElement(Key) {
 
     init {
-        if (efficiencyBenchmark.isPositive().not()) {
+        if (!efficiencyBenchmark.isPositive()) {
             throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
         }
     }
@@ -49,6 +49,12 @@ internal data class AdventTestConfig(
     val efficiencyBenchmark: Duration?,
     val examples: List<Pair<PuzzleInput, PuzzleAnswer>>,
 ) {
+
+    init {
+        if (efficiencyBenchmark != null && !efficiencyBenchmark.isPositive()) {
+            throw ConfigurationException("Efficiency benchmark must be a positive value, but was: $efficiencyBenchmark")
+        }
+    }
 
     data class ForExamples(
         val enabled: Boolean,

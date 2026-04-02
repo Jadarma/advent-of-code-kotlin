@@ -7,6 +7,7 @@ import io.github.jadarma.aockt.internal.AdventDebugScopeImpl
 import io.github.jadarma.aockt.internal.AdventProjectConfig
 import io.github.jadarma.aockt.internal.AdventRootScopeImpl
 import io.github.jadarma.aockt.internal.AdventTestConfig
+import io.github.jadarma.aockt.internal.ConfigurationException
 import io.github.jadarma.aockt.internal.DuplicateDefinitionException
 import io.github.jadarma.aockt.internal.PuzzleAnswer
 import io.github.jadarma.aockt.internal.PuzzleInput
@@ -44,6 +45,23 @@ class AocKtDslTest : FunSpec({
             shouldThrowExactly<DuplicateDefinitionException> { scope.debug {} }
                 .message
                 .shouldBe("In io.github.jadarma.aockt.SomeSpec, debug has been declared twice.")
+        }
+    }
+
+    context("Validates input") {
+        test("and rejects invalid efficiency benchmarks") {
+            val scope = AdventRootScopeImpl(SomeSpec::class)
+
+            shouldThrowExactly<ConfigurationException> { scope.partOne(efficiencyBenchmark = 0.seconds) }
+                .message
+                .shouldBe("Efficiency benchmark must be a positive value, but was: 0s")
+
+            shouldThrowExactly<ConfigurationException> { scope.partOne(efficiencyBenchmark = (-1).seconds) }
+                .message
+                .shouldBe("Efficiency benchmark must be a positive value, but was: -1s")
+
+            scope.partOne.shouldBeNull()
+            scope.partTwo.shouldBeNull()
         }
     }
 
