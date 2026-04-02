@@ -1,9 +1,6 @@
-package io.github.jadarma.aockt.integration
+package io.github.jadarma.aockt
 
-import io.github.jadarma.aockt.AdventDay
-import io.github.jadarma.aockt.AdventSpec
-import io.github.jadarma.aockt.AocKtExtension
-import io.github.jadarma.aockt.ExecMode
+import io.github.jadarma.aockt.integration.SampleCorrect
 import io.github.jadarma.aockt.internal.AdventProjectConfig
 import io.github.jadarma.aockt.internal.ConfigurationException
 import io.kotest.assertions.throwables.shouldThrowExactly
@@ -15,7 +12,7 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @AdventDay(3000, 5, "AocKtExtensionTest")
-class AocKtExtensionTest : AdventSpec<ObjectSolution>() {
+class AocKtExtensionTest : AdventSpec<SampleCorrect>() {
 
     init {
         context("Applies config") {
@@ -26,12 +23,12 @@ class AocKtExtensionTest : AdventSpec<ObjectSolution>() {
             }
 
             test("by default") {
-                AocKtExtension().configuration shouldBe AdventProjectConfig.Default
+                AocKtExtension().configuration shouldBe AdventProjectConfig.Key.Default
             }
 
             test("and applies overrides") {
                 AocKtExtension(executionMode = ExecMode.ExamplesOnly).configuration shouldBe AdventProjectConfig(
-                    efficiencyBenchmark = AdventProjectConfig.Default.efficiencyBenchmark,
+                    efficiencyBenchmark = AdventProjectConfig.Key.Default.efficiencyBenchmark,
                     executionMode = ExecMode.ExamplesOnly,
                 )
             }

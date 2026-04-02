@@ -2,11 +2,11 @@
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
 package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.Solution
 import io.github.jadarma.aockt.AdventSpec
 import io.github.jadarma.aockt.AdventDay
 import io.github.jadarma.aockt.AdventRootScope
 import io.github.jadarma.aockt.AdventDebugScope
+import io.github.jadarma.aockt.Solution
 import io.kotest.common.reflection.bestName
 import kotlin.reflect.KClass
 
@@ -20,8 +20,8 @@ internal class ConfigurationException(message: String? = null) : AocKtException(
  * An [AdventSpec] was declared without an [AdventDay] annotation.
  * It is required in order to determine test input.
  */
-internal class MissingAdventDayAnnotationException(kclass: KClass<out AdventSpec<*>>) : AocKtException(
-    message = "Class ${kclass.bestName()} is an AdventSpec but is missing the AdventDay annotation.",
+internal class MissingAdventDayAnnotationException(spec: KClass<out AdventSpec<*>>) : AocKtException(
+    message = "Class ${spec.bestName()} is an AdventSpec but is missing the AdventDay annotation.",
 )
 
 /**
@@ -34,7 +34,7 @@ internal class MissingNoArgConstructorException(kclass: KClass<out Solution>) : 
 )
 
 /** An [AdventRootScope] declared the same function twice. */
-internal class DuplicateDefinitionException(spec: KClass<*>, definition: String) : AocKtException(
+internal class DuplicateDefinitionException(spec: KClass<out AdventSpec<*>>, definition: String) : AocKtException(
     message = "In ${spec.bestName()}, $definition has been declared twice.",
 )
 

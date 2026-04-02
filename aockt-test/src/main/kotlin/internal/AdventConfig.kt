@@ -2,10 +2,10 @@
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
 package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.Solution
 import io.github.jadarma.aockt.AdventDebugScope
 import io.github.jadarma.aockt.AdventSpec
 import io.github.jadarma.aockt.ExecMode
+import io.github.jadarma.aockt.Solution
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
@@ -38,7 +38,7 @@ internal data class AdventProjectConfig(
     }
 }
 
-@Suppress("BooleanPropertyNaming")
+@Suppress("BooleanPropertyNaming", "DataClassContainsFunctions")
 internal data class AdventTestConfig(
     val id: AdventDayID,
     val part: AdventDayPart,
@@ -63,6 +63,20 @@ internal data class AdventTestConfig(
         val partFunction: PartFunction,
         val efficiencyBenchmark: Duration,
     )
+
+    internal fun forExamples(defaults: AdventProjectConfig) = ForExamples(
+        enabled = if (!enabled) false else (executionMode ?: defaults.executionMode) != ExecMode.SkipExamples,
+        partFunction = partFunction,
+        examples = examples,
+    )
+
+    internal fun forInput(defaults: AdventProjectConfig) = ForInput(
+        id = id,
+        part = part,
+        enabled = if (!enabled) false else (executionMode ?: defaults.executionMode) != ExecMode.ExamplesOnly,
+        partFunction = partFunction,
+        efficiencyBenchmark = efficiencyBenchmark ?: defaults.efficiencyBenchmark,
+    )
 }
 
 internal data class AdventDebugConfig(
@@ -70,19 +84,3 @@ internal data class AdventDebugConfig(
     val solution: Solution,
     val test: AdventDebugScope.() -> Unit,
 )
-
-internal fun AdventTestConfig.forExamples(defaults: AdventProjectConfig): AdventTestConfig.ForExamples =
-    AdventTestConfig.ForExamples(
-        enabled = if (!enabled) false else (executionMode ?: defaults.executionMode) != ExecMode.SkipExamples,
-        partFunction = partFunction,
-        examples = examples,
-    )
-
-internal fun AdventTestConfig.forInput(defaults: AdventProjectConfig): AdventTestConfig.ForInput =
-    AdventTestConfig.ForInput(
-        id = id,
-        part = part,
-        enabled = if (!enabled) false else (executionMode ?: defaults.executionMode) != ExecMode.ExamplesOnly,
-        partFunction = partFunction,
-        efficiencyBenchmark = efficiencyBenchmark ?: defaults.efficiencyBenchmark,
-    )

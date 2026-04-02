@@ -19,6 +19,12 @@ class AocKtDisplayNameFormatterTest : FunSpec({
             .shouldBeNull()
     }
 
+    test("Does not format non-annotated advent specs") {
+        AocKtDisplayNameFormatter
+            .format(UnannotatedAdventSpec::class)
+            .shouldBeNull()
+    }
+
     test("Formats names correctly") {
         mapOf(
             SimpleAdventSpec::class to "Y3000D02",
@@ -42,3 +48,5 @@ private class VariantAdventSpec : AdventSpec<Solution>()
 
 @AdventDay(3000, 2, title = "Custom Title", variant = "faster")
 private class ComplexAdventSpec : AdventSpec<Solution>()
+
+private class UnannotatedAdventSpec : AdventSpec<Solution>()

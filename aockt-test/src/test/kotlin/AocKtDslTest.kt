@@ -1,9 +1,16 @@
-package io.github.jadarma.aockt.internal
+package io.github.jadarma.aockt
 
-import io.github.jadarma.aockt.AdventDay
-import io.github.jadarma.aockt.AdventSpec
-import io.github.jadarma.aockt.ExecMode
-import io.github.jadarma.aockt.integration.ObjectSolution
+import io.github.jadarma.aockt.integration.SampleCorrect
+import io.github.jadarma.aockt.internal.AdventDayID
+import io.github.jadarma.aockt.internal.AdventDayPart
+import io.github.jadarma.aockt.internal.AdventDebugScopeImpl
+import io.github.jadarma.aockt.internal.AdventProjectConfig
+import io.github.jadarma.aockt.internal.AdventRootScopeImpl
+import io.github.jadarma.aockt.internal.AdventTestConfig
+import io.github.jadarma.aockt.internal.DuplicateDefinitionException
+import io.github.jadarma.aockt.internal.PuzzleAnswer
+import io.github.jadarma.aockt.internal.PuzzleInput
+import io.github.jadarma.aockt.internal.partFunction
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -15,7 +22,7 @@ import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import kotlin.time.Duration.Companion.seconds
 
-class DslTest : FunSpec({
+class AocKtDslTest : FunSpec({
 
     context("Cannot register duplicate") {
         val scope = AdventRootScopeImpl(SomeSpec::class).apply {
@@ -26,17 +33,17 @@ class DslTest : FunSpec({
         test("partOne scopes") {
             shouldThrowExactly<DuplicateDefinitionException> { scope.partOne() }
                 .message
-                .shouldBe("In io.github.jadarma.aockt.internal.SomeSpec, partOne has been declared twice.")
+                .shouldBe("In io.github.jadarma.aockt.SomeSpec, partOne has been declared twice.")
         }
         test("partTwo scopes") {
             shouldThrowExactly<DuplicateDefinitionException> { scope.partTwo() }
                 .message
-                .shouldBe("In io.github.jadarma.aockt.internal.SomeSpec, partTwo has been declared twice.")
+                .shouldBe("In io.github.jadarma.aockt.SomeSpec, partTwo has been declared twice.")
         }
         test("debug scopes") {
             shouldThrowExactly<DuplicateDefinitionException> { scope.debug {} }
                 .message
-                .shouldBe("In io.github.jadarma.aockt.internal.SomeSpec, debug has been declared twice.")
+                .shouldBe("In io.github.jadarma.aockt.SomeSpec, debug has been declared twice.")
         }
     }
 
@@ -91,7 +98,7 @@ class DslTest : FunSpec({
             scope.debug.shouldBeNull()
             scope.debug {
                 wasInvoked = true
-                solution shouldBe ObjectSolution
+                solution shouldBe SampleCorrect
                 input shouldBe "B"
             }
 
@@ -107,7 +114,7 @@ class DslTest : FunSpec({
         val configA = AdventTestConfig(
             id = AdventDayID(9999, 2),
             part = AdventDayPart.One,
-            partFunction = ObjectSolution.partFunction(AdventDayPart.One),
+            partFunction = SampleCorrect.partFunction(AdventDayPart.One),
             enabled = true,
             expensive = true,
             executionMode = ExecMode.SkipExamples,
@@ -117,7 +124,7 @@ class DslTest : FunSpec({
         val configB = AdventTestConfig(
             id = AdventDayID(9999, 2),
             part = AdventDayPart.Two,
-            partFunction = ObjectSolution.partFunction(AdventDayPart.Two),
+            partFunction = SampleCorrect.partFunction(AdventDayPart.Two),
             enabled = false,
             expensive = false,
             executionMode = null,
@@ -157,5 +164,5 @@ class DslTest : FunSpec({
     }
 })
 
-@AdventDay(3000, 3)
-private class SomeSpec : AdventSpec<ObjectSolution>()
+@AdventDay(9999, 1)
+private class SomeSpec : AdventSpec<SampleCorrect>()

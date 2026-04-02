@@ -1,22 +1,10 @@
-package io.github.jadarma.aockt.integration
+package io.github.jadarma.aockt
 
-import io.github.jadarma.aockt.Solution
-import io.github.jadarma.aockt.AdventDay
-import io.github.jadarma.aockt.AdventSpec
 import io.github.jadarma.aockt.internal.MissingNoArgConstructorException
 import io.github.jadarma.aockt.internal.injectSolution
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-
-open class SolutionImpl : Solution {
-    override fun partOne(input: String) = "1:$input"
-    override fun partTwo(input: String) = "2:${input.length}"
-}
-
-class ClassSolution : SolutionImpl()
-object ObjectSolution : SolutionImpl()
-class ConstructedSolution(val arg: Int) : SolutionImpl()
 
 class SolutionTest : FunSpec({
 
@@ -36,16 +24,25 @@ class SolutionTest : FunSpec({
         @Suppress("MaxLineLength")
         test("but not from a complex class") {
             shouldThrowExactly<MissingNoArgConstructorException> { ConstructedSolutionSpec::class.injectSolution() }
-                .message.shouldBe("Class io.github.jadarma.aockt.integration.ConstructedSolution is a Solution but it is missing a no-arg constructor.")
+                .message.shouldBe("Class io.github.jadarma.aockt.ConstructedSolution is a Solution but it is missing a no-arg constructor.")
         }
     }
 })
 
-@AdventDay(3000, 1)
+open class SolutionImpl : Solution {
+    override fun partOne(input: String) = "1:$input"
+    override fun partTwo(input: String) = "2:${input.length}"
+}
+
+class ClassSolution : SolutionImpl()
+object ObjectSolution : SolutionImpl()
+class ConstructedSolution(val arg: Int) : SolutionImpl()
+
+@AdventDay(9999, 1)
 private class ClassSolutionSpec : AdventSpec<ClassSolution>()
 
-@AdventDay(3000, 4)
+@AdventDay(9999, 1)
 private class ObjectSolutionSpec : AdventSpec<ObjectSolution>()
 
-@AdventDay(3000, 4)
+@AdventDay(9999, 1)
 private class ConstructedSolutionSpec : AdventSpec<ConstructedSolution>()

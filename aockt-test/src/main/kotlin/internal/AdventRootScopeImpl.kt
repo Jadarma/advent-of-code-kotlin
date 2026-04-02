@@ -2,12 +2,12 @@
 // This code is licensed under the MIT license, detailed in LICENSE.md or at https://opensource.org/license/MIT.
 package io.github.jadarma.aockt.internal
 
-import io.github.jadarma.aockt.Solution
 import io.github.jadarma.aockt.AdventDebugScope
 import io.github.jadarma.aockt.AdventPartScope
 import io.github.jadarma.aockt.AdventRootScope
 import io.github.jadarma.aockt.AdventSpec
 import io.github.jadarma.aockt.ExecMode
+import io.github.jadarma.aockt.Solution
 import kotlin.reflect.KClass
 import kotlin.time.Duration
 

@@ -30,7 +30,7 @@ class DebugTestWithInput : AdventSpec<SampleCorrect>({
             "Debug" to "Success",
         )
         beforeAny { testCase ->
-            if(testCase.name.name == "Debug") {
+            if (testCase.name.name == "Debug") {
                 testCase.name.focus.shouldBeTrue()
                 didExecute.shouldBeFalse()
             } else {
@@ -39,22 +39,22 @@ class DebugTestWithInput : AdventSpec<SampleCorrect>({
         }
         afterTest { (testCase, result) ->
             result.isIgnored shouldBe (testCase.name.name != "Debug")
-            if(testCase.name.name == "Debug") {
+            if (testCase.name.name == "Debug") {
                 didExecute.shouldBeTrue()
             }
         }
     }
 }
 
-@AdventDay(9999, 2, "Debug Mode", "No input")
+@AdventDay(9999, 1, "Debug Mode", "No input")
 class DebugTestWithoutInput : AdventSpec<SampleCorrect>({
     debug {
-        shouldThrowExactly<MissingInputException>{ input }
+        shouldThrowExactly<MissingInputException> { input }
     }
 }) {
     init {
         testExtension(
-            "Debug" to "Failure",
+            "Debug" to "Success", // because shouldThrow expects failure.
         )
     }
 }
