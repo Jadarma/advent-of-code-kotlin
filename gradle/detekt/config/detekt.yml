@@ -1,5 +1,8 @@
 # Explicit configuration to all Detekt rules.
 # https://detekt.dev/docs/intro
+config:
+  validation: true
+  warningsAsErrors: true
 
 # https://detekt.dev/docs/rules/comments
 comments:
@@ -311,6 +314,8 @@ style:
     active: true
   BracesOnIfStatements:
     active: true
+    singleLine: 'necessary'
+    multiLine: 'consistent'
   BracesOnWhenStatements:
     active: true
   CanBeNonNullable:
