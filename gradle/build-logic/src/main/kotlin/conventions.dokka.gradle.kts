@@ -2,7 +2,6 @@ import org.gradle.internal.extensions.stdlib.capitalized
 import org.jetbrains.dokka.gradle.engine.parameters.DokkaSourceSetSpec
 import org.jetbrains.dokka.gradle.engine.parameters.KotlinPlatform
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
-import java.time.LocalDate
 
 plugins {
     id("org.jetbrains.dokka")
