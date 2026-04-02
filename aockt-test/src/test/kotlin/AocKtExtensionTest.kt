@@ -23,12 +23,12 @@ class AocKtExtensionTest : AdventSpec<SampleCorrect>() {
             }
 
             test("by default") {
-                AocKtExtension().configuration shouldBe AdventProjectConfig.Key.Default
+                AocKtExtension().configuration shouldBe AdventProjectConfig.Default
             }
 
             test("and applies overrides") {
                 AocKtExtension(executionMode = ExecMode.ExamplesOnly).configuration shouldBe AdventProjectConfig(
-                    efficiencyBenchmark = AdventProjectConfig.Key.Default.efficiencyBenchmark,
+                    efficiencyBenchmark = AdventProjectConfig.Default.efficiencyBenchmark,
                     executionMode = ExecMode.ExamplesOnly,
                 )
             }

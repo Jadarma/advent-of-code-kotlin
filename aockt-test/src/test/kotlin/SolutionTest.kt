@@ -36,7 +36,7 @@ open class SolutionImpl : Solution {
 
 class ClassSolution : SolutionImpl()
 object ObjectSolution : SolutionImpl()
-class ConstructedSolution(val arg: Int) : SolutionImpl()
+class ConstructedSolution(@Suppress("unused") val arg: Int) : SolutionImpl()
 
 @AdventDay(9999, 1)
 private class ClassSolutionSpec : AdventSpec<ClassSolution>()
