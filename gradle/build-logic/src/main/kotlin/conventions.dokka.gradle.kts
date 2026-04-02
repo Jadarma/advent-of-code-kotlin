@@ -45,7 +45,7 @@ dokka {
     pluginsConfiguration.html {
         separateInheritedMembers = true
         homepageLink = "https://jadarma.github.io/advent-of-code-kotlin"
-        footerMessage = "© 2020-${LocalDate.now().year} Dan Cîmpianu"
+        footerMessage = "Copyright © 2020 Dan Cîmpianu"
     }
 
     dokkaGeneratorIsolation = ClassLoaderIsolation()
