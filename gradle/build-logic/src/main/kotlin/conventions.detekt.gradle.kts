@@ -13,13 +13,13 @@ detekt {
 }
 
 tasks {
-    val detektMain: Detekt by named<Detekt>("detektMain") {
+    val detektMain: Detekt = getByName<Detekt>("detektMain") {
         config.setFrom(
             "$rootDir/gradle/detekt/config/detekt.yml",
             "$rootDir/gradle/detekt/config/${project.name}.yml",
         )
     }
-    val detektTest: Detekt by named<Detekt>("detektTest") {
+    val detektTest: Detekt = getByName<Detekt>("detektTest") {
         config.setFrom(
             "$rootDir/gradle/detekt/config/detekt.yml",
             "$rootDir/gradle/detekt/config/${project.name}.yml",

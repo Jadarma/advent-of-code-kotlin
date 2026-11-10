@@ -1,11 +1,11 @@
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention")
-}
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
     }
+}
+
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention")
 }
 
 @Suppress("UnstableApiUsage")
