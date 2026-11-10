@@ -39,6 +39,7 @@ public abstract class io/github/jadarma/aockt/AdventSpec : io/kotest/core/spec/s
 }
 
 public final class io/github/jadarma/aockt/AocKtExtension : io/kotest/core/extensions/DisplayNameFormatterExtension, io/kotest/core/extensions/SpecExecutionOrderExtension, io/kotest/core/extensions/SpecExtension {
+	public fun <init> ()V
 	public synthetic fun <init> (JLio/github/jadarma/aockt/ExecMode;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (JLio/github/jadarma/aockt/ExecMode;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun formatter ()Lio/kotest/engine/names/DisplayNameFormatter;

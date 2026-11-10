@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.1-SNAPSHOT
+
+- Update Kotlin to `2.4` and Kotest to `6.2`.
+
 ## 0.4.0
 
 _[Released 2025-04-02](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.4.0)_
