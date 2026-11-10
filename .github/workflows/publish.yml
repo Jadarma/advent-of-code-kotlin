@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78
         with:
           java-version: '21'
-          distribution: 'adopt'
+          distribution: 'temurin'
       - name: 'Setup Gradle'
         uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c
         with:
