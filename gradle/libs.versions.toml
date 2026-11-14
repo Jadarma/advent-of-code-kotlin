@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.4.21"       # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
-kotest = "6.2.6"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
+kotest = "6.2.7"        # https://mvnrepository.com/artifact/io.kotest/kotest-framework-engine
 
 bcv = "0.18.2"          # https://mvnrepository.com/artifact/org.jetbrains.kotlinx.binary-compatibility-validator/org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin
 detekt = "2.0.0-alpha.6"# https://mvnrepository.com/artifact/dev.detekt/detekt-gradle-plugin
