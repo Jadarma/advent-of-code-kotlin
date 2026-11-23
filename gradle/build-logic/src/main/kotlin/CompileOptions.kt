@@ -11,7 +11,7 @@ object CompileOptions {
 
     object AocKt {
         const val GROUP_ID: String = "io.github.jadarma.aockt"
-        const val CURRENT: String = "0.4.0" // Last released version.
+        const val CURRENT: String = "0.4.1" // Last released version.
         const val NEXT: String = "0.5.0" // Current snapshot.
     }
 

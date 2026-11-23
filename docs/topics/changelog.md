@@ -1,12 +1,14 @@
 # Change Log
 
-## 0.4.1-SNAPSHOT
+## 0.4.1
+
+_[Released 2026-11-23](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.4.1)_
 
 - Update Kotlin to `2.4` and Kotest to `6.2`.
 
 ## 0.4.0
 
-_[Released 2025-04-02](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.4.0)_
+_[Released 2026-04-02](https://github.com/Jadarma/advent-of-code-kotlin/releases/tag/v0.4.0)_
 
 - Update Kotlin to `2.3` and Kotest to `6.1`.
 - Changed package structure. The `core` and `test` packages are gone and instead both should be replaced by just
