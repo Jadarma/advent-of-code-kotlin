@@ -8,11 +8,11 @@ for testing AoC puzzle solutions with minimal boilerplate.
 
 ## ✨ Features
 
-- **Completely Offline** - Puzzle inputs and solutions are read from local files, no need for tokens.
-- **Test-Driven** - Run your code from unit tests for faster feedback loops and fearless refactorings.
-- **DSL-Driven** - Define your test cases with minimal code.
-- **Configurable** - You decide what runs and when using optional parameters.
-- **Minimal** - The test framework is the only non-Kotlin dependency.
+- **Completely Offline**: Puzzle inputs and solutions are read from local files, no need for tokens.
+- **Test-Driven**: Run your code from unit tests for faster feedback loops and fearless refactorings.
+- **DSL-Driven**: Define your test cases with minimal code.
+- **Configurable**: You decide what runs and when using optional parameters.
+- **Minimal**: The test framework is the only non-Kotlin dependency.
 
 ## ⚡ Quick Start
 

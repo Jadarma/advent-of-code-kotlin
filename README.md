@@ -5,6 +5,7 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Jadarma/advent-of-code-kotlin/build.yml?style=flat-square&logo=github&label=Build&logoColor=%23171515)](https://github.com/Jadarma/advent-of-code-kotlin/actions/workflows/build.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.jadarma.aockt/aockt-test?style=flat-square&logo=apachemaven&logoColor=blue&label=Maven%20Central&color=blue)](https://central.sonatype.com/namespace/io.github.jadarma.aockt)
 [![Maven SNAPSHOT](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fio%2Fgithub%2Fjadarma%2Faockt%2Faockt-test%2Fmaven-metadata.xml&strategy=latestProperty&style=flat-square&logo=apachemaven&logoColor=orange&label=Snapshot&color=orange)](https://jadarma.github.io/advent-of-code-kotlin/overview.html#snapshot)
+[![No AI Notice](https://img.shields.io/badge/Human--Made-pink?style=flat-square&label=%F0%9F%A7%A0%20100%25)](## "No AI was used in making of this software.")
 
 AocKt _(short for Advent of Code - Kotlin)_ is a simple library that makes running and testing your Kotlin solutions to
 [Advent of Code](https://adventofcode.com) puzzles a breeze.
@@ -19,11 +20,11 @@ DSL documentation, workflow guides, advanced configuration options, and more!
 
 ## ✨ Features
 
-- **Completely Offline** - Puzzle inputs and solutions are read from local files, no need for tokens.
-- **Test-Driven** - Run your code from unit tests for faster feedback loops and fearless refactorings.
-- **DSL-Driven** - Define your test cases with minimal code.
-- **Configurable** - You decide what runs and when using optional parameters.
-- **Minimal** - The test framework is the only non-Kotlin dependency.
+- **Completely Offline**: Puzzle inputs and solutions are read from local files, no need for tokens.
+- **Test-Driven**: Run your code from unit tests for faster feedback loops and fearless refactorings.
+- **DSL-Driven**: Define your test cases with minimal code.
+- **Configurable**: You decide what runs and when using optional parameters.
+- **Minimal**: The test framework is the only non-Kotlin dependency.
 
 ## ⚡ Quick Start
 
@@ -114,5 +115,5 @@ If you'd like to help out:
 
 ## ⚖️ License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) for details.\
+This project is licensed under the MIT License; see the [LICENSE](LICENSE.md) for details.\
 _Advent of Code_ is a registered trademark of Eric K. Wastl in the United States.
